@@ -1,0 +1,8 @@
+requests
+pandas
+numpy
+georinex
+tqdm
+netCDF4
+xarray
+python-dotenv

@@ -1,0 +1,25 @@
+# Environment & Secret Credentials
+.env
+
+# Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+.ruff_cache/
+
+# IDE & System Files
+.vscode/
+.idea/
+.DS_Store
+
+# Datasets
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Heavy Trained Models
+models/*.json
