@@ -1,0 +1,98 @@
+[
+  {
+    "station": "hyderabad",
+    "horizon": "1h",
+    "rmse": 6.819624508899505,
+    "mae": 5.27978515625,
+    "r": 0.9877875447273254,
+    "training_time_sec": 36.85
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "3h",
+    "rmse": 11.197488939263208,
+    "mae": 8.613018035888672,
+    "r": 0.9677534103393555,
+    "training_time_sec": 36.27
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "6h",
+    "rmse": 13.613004951464381,
+    "mae": 9.717214584350586,
+    "r": 0.9527931809425354,
+    "training_time_sec": 36.24
+  },
+  {
+    "station": "bangalore",
+    "horizon": "1h",
+    "rmse": 6.248585655400036,
+    "mae": 4.867944240570068,
+    "r": 0.9881086945533752,
+    "training_time_sec": 36.46
+  },
+  {
+    "station": "bangalore",
+    "horizon": "3h",
+    "rmse": 9.021026209882915,
+    "mae": 7.0360307693481445,
+    "r": 0.9766514301300049,
+    "training_time_sec": 36.44
+  },
+  {
+    "station": "bangalore",
+    "horizon": "6h",
+    "rmse": 9.482024201560781,
+    "mae": 7.350391864776611,
+    "r": 0.9728177785873413,
+    "training_time_sec": 36.52
+  },
+  {
+    "station": "lucknow",
+    "horizon": "1h",
+    "rmse": 8.621161449807813,
+    "mae": 6.50656795501709,
+    "r": 0.9807367920875549,
+    "training_time_sec": 36.85
+  },
+  {
+    "station": "lucknow",
+    "horizon": "3h",
+    "rmse": 13.891255522107018,
+    "mae": 10.190411567687988,
+    "r": 0.9493958353996277,
+    "training_time_sec": 36.86
+  },
+  {
+    "station": "lucknow",
+    "horizon": "6h",
+    "rmse": 17.139511308680614,
+    "mae": 12.148473739624023,
+    "r": 0.919510006904602,
+    "training_time_sec": 37.41
+  },
+  {
+    "station": "colombo",
+    "horizon": "1h",
+    "rmse": 6.3358113644388085,
+    "mae": 4.926514625549316,
+    "r": 0.9880850315093994,
+    "training_time_sec": 36.57
+  },
+  {
+    "station": "colombo",
+    "horizon": "3h",
+    "rmse": 9.951314285352431,
+    "mae": 7.576181411743164,
+    "r": 0.9740144610404968,
+    "training_time_sec": 36.85
+  },
+  {
+    "station": "colombo",
+    "horizon": "6h",
+    "rmse": 10.644719035040847,
+    "mae": 7.897132873535156,
+    "r": 0.967460036277771,
+    "training_time_sec": 35.86
+  }
+]

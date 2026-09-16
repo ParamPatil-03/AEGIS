@@ -1,0 +1,350 @@
+[
+  {
+    "station": "hyderabad",
+    "horizon": "1h",
+    "all_hours": {
+      "rmse": 7.3014212909989205,
+      "mae": 4.9382829666137695,
+      "r": 0.9854177832603455
+    },
+    "storm_hours": {
+      "rmse": 10.235655633140183,
+      "mae": 5.833171367645264,
+      "r": 0.9708783626556396,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0022590908109272677,
+      "max_sigma_tecu": 0.006720133340917385
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 18,
+    "val_rmse": 5.366321032907242,
+    "training_time_sec": 376.42
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "3h",
+    "all_hours": {
+      "rmse": 11.176080256398526,
+      "mae": 8.293318748474121,
+      "r": 0.9665455222129822
+    },
+    "storm_hours": {
+      "rmse": 13.656282403065104,
+      "mae": 9.727349281311035,
+      "r": 0.9490526914596558,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0022318187918154327,
+      "max_sigma_tecu": 0.007073925327941066
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 18,
+    "val_rmse": 9.26609968285036,
+    "training_time_sec": 461.55
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "6h",
+    "all_hours": {
+      "rmse": 14.075420496674447,
+      "mae": 9.96306037902832,
+      "r": 0.9466881155967712
+    },
+    "storm_hours": {
+      "rmse": 14.14922368915904,
+      "mae": 10.785953521728516,
+      "r": 0.9464460611343384,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.00234297097338008,
+      "max_sigma_tecu": 0.007343677239149621
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 6,
+    "val_rmse": 11.11753680604607,
+    "training_time_sec": 284.64
+  },
+  {
+    "station": "bangalore",
+    "horizon": "1h",
+    "all_hours": {
+      "rmse": 6.3547907621812,
+      "mae": 4.636204719543457,
+      "r": 0.9872152805328369
+    },
+    "storm_hours": {
+      "rmse": 7.805907374636613,
+      "mae": 5.190669059753418,
+      "r": 0.9800888299942017,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.002424056136367785,
+      "max_sigma_tecu": 0.006981442293878296
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 13,
+    "val_rmse": 5.656914266286283,
+    "training_time_sec": 400.84
+  },
+  {
+    "station": "bangalore",
+    "horizon": "3h",
+    "all_hours": {
+      "rmse": 9.338836092260399,
+      "mae": 7.122448921203613,
+      "r": 0.9727373719215393
+    },
+    "storm_hours": {
+      "rmse": 10.848436909252108,
+      "mae": 8.009651184082031,
+      "r": 0.9627548456192017,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0022831437812420056,
+      "max_sigma_tecu": 0.0065859128341249195
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 12,
+    "val_rmse": 8.522961289400827,
+    "training_time_sec": 382.23
+  },
+  {
+    "station": "bangalore",
+    "horizon": "6h",
+    "all_hours": {
+      "rmse": 9.609186037268096,
+      "mae": 7.408775329589844,
+      "r": 0.970466673374176
+    },
+    "storm_hours": {
+      "rmse": 10.833903214553132,
+      "mae": 8.256023406982422,
+      "r": 0.9611588716506958,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.002359504808657259,
+      "max_sigma_tecu": 0.007051165422844562
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 9,
+    "val_rmse": 8.89750247158907,
+    "training_time_sec": 298.78
+  },
+  {
+    "station": "lucknow",
+    "horizon": "1h",
+    "all_hours": {
+      "rmse": 9.608472232746522,
+      "mae": 6.729485511779785,
+      "r": 0.9762014746665955
+    },
+    "storm_hours": {
+      "rmse": 11.56274083891911,
+      "mae": 7.649664878845215,
+      "r": 0.9692469239234924,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0020241306280624183,
+      "max_sigma_tecu": 0.006749163898437653
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 19,
+    "val_rmse": 8.578796471613439,
+    "training_time_sec": 419.63
+  },
+  {
+    "station": "lucknow",
+    "horizon": "3h",
+    "all_hours": {
+      "rmse": 13.881567697955793,
+      "mae": 9.949044227600098,
+      "r": 0.9484732151031494
+    },
+    "storm_hours": {
+      "rmse": 14.765590897778079,
+      "mae": 10.230493545532227,
+      "r": 0.9428353309631348,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.00181191189515833,
+      "max_sigma_tecu": 0.006863400220460529
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 6,
+    "val_rmse": 14.000090462528604,
+    "training_time_sec": 238.99
+  },
+  {
+    "station": "lucknow",
+    "horizon": "6h",
+    "all_hours": {
+      "rmse": 17.182453982290063,
+      "mae": 12.229558944702148,
+      "r": 0.928684651851654
+    },
+    "storm_hours": {
+      "rmse": 16.203464956956832,
+      "mae": 12.14702033996582,
+      "r": 0.9385706782341003,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0019129025824011594,
+      "max_sigma_tecu": 0.006851186876835457
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 6,
+    "val_rmse": 14.246732638368021,
+    "training_time_sec": 266.75
+  },
+  {
+    "station": "colombo",
+    "horizon": "1h",
+    "all_hours": {
+      "rmse": 6.7603259754024565,
+      "mae": 5.0428667068481445,
+      "r": 0.9863648414611816
+    },
+    "storm_hours": {
+      "rmse": 7.352509165021728,
+      "mae": 5.278714656829834,
+      "r": 0.9838706254959106,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0022572698654349183,
+      "max_sigma_tecu": 0.00687926197529527
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 24,
+    "val_rmse": 6.088009678616142,
+    "training_time_sec": 582.66
+  },
+  {
+    "station": "colombo",
+    "horizon": "3h",
+    "all_hours": {
+      "rmse": 9.400508103943356,
+      "mae": 7.039131164550781,
+      "r": 0.9749314785003662
+    },
+    "storm_hours": {
+      "rmse": 10.651270085926813,
+      "mae": 7.719049453735352,
+      "r": 0.9654901027679443,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.0022863509334208163,
+      "max_sigma_tecu": 0.007337442243873446
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 11,
+    "val_rmse": 8.861203497787375,
+    "training_time_sec": 293.29
+  },
+  {
+    "station": "colombo",
+    "horizon": "6h",
+    "all_hours": {
+      "rmse": 11.104539551238473,
+      "mae": 8.188243865966797,
+      "r": 0.9652730226516724
+    },
+    "storm_hours": {
+      "rmse": 11.548606649797966,
+      "mae": 8.200835227966309,
+      "r": 0.9587296843528748,
+      "n_samples": 955
+    },
+    "uncertainty": {
+      "mean_sigma_tecu": 0.002163036438623788,
+      "max_sigma_tecu": 0.008035155579357994
+    },
+    "best_params": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.155,
+      "lr": 0.000862,
+      "batch_size": 64
+    },
+    "best_epoch": 15,
+    "val_rmse": 9.321472760843768,
+    "training_time_sec": 253.71
+  }
+]

@@ -23,3 +23,6 @@ logs/*
 
 # Heavy Trained Models
 models/*.json
+models/*.pt
+models/*.bin
+!models/.gitkeep

@@ -1,0 +1,13 @@
+station,horizon,lb_stat_lag10,p_val_lag10,lb_stat_lag24,p_val_lag24,is_autocorrelated
+hyderabad,1h,4036.79,0.0,4221.35,0.0,True
+hyderabad,3h,5224.66,0.0,5289.87,0.0,True
+hyderabad,6h,4168.36,0.0,4598.39,0.0,True
+bangalore,1h,1655.25,0.0,1917.17,0.0,True
+bangalore,3h,4418.79,0.0,4503.88,0.0,True
+bangalore,6h,3174.52,0.0,3622.35,0.0,True
+lucknow,1h,4132.8,0.0,4207.31,0.0,True
+lucknow,3h,3105.73,0.0,3653.14,0.0,True
+lucknow,6h,4680.29,0.0,5227.42,0.0,True
+colombo,1h,2346.79,0.0,2515.44,0.0,True
+colombo,3h,4159.6,0.0,4306.97,0.0,True
+colombo,6h,3997.83,0.0,4475.45,0.0,True

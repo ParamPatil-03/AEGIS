@@ -1,0 +1,410 @@
+[
+  {
+    "station": "hyderabad",
+    "horizon": "1h",
+    "ensemble_metrics": {
+      "rmse": 7.06816103747362,
+      "mae": 4.665721893310547,
+      "r": 0.9863479137420654
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 7.325213734499733,
+      "mae": 4.913952827453613,
+      "r": 0.9852728843688965
+    },
+    "storm_metrics": {
+      "rmse": 10.055934873092356,
+      "mae": 5.518074989318848,
+      "r": 0.9722872376441956,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 94.65,
+      "calm_coverage_pct": 94.52,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 10.803,
+      "mean_half_width_calm": 11.65,
+      "mean_half_width_storm": 33.47,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.2571,
+    "improvement_vs_s4_r": 0.0011,
+    "pipeline_time_sec": 28.58
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "3h",
+    "ensemble_metrics": {
+      "rmse": 11.038484702677719,
+      "mae": 8.105111122131348,
+      "r": 0.9668024182319641
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 11.157611838602289,
+      "mae": 8.280035972595215,
+      "r": 0.9665835499763489
+    },
+    "storm_metrics": {
+      "rmse": 13.656692462797773,
+      "mae": 9.53503131866455,
+      "r": 0.947942316532135,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 93.79,
+      "calm_coverage_pct": 93.64,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 18.285,
+      "mean_half_width_calm": 19.71,
+      "mean_half_width_storm": 56.66,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.1191,
+    "improvement_vs_s4_r": 0.0002,
+    "pipeline_time_sec": 28.35
+  },
+  {
+    "station": "hyderabad",
+    "horizon": "6h",
+    "ensemble_metrics": {
+      "rmse": 13.23237445217517,
+      "mae": 9.25768756866455,
+      "r": 0.9519212245941162
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 14.080080156965105,
+      "mae": 9.96017074584961,
+      "r": 0.946914553642273
+    },
+    "storm_metrics": {
+      "rmse": 13.028359803892718,
+      "mae": 9.600409507751465,
+      "r": 0.9530256390571594,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 94.47,
+      "calm_coverage_pct": 94.44,
+      "storm_coverage_pct": 95.7,
+      "q_adaptive": 20.896,
+      "mean_half_width_calm": 22.53,
+      "mean_half_width_storm": 64.75,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.8477,
+    "improvement_vs_s4_r": 0.005,
+    "pipeline_time_sec": 28.39
+  },
+  {
+    "station": "bangalore",
+    "horizon": "1h",
+    "ensemble_metrics": {
+      "rmse": 6.135679626874482,
+      "mae": 4.480087757110596,
+      "r": 0.9881687760353088
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 6.375580106782287,
+      "mae": 4.6381144523620605,
+      "r": 0.9872391819953918
+    },
+    "storm_metrics": {
+      "rmse": 7.367606125848122,
+      "mae": 4.923758506774902,
+      "r": 0.982377290725708,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 96.12,
+      "calm_coverage_pct": 96.03,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 11.152,
+      "mean_half_width_calm": 12.02,
+      "mean_half_width_storm": 34.56,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.2399,
+    "improvement_vs_s4_r": 0.0009,
+    "pipeline_time_sec": 30.45
+  },
+  {
+    "station": "bangalore",
+    "horizon": "3h",
+    "ensemble_metrics": {
+      "rmse": 8.92311015489699,
+      "mae": 6.720915794372559,
+      "r": 0.9747275114059448
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 9.283784359762684,
+      "mae": 7.068510055541992,
+      "r": 0.9728572964668274
+    },
+    "storm_metrics": {
+      "rmse": 10.384538792602134,
+      "mae": 7.673837184906006,
+      "r": 0.965604841709137,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 95.97,
+      "calm_coverage_pct": 95.87,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 16.612,
+      "mean_half_width_calm": 17.91,
+      "mean_half_width_storm": 51.47,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.3607,
+    "improvement_vs_s4_r": 0.0019,
+    "pipeline_time_sec": 32.03
+  },
+  {
+    "station": "bangalore",
+    "horizon": "6h",
+    "ensemble_metrics": {
+      "rmse": 9.331070171445159,
+      "mae": 7.144950866699219,
+      "r": 0.972292423248291
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 9.624841465821008,
+      "mae": 7.429468154907227,
+      "r": 0.9704738855361938
+    },
+    "storm_metrics": {
+      "rmse": 10.43140347541005,
+      "mae": 7.858696937561035,
+      "r": 0.9642181992530823,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 95.19,
+      "calm_coverage_pct": 95.07,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 16.942,
+      "mean_half_width_calm": 18.27,
+      "mean_half_width_storm": 52.5,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.2938,
+    "improvement_vs_s4_r": 0.0018,
+    "pipeline_time_sec": 20.18
+  },
+  {
+    "station": "lucknow",
+    "horizon": "1h",
+    "ensemble_metrics": {
+      "rmse": 9.007041719516424,
+      "mae": 6.160353660583496,
+      "r": 0.9777716994285583
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 9.679940898494156,
+      "mae": 6.791478633880615,
+      "r": 0.9761184453964233
+    },
+    "storm_metrics": {
+      "rmse": 10.70203397438846,
+      "mae": 6.767472267150879,
+      "r": 0.9698876738548279,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 94.85,
+      "calm_coverage_pct": 94.78,
+      "storm_coverage_pct": 97.85,
+      "q_adaptive": 17.416,
+      "mean_half_width_calm": 18.78,
+      "mean_half_width_storm": 53.97,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.6729,
+    "improvement_vs_s4_r": 0.0017,
+    "pipeline_time_sec": 3.81
+  },
+  {
+    "station": "lucknow",
+    "horizon": "3h",
+    "ensemble_metrics": {
+      "rmse": 12.267534435372369,
+      "mae": 8.807992935180664,
+      "r": 0.9582651257514954
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 13.947024798587757,
+      "mae": 9.99987506866455,
+      "r": 0.9486556649208069
+    },
+    "storm_metrics": {
+      "rmse": 13.673477026675528,
+      "mae": 9.554245948791504,
+      "r": 0.950108528137207,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 96.25,
+      "calm_coverage_pct": 96.16,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 25.697,
+      "mean_half_width_calm": 27.71,
+      "mean_half_width_storm": 79.63,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 1.6795,
+    "improvement_vs_s4_r": 0.0096,
+    "pipeline_time_sec": 3.56
+  },
+  {
+    "station": "lucknow",
+    "horizon": "6h",
+    "ensemble_metrics": {
+      "rmse": 15.79201800409313,
+      "mae": 11.061091423034668,
+      "r": 0.9303840398788452
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 17.26077774152102,
+      "mae": 12.289895057678223,
+      "r": 0.9287889003753662
+    },
+    "storm_metrics": {
+      "rmse": 15.268377518609542,
+      "mae": 11.004159927368164,
+      "r": 0.9377750754356384,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 95.32,
+      "calm_coverage_pct": 95.2,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 31.138,
+      "mean_half_width_calm": 33.57,
+      "mean_half_width_storm": 96.49,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 1.4688,
+    "improvement_vs_s4_r": 0.0016,
+    "pipeline_time_sec": 3.85
+  },
+  {
+    "station": "colombo",
+    "horizon": "1h",
+    "ensemble_metrics": {
+      "rmse": 6.393973445623609,
+      "mae": 4.753772735595703,
+      "r": 0.9878275394439697
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 6.704937598658492,
+      "mae": 5.0125813484191895,
+      "r": 0.9865012168884277
+    },
+    "storm_metrics": {
+      "rmse": 6.873954554745262,
+      "mae": 4.968993186950684,
+      "r": 0.9854564666748047,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 93.97,
+      "calm_coverage_pct": 93.83,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 11.073,
+      "mean_half_width_calm": 11.94,
+      "mean_half_width_storm": 34.31,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.311,
+    "improvement_vs_s4_r": 0.0013,
+    "pipeline_time_sec": 3.83
+  },
+  {
+    "station": "colombo",
+    "horizon": "3h",
+    "ensemble_metrics": {
+      "rmse": 9.193892765557488,
+      "mae": 6.906534671783447,
+      "r": 0.9764381647109985
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 9.381113322543873,
+      "mae": 7.038559436798096,
+      "r": 0.9749966859817505
+    },
+    "storm_metrics": {
+      "rmse": 10.228254745038106,
+      "mae": 7.415546417236328,
+      "r": 0.968610942363739,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 95.11,
+      "calm_coverage_pct": 95.05,
+      "storm_coverage_pct": 97.85,
+      "q_adaptive": 16.277,
+      "mean_half_width_calm": 17.55,
+      "mean_half_width_storm": 50.44,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.1872,
+    "improvement_vs_s4_r": 0.0014,
+    "pipeline_time_sec": 3.89
+  },
+  {
+    "station": "colombo",
+    "horizon": "6h",
+    "ensemble_metrics": {
+      "rmse": 10.63683243661702,
+      "mae": 7.813284873962402,
+      "r": 0.9673178791999817
+    },
+    "stage4_lstm_metrics": {
+      "rmse": 11.064042323298402,
+      "mae": 8.165376663208008,
+      "r": 0.9653500318527222
+    },
+    "storm_metrics": {
+      "rmse": 11.220167830192885,
+      "mae": 7.9991984367370605,
+      "r": 0.9607909917831421,
+      "n_samples": 955
+    },
+    "conformal_prediction": {
+      "target_coverage_pct": 95.0,
+      "empirical_coverage_pct": 93.72,
+      "calm_coverage_pct": 93.56,
+      "storm_coverage_pct": 100.0,
+      "q_adaptive": 17.128,
+      "mean_half_width_calm": 18.47,
+      "mean_half_width_storm": 53.08,
+      "n_calm_test": 3774,
+      "n_storm_test": 93
+    },
+    "improvement_vs_s4_rmse": 0.4272,
+    "improvement_vs_s4_r": 0.002,
+    "pipeline_time_sec": 4.24
+  }
+]
