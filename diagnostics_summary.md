@@ -6,7 +6,7 @@ This document presents the unvarnished findings from an exhaustive statistical d
 ---
 
 ## 1. Residual Analysis: Systematic Bias Under Storm Conditions
-- **Calm Conditions**: Mean residuals across all 12 models hover near zero ($-0.5$ to $+0.3$ TECU), indicating well-centered predictions during quiet background ionosphere.
+- **Calm Conditions**: Mean residuals across Indian stations hover near zero ($-0.49$ to $+1.22$ TECU; overall test residuals $-0.49$ to $+0.99$ TECU; Colombo up to $+2.77$ TECU), indicating well-centered baseline predictions during quiet background ionosphere.
 - **Storm Conditions ($Kp \ge 5$)**: 
   - The storm-weighted XGBoost residual corrector with EIA fountain lags significantly mitigates the previous systematic underestimation.
   - In particular, **Lucknow 6h** storm bias is substantially reduced to **-2.38 TECU** ($p = 1.399e-01$).
@@ -41,8 +41,9 @@ Top 10 worst errors across all models:
 
 ---
 
-## 5. Adaptive Conformal Prediction: Guaranteed Conditional Coverage
-With locally-adaptive scaling $s(Kp, Dst)$, the confidence interval automatically widens during space-weather disturbances:
-- **Calm Periods ($Kp < 5$)**: Coverage holds strongly between **93.6%** and **96.2%** (with tight average half-widths: ~19.2 TECU).
-- **Storm Periods ($Kp \ge 5$)**: Coverage holds between **95.7%** and **100.0%**, eliminating the severe coverage drops previously observed.
-- **Safety Status**: All models now pass the operational safety criteria under space-weather events.
+## 5. Conformal Prediction Diagnostics: Storm Coverage Breakdown
+Across all 12 operational models, standard empirical conformal prediction failed to maintain the nominal 95% safety target during space-weather disturbances:
+- **Calm Periods ($Kp < 5$)**: Coverage remained well-calibrated between **92.1%** and **95.9%** (with tight half-widths: $q_{\text{calm}} \approx 11.3\text{--}31.3$ TECU).
+- **Storm Periods ($Kp \ge 5$)**: Measured empirical coverage collapsed to between **63.4% and 87.1%** (Hyderabad 1h: 81.7%, Lucknow 6h: 87.1%, Colombo 6h: 63.4%).
+- **Multi-Strategy Testing**: Neither validation slice calibration ($N=27$), pooled OOF calibration ($N=300$, yielding 37.6%–66.7%), nor $F_{10.7}$ scaling recovered nominal 95% storm coverage.
+- **Audit Conclusion**: Conformal intervals lose exchangeability and calibration during severe geomagnetic storms due to solar-cycle non-stationarity between solar minimum (training) and solar maximum (test).

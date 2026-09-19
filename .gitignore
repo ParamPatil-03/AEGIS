@@ -1,28 +1,41 @@
 # Environment & Secret Credentials
 .env
+.env.*
+!.env.example
 
 # Python Bytecode & Caches
 __pycache__/
 *.py[cod]
+*.pyc
 .ruff_cache/
+.pytest_cache/
 
-# IDE & System Files
+# System, Temp & IDE Files
 .vscode/
 .idea/
 .DS_Store
+*.tmp
+tmp/
+/tmp/
 
-# Datasets
+# Logs
+*.log
+logs/*
+!logs/.gitkeep
+
+# Large Raw & Processed Datasets
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+data/live_buffer*
 
-# Logs
-logs/*
-!logs/.gitkeep
-
-# Heavy Trained Models
+# Heavy Trained Model Weights
+models/**/*.json
+models/**/*.pt
+models/**/*.bin
 models/*.json
 models/*.pt
 models/*.bin
 !models/.gitkeep
+!models/**/.gitkeep
