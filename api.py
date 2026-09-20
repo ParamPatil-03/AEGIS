@@ -29,6 +29,7 @@ from sklearn.preprocessing import StandardScaler
 
 from fastapi import FastAPI, HTTPException, Query, Request, Response, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -523,6 +524,11 @@ app.add_middleware(
 @app.get("/")
 def serve_index():
     return FileResponse("index.html")
+
+
+# Mount fonts directory for custom typography (Haval & Bounded)
+if os.path.isdir("fonts"):
+    app.mount("/fonts", StaticFiles(directory="fonts"), name="fonts")
 
 
 # ── Request Logging Middleware ────────────────────────────────────────────────
