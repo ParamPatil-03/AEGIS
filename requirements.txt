@@ -1,3 +1,8 @@
+# Web Server
+uvicorn>=0.23.0
+fastapi>=0.104.0
+websockets>=11.0
+
 # Core Data Ingestion & Space Weather Processing
 requests>=2.28.0
 pandas>=2.0.0
