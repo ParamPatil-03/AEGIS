@@ -1,0 +1,358 @@
+/* --- SLIDE 8: METHODOLOGY & ARCHITECTURE --- */
+        .s6-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: space-between;
+            padding-bottom: 2rem;
+        }
+
+        .s6-top-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 0.6rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Space Mono', monospace;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meth-badge-live {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border: 1px solid var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.12);
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+        }
+
+        .s6-main-grid {
+            display: grid;
+            grid-template-columns: 44% 56%;
+            gap: 1.8rem;
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .s6-col-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .s6-col-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 0;
+        }
+
+        .pipeline-stages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .pipeline-stage-card {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 4px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.85rem 1rem;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .pipeline-stage-card:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pipeline-stage-card.selected {
+            border-left: 4px solid var(--accent-cyan) !important;
+            border-color: rgba(0, 229, 255, 0.45) !important;
+            background: rgba(0, 229, 255, 0.08) !important;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.12);
+        }
+
+        .stage-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .stage-num-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #FFF;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-status-badge {
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: #10B981;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #F8F9FA;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-card-sub {
+            font-size: 0.72rem;
+            opacity: 0.75;
+            margin: 2px 0 6px 0;
+            line-height: 1.3;
+        }
+
+        .stage-card-footer {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .stage-meta-tag {
+            font-size: 0.6rem;
+            padding: 1px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.35);
+            opacity: 0.85;
+        }
+
+        .meth-panel {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            margin-bottom: 0.8rem;
+        }
+
+        .inspector-card {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.2rem;
+            font-family: 'Space Mono', monospace;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 0;
+        }
+
+        .inspector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 0.6rem;
+            margin-bottom: 0.6rem;
+            gap: 1rem;
+        }
+
+        .inspector-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 3px 0 2px 0;
+            color: #F8F9FA;
+        }
+
+        .inspector-subtitle {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+        }
+
+        .insp-status-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10B981;
+            color: #10B981;
+            white-space: nowrap;
+        }
+
+        .inspector-summary {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.6rem;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(0, 229, 255, 0.35);
+            padding: 0.5rem 0.8rem;
+            margin: 0.5rem 0;
+        }
+
+        .formula-label {
+            font-size: 0.62rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .formula-code {
+            font-size: 0.76rem;
+            color: #F8F9FA;
+            font-family: 'Space Mono', monospace;
+            word-break: break-all;
+        }
+
+        .tech-stack-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tech-chip {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            color: var(--accent-cyan);
+        }
+
+        .table-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.25);
+            margin-bottom: 0.6rem;
+        }
+
+        .benchmark-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.73rem;
+            text-align: left;
+        }
+
+        .benchmark-table th {
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+            color: var(--accent-cyan);
+            font-weight: 800;
+            font-size: 0.68rem;
+            position: sticky;
+            top: 0;
+        }
+
+        .benchmark-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .benchmark-table tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .benchmark-audit-note {
+            font-size: 0.68rem;
+            line-height: 1.35;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 0.5rem;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .eia-pillars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .eia-pillar-box {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.75rem 0.9rem;
+            border-left: 3px solid var(--accent-cyan);
+        }
+
+        .eia-pillar-title {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .eia-pillar-text {
+            font-size: 0.73rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .data-sources-strip {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.75rem 1rem;
+        }
+
+        .data-sources-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.4rem;
+        }
+
+        .source-tag {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            color: var(--accent-cyan);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.4rem 0.2rem;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .source-tag:hover {
+            background: rgba(0, 229, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .source-tag.active {
+            background: var(--accent-cyan) !important;
+            color: #0B0E17 !important;
+            font-weight: 800 !important;
+            border-color: var(--accent-cyan) !important;
+        }
+
+        .source-detail-drawer {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.45rem 0.7rem;
+            margin-top: 0.45rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        

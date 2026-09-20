@@ -1,0 +1,111 @@
+id="slide-4">
+            <div class="s5-container">
+                <!-- Top HUD Controls Row -->
+                <div class="impact-top-hud">
+                    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                        <span class="cyan-label" style="margin:0; font-size:0.85rem; color:#F8F9FA;">STAGE 7 OPERATIONAL IMPACT &amp; SECTOR ADVISORY</span>
+                        <span id="impact-data-source-badge" style="font-size:0.65rem; font-weight:700; padding:2px 8px; border:1px solid rgba(255,255,255,0.6); background:rgba(0,0,0,0.3); color:#F8F9FA;">● LIVE SWPC EVALUATION</span>
+                    </div>
+
+                    <!-- Assessment Mode Selector -->
+                    <div class="ctrl-group">
+                        <span class="ctrl-label" style="color:rgba(255,255,255,0.9);">ASSESSMENT MODE:</span>
+                        <div class="btn-group" id="impact-event-btns">
+                            <button class="ctrl-btn active" id="btn-impact-live" onclick="setImpactEvent('live')">● LIVE TELEMETRY</button>
+                            <button class="ctrl-btn" id="btn-impact-m23" onclick="setImpactEvent('march_2023_g4')">MARCH 2023 G4</button>
+                            <button class="ctrl-btn" id="btn-impact-m24" onclick="setImpactEvent('may_2024_g5')">MAY 2024 REPLAY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Impact Title & Window -->
+                <div class="impact-center-block">
+                    <div id="impact-status-pill" class="impact-status-pill">
+                        ⚡ OPERATIONAL ALERT: CRITICAL
+                    </div>
+                    <h1 class="impact-title" id="impact-headline">DISRUPTION<br>WINDOW: 1 TO 6 HRS</h1>
+                    <div class="impact-subtitle" id="impact-subheadline">
+                        SEVERE IONOSPHERIC STORM FORCING DETECTED // REGIONAL PEAK GPS ERROR: 12.94m (LUCKNOW)
+                    </div>
+                </div>
+
+                <!-- 4 Interactive Live Sector Cards -->
+                <div class="impact-sectors-grid" id="impact-sectors-container">
+                    <div class="impact-sector-card selected" onclick="selectSector('aviation')" id="card-sector-aviation">
+                        <div class="sector-card-header">
+                            <div class="sector-name">CIVIL AVIATION (ISRO GAGAN)</div>
+                            <span class="sector-badge badge-crit" id="sec-badge-aviation">✕ APV-I UNAVAILABLE</span>
+                        </div>
+                        <div style="font-size:0.65rem; opacity:0.8; margin-bottom:4px;">BAND: GPS L1 / SBAS 1575 MHz</div>
+                        <div class="sector-metrics">
+                            <div style="font-size:0.68rem; opacity:0.8;">PEAK ERROR (LUCKNOW)</div>
+                            <div class="sector-err-val" id="sec-err-aviation">12.94<span style="font-size:0.85rem; font-weight:normal; margin-left:3px;">m</span></div>
+                            <div style="font-size:0.65rem; opacity:0.75;">SAFETY LIMIT: 4.0m</div>
+                        </div>
+                        <div class="sector-action-text" id="sec-act-aviation">GAGAN APV-I vertical guidance unavailable. Revert to ground-based ILS / VOR.</div>
+                    </div>
+
+                    <div class="impact-sector-card" onclick="selectSector('telecom')" id="card-sector-telecom">
+                        <div class="sector-card-header">
+                            <div class="sector-name">NAVIC L5 TIMING &amp; 5G SYNC</div>
+                            <span class="sector-badge badge-crit" id="sec-badge-telecom">✕ L5 BAND DEGRADED</span>
+                        </div>
+                        <div style="font-size:0.65rem; opacity:0.8; margin-bottom:4px;">BAND: NAVIC L5 1176.45 MHz</div>
+                        <div class="sector-metrics">
+                            <div style="font-size:0.68rem; opacity:0.8;">PEAK ERROR (LUCKNOW)</div>
+                            <div class="sector-err-val" id="sec-err-telecom">23.21<span style="font-size:0.85rem; font-weight:normal; margin-left:3px;">m</span></div>
+                            <div style="font-size:0.65rem; opacity:0.75;">SAFETY LIMIT: 5.0m</div>
+                        </div>
+                        <div class="sector-action-text" id="sec-act-telecom">Engage atomic clock holdover immediately for critical telecommunications.</div>
+                    </div>
+
+                    <div class="impact-sector-card" onclick="selectSector('defense')" id="card-sector-defense">
+                        <div class="sector-card-header">
+                            <div class="sector-name">DEFENSE UAVs &amp; FRONTIER</div>
+                            <span class="sector-badge badge-crit" id="sec-badge-defense">✕ GUIDANCE COMPROMISED</span>
+                        </div>
+                        <div style="font-size:0.65rem; opacity:0.8; margin-bottom:4px;">BAND: L-BAND / EIA NORTH CORRIDOR</div>
+                        <div class="sector-metrics">
+                            <div style="font-size:0.68rem; opacity:0.8;">PEAK ERROR (LUCKNOW)</div>
+                            <div class="sector-err-val" id="sec-err-defense">12.94<span style="font-size:0.85rem; font-weight:normal; margin-left:3px;">m</span></div>
+                            <div style="font-size:0.65rem; opacity:0.75;">SAFETY LIMIT: 6.0m</div>
+                        </div>
+                        <div class="sector-action-text" id="sec-act-defense">Switch autonomous drones to onboard inertial (INS) or terrain-matching navigation.</div>
+                    </div>
+
+                    <div class="impact-sector-card" onclick="selectSector('surveying')" id="card-sector-surveying">
+                        <div class="sector-card-header">
+                            <div class="sector-name">PRECISION RTK &amp; SURVEYING</div>
+                            <span class="sector-badge badge-warn" id="sec-badge-surveying">⚠ RTK FLOAT (DM)</span>
+                        </div>
+                        <div style="font-size:0.65rem; opacity:0.8; margin-bottom:4px;">BAND: DUAL-FREQ CARRIER PHASE</div>
+                        <div class="sector-metrics">
+                            <div style="font-size:0.68rem; opacity:0.8;">PEAK GRADIENT (REGIONAL)</div>
+                            <div class="sector-err-val" id="sec-err-surveying">4.12<span style="font-size:0.85rem; font-weight:normal; margin-left:3px;">m</span></div>
+                            <div style="font-size:0.65rem; opacity:0.75;">SAFETY LIMIT: 3.0m</div>
+                        </div>
+                        <div class="sector-action-text" id="sec-act-surveying">RTK baseline ambiguity resolution degraded to float (10–30 cm error).</div>
+                    </div>
+                </div>
+
+                <!-- Active Sector Emergency Advisory Detail Drawer -->
+                <div class="impact-detail-drawer" id="impact-detail-box">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <span style="font-size:1.2rem; font-weight:bold; flex-shrink:0;">🛡️</span>
+                        <div id="impact-detail-text">Click any sector card above for detailed physical cause and operational contingency protocols.</div>
+                    </div>
+                    <div id="impact-detail-tag" style="font-weight:800; font-size:0.7rem; padding:4px 10px; background:rgba(255,255,255,0.25); white-space:nowrap;">RECOMMENDED PROTOCOL</div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Sliding Bar Marquee -->
+            <div class="marquee" id="impact-marquee">
+                <span id="marquee-text-1">⚡ CRITICAL ALERT // SEVERE SPACE WEATHER DETECTED // GAGAN APV-I DEGRADATION IMMINENT // NAVIC L5 TIMING DRIFT RISK // SWITCH TO BACKUP SYSTEMS //</span>
+                <span id="marquee-text-2">⚡ CRITICAL ALERT // SEVERE SPACE WEATHER DETECTED // GAGAN APV-I DEGRADATION IMMINENT // NAVIC L5 TIMING DRIFT RISK // SWITCH TO BACKUP SYSTEMS //</span>
+                <span id="marquee-text-3">⚡ CRITICAL ALERT // SEVERE SPACE WEATHER DETECTED // GAGAN APV-I DEGRADATION IMMINENT // NAVIC L5 TIMING DRIFT RISK // SWITCH TO BACKUP SYSTEMS //</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: METHODOLOGY & MODEL ARCHITECTURE -->
+        <div 

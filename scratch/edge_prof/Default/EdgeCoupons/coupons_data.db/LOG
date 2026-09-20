@@ -1,0 +1,5 @@
+2026/09/20-15:01:20.249 1ebc Creating DB C:\Users\PARAM\Desktop\AEGIS\scratch\edge_prof\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/09/20-15:01:20.283 1ebc Reusing MANIFEST C:\Users\PARAM\Desktop\AEGIS\scratch\edge_prof\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/09/20-15:01:22.833 317c Level-0 table #5: started
+2026/09/20-15:01:22.838 317c Level-0 table #5: 683284 bytes OK
+2026/09/20-15:01:22.841 317c Delete type=0 #3

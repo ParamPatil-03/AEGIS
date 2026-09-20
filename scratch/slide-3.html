@@ -1,0 +1,87 @@
+id="slide-3">
+            <div class="s4-container">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;" class="anim-up">
+                    <h2 class="s4-header" style="margin-bottom:0">TRAJECTORY ANALYSIS</h2>
+                    <div style="font-size:0.85rem; font-family:'Space Mono', monospace;">
+                        FOCUSED STATION: <span id="chart-focus-station" style="color:var(--accent-cyan); font-weight:bold;">HYDERABAD</span>
+                    </div>
+                </div>
+
+                <!-- Controls Bar -->
+                <div class="chart-controls-bar anim-up del-1">
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">STATION:</span>
+                        <div class="btn-group" id="chart-station-btns">
+                            <button class="ctrl-btn active" id="btn-chart-hyderabad" onclick="setChartStation('hyderabad')">HYD</button>
+                            <button class="ctrl-btn" id="btn-chart-bangalore" onclick="setChartStation('bangalore')">BLR</button>
+                            <button class="ctrl-btn" id="btn-chart-lucknow" onclick="setChartStation('lucknow')">LKO</button>
+                            <button class="ctrl-btn" id="btn-chart-colombo" onclick="setChartStation('colombo')">CMB</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">MODE:</span>
+                        <select id="chart-replay-select" class="replay-select" onchange="handleModeChange(this.value)">
+                            <option value="live">● Live Forecast</option>
+                            <option value="march_2023_g4">March 2023 G4 Replay</option>
+                            <option value="may_2024_g5">May 2024 Replay</option>
+                        </select>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">HORIZON:</span>
+                        <div class="btn-group">
+                            <button class="ctrl-btn active" id="btn-hz-1h" onclick="setHorizon('1h')">+1H</button>
+                            <button class="ctrl-btn" id="btn-hz-3h" onclick="setHorizon('3h')">+3H</button>
+                            <button class="ctrl-btn" id="btn-hz-6h" onclick="setHorizon('6h')">+6H</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">METRIC:</span>
+                        <div class="btn-group">
+                            <button class="ctrl-btn active" id="btn-metric-tec" onclick="setMetric('tec')">VTEC (TECU)</button>
+                            <button class="ctrl-btn" id="btn-metric-gps" onclick="setMetric('gps')">GPS L1 ERROR (m)</button>
+                            <button class="ctrl-btn" id="btn-metric-navic" onclick="setMetric('navic')">NAVIC L5 ERROR (m)</button>
+                        </div>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">AUGMENTATION:</span>
+                        <select id="chart-augmentation-select" class="replay-select" onchange="handleAugmentationChange(this.value)">
+                            <option value="single_frequency">Single-Freq (0.40 Residual)</option>
+                            <option value="gagan_sbas">ISRO GAGAN SBAS (0.08 APV-I)</option>
+                            <option value="dual_frequency">Dual-Freq Iono-Free (0.01)</option>
+                        </select>
+                    </div>
+
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">ELEVATION:</span>
+                        <div class="btn-group" id="chart-elevation-btns">
+                            <button class="ctrl-btn" id="btn-el-15" onclick="setElevation(15.0)">15° Low</button>
+                            <button class="ctrl-btn active" id="btn-el-45" onclick="setElevation(45.0)">45° Mid</button>
+                            <button class="ctrl-btn" id="btn-el-90" onclick="setElevation(90.0)">90° Zenith</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-box anim-up del-1">
+                    <div id="chart-telemetry-badge" style="position: absolute; top: 12px; right: 16px; font-size: 0.7rem; color: #888; font-family: 'Space Mono', monospace; background: rgba(11, 14, 23, 0.85); padding: 4px 8px; border: 1px solid rgba(255, 255, 255, 0.1); pointer-events: none; z-index: 5;">
+                        ● LIVE 95% CONFORMAL SAFETY BOUNDS
+                    </div>
+                    <canvas id="brutalistChart"></canvas>
+                </div>
+
+                <!-- Known Limitations Warnbar -->
+                <div id="known-limitations-warnbar" class="warnbar-box anim-up del-2">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span id="warnbar-pulse" class="pulse-amber" style="display:none; flex-shrink:0;"></span>
+                        <span id="warnbar-text">STATISTICAL BASELINE: Conformal prediction intervals calibrated on quiet ionosphere maintain 92–96% nominal coverage during calm periods.</span>
+                    </div>
+                    <span id="warnbar-status-tag" class="warnbar-tag">CALIBRATED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: OPERATIONAL IMPACT & ADVISORY -->
+        <div 
