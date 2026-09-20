@@ -10,6 +10,10 @@ __pycache__/
 .ruff_cache/
 .pytest_cache/
 
+# Development Scratch & Debug Scripts
+scratch/
+debug_scripts/
+
 # System, Temp & IDE Files
 .vscode/
 .idea/

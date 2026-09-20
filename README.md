@@ -1,204 +1,186 @@
-# Solar and Ionospheric TEC Data Acquisition Pipeline
+﻿# AEGIS — Space Weather & GNSS Positioning Error Forecasting System
 
-This repository contains a Python-based data acquisition pipeline developed for a machine learning project that predicts ionospheric Total Electron Content (TEC) disturbances over India. 
+> **A real-time AI-powered system that forecasts GPS/GNSS positioning errors caused by space weather events over the Indian subcontinent.**
 
-The pipeline collects data from **2020-01-01 to 2024-12-31** at **hourly** resolution:
-1. **Solar and geomagnetic indices** (NOAA GOES-16, NASA OMNIWeb, GFZ Potsdam).
-2. **Ionospheric TEC data** from 4 ground stations archived at NASA CDDIS: Bangalore (IISC) and Hyderabad (HYDE) as active Indian stations, Lucknow (LCK4) as a North India station, and Colombo, Sri Lanka (SGOC) as a southern Equatorial Ionization Anomaly (EIA) proxy.
-
+AEGIS uses an ensemble of deep learning (AttentionBiLSTM) and gradient boosting (XGBoost) models trained on years of ionospheric TEC data, solar wind parameters, and geomagnetic indices. It delivers 1h, 3h, and 6h ahead forecasts for four Indian GNSS ground stations, served through a live web dashboard with real-time NOAA SWPC data ingestion.
 
 ---
 
-## Prerequisites
+## Features
 
-- Python 3.10 or higher.
-- A free **NASA Earthdata Login** account to download RINEX data from NASA CDDIS.
-  - Register at: [urs.earthdata.nasa.gov](https://urs.earthdata.nasa.gov)
-  - Once registered, log in and verify you have checked/approved access for **NASA CDDIS** in your profile applications.
-
----
-
-## Installation
-
-1. Clone or download this repository to your local system.
-2. Open a terminal/command prompt in the project directory.
-3. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **Real-time solar data ingestion** — Kp index, IMF Bz, solar wind speed, X-ray flux, proton flux, Dst index (from NOAA SWPC — no account required)
+- **AI forecasting** — 24 trained models across 4 stations × 3 horizons, with conformal prediction uncertainty bands
+- **Live dashboard** — Animated 3D globe, storm alerts, GPS error gauges, data source health monitor
+- **No cloud dependency** — Runs entirely on your local machine
 
 ---
 
-## Configuration
+## ⚠️ Copyright & License Notice
 
-To download RINEX files from NASA CDDIS, you must provide your Earthdata Login credentials. You can set them as environment variables or create a `.env` file in the project root directory.
+Copyright © 2024 Param Patil. All rights reserved.
 
-### Method 1: Using a `.env` file (Recommended)
+This project and its source code, trained model weights, and associated assets are the intellectual property of the author.
 
-1. Copy the `.env.example` file to a new file named `.env`:
-   - **Command Prompt (Windows)**:
-     ```cmd
-     copy .env.example .env
-     ```
-   - **PowerShell (Windows)**:
-     ```powershell
-     Copy-Item .env.example .env
-     ```
-   - **Linux/macOS**:
-     ```bash
-     cp .env.example .env
-     ```
-2. Open the `.env` file and replace the placeholders with your actual Earthdata username and password:
-   ```env
-   EARTHDATA_USER=your_real_username
-   EARTHDATA_PASS=your_real_password
-   ```
+- **Personal/educational use** — Allowed with attribution
+- **Commercial use** — Not permitted without explicit written permission
+- **Redistribution** — Not permitted without explicit written permission
+- **Model weights** — The pre-trained model files are provided solely for running this project and may not be used to build derivative products
 
-### Method 2: Setting Environment Variables in Session
+If you wish to use this project for research, academic work, or any other purpose, please contact: parampatil658@gmail.com
 
-If you prefer not to write your credentials to disk, you can export them directly in your shell session:
+---
 
-#### Windows (Command Prompt)
-```cmd
-set EARTHDATA_USER=your_username
-set EARTHDATA_PASS=your_password
-```
+## System Requirements
 
-#### Windows (PowerShell)
-```powershell
-$env:EARTHDATA_USER="your_username"
-$env:EARTHDATA_PASS="your_password"
-```
+| Requirement | Minimum |
+|---|---|
+| OS | Windows 10/11, macOS 12+, Ubuntu 20.04+ |
+| Python | 3.10 or newer |
+| RAM | 4 GB |
+| Disk space | ~500 MB (models + data) |
+| Internet | Required for live data feeds |
 
-#### macOS / Linux
+---
+
+## Installation & Setup
+
+### Step 1 — Install Python 3.10+
+
+Download from: https://www.python.org/downloads/
+
+> **Windows users:** During installation, make sure to tick the **"Add Python to PATH"** checkbox before clicking Install.
+
+Verify installation:
 ```bash
-export EARTHDATA_USER="your_username"
-export EARTHDATA_PASS="your_password"
+python --version
 ```
 
----
-
-## Running the Pipeline
-
-To run the data acquisition pipeline, simply execute:
+### Step 2 — Clone the Repository
 
 ```bash
-python data_acquisition.py
+git clone https://github.com/ParamPatil-03/AEGIS.git
+cd AEGIS
 ```
 
-### Script Execution Features
-- **Logging**: Detailed logs are written to `data_acquisition.log` in real-time.
-- **Resumability**: The script preserves state. If interrupted, running it again will skip already downloaded/processed days, avoiding redundant network requests.
-- **Disk Efficiency**: The script downloads raw daily NetCDF and RINEX files (which total ~8 GB), extracts the hourly summaries, saves them locally, and deletes the raw files immediately. This ensures your local disk usage stays below 100 MB at all times.
-- **Error Handling & Retries**: Employs robust HTTP requests with 3 retries and a 5-second delay on network timeouts, and writes `.404` placeholders for missing historical dates to prevent re-querying dead links on subsequent runs.
+Or download the ZIP directly from GitHub:
+- Click the green **Code** button → **Download ZIP**
+- Extract the ZIP to a folder of your choice
+- Open a terminal inside that folder
 
----
+### Step 3 — Install Dependencies
 
-## Outputs
-
-Upon successful completion, two clean CSV files are produced in the root directory:
-
-1. **`solar_data.csv`**
-   - **Resolution**: Hourly UTC
-   - **Columns**: `timestamp`, `xray_flux`, `solar_wind_speed`, `imf_bz`, `proton_flux`, `kp_index`, `dst_index`, `kp_gfz`
-
-2. **`tec_data.csv`**
-   - **Resolution**: Hourly UTC
-   - **Columns**: `timestamp`, `tec_hyderabad`, `tec_bangalore`, `tec_lucknow`, `tec_colombo`
-
----
-
-## GNSS Positioning Error Conversion (`tec_to_gps_error.py`)
-
-AEGIS forecasts vertical Total Electron Content (VTEC in TECU). The [`tec_to_gps_error.py`](file:///c:/Users/PARAM/Desktop/AEGIS/tec_to_gps_error.py) module translates VTEC forecasts and conformal safety intervals into operational single-frequency pseudorange delay and positioning error (in meters) for both **GPS L1 (1575.42 MHz)** and **NavIC L5 (1176.45 MHz)**.
-
-### Physical Formulations & Equations
-1. **Ionospheric Range Delay:**
-   $$\Delta \rho = \frac{40.3 \times (\text{STEC} \times 10^{16})}{f^2}$$
-2. **Thin-Shell Slant TEC Mapping:**
-   $$z_{\text{shell}} = \arcsin\left( \frac{R_{\text{earth}}}{R_{\text{earth}} + h_{\text{ion}}} \cos(E) \right), \quad M(E) = \frac{1}{\cos(z_{\text{shell}})}, \quad \text{STEC} = \text{VTEC} \times M(E)$$
-   *(Parameters: $R_{\text{earth}} = 6371\text{ km}$, $h_{\text{ion}} = 350\text{ km}$).*
-3. **Representative Elevation Assumption:**
-   Without per-satellite orbital ephemerides, a representative elevation of **$E = 45.0^\circ$** is assumed (mapping factor $M(45^\circ) \approx 1.3475$). This is documented as a simplifying baseline approximation rather than a full multi-satellite least-squares positioning solution.
-4. **Single-Frequency Residual Error (0.4 Factor):**
-   Standard broadcast ionospheric models (GPS Klobuchar, NavIC NeQuick) typically eliminate ~60% of vertical delay. The remaining unmodeled fraction (~40% or $\text{factor} = 0.4$) maps directly into residual pseudorange position error:
-   $$\text{Error}_{\text{position}} \approx \Delta \rho \times 0.4$$
-   *(Documented as a literature-based approximation from Klobuchar 1987 & Ho et al. 2002).*
-5. **Rate of TEC Index (ROTI):**
-   $$\text{ROTI} = \sqrt{\langle (\Delta \text{TEC}/\Delta t)^2 \rangle - \langle \Delta \text{TEC}/\Delta t \rangle^2} \quad [\text{TECU/min}]$$
-   - $\text{ROTI} < 0.25$: **Nominal / Quiet** (minimal scintillation risk)
-   - $0.25 \le \text{ROTI} < 0.50$: **Moderate** (carrier phase jitter, risk of cycle slips)
-   - $\text{ROTI} \ge 0.50$: **Severe** (carrier tracking loss, lock loss risk)
-
-### Execution
-Run the sample evaluation across calm and storm events:
 ```bash
-python tec_to_gps_error.py
+pip install -r requirements.txt
 ```
-*(Calm single-frequency errors: ~1–5 meters; G4 storm errors: 10–35+ meters).*
 
----
+This installs all required libraries including PyTorch, XGBoost, FastAPI, and more. This may take a few minutes depending on your internet speed.
 
-## FastAPI Operational Serving Backend (`api.py`)
+### Step 4 — Download Pre-trained Models
 
-The operational REST API server loads all 12 trained AttentionBiLSTM models and 12 XGBoost residual models into memory on startup and serves live ionospheric and GNSS positioning error forecasts.
+The trained model weights are not stored in the repository (they are large binary files). Run the included download script to fetch them automatically:
 
-### Running the API Server with Uvicorn
-
-Start the local server using `uvicorn`:
 ```bash
-uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+python download_models.py
 ```
 
-Interactive OpenAPI / Swagger documentation is available in your browser at:
-- **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+This will download ~72 MB of model weights from GitHub Releases and place them in the `models/` folder. You only need to do this once.
 
-### API Endpoints Summary
+### Step 5 — Run AEGIS
 
-| Endpoint | Method | Description |
-| :--- | :---: | :--- |
-| **`/api/health`** | `GET` | Health status and list of all 12 operational models loaded in memory. |
-| **`/api/status`** | `GET` | Current space-weather conditions ($Kp$, $B_z$, $Dst$, wind speed) and derived alert level (`CALM`, `WATCH`, `WARNING`, `SEVERE`). |
-| **`/api/forecast`** | `GET` | Single station-horizon forecast: `?station=bangalore&horizon=1h`. Returns VTEC, conformal bounds, GPS L1 / NavIC L5 error (m), MC-Dropout sigma, and storm calibration warning. Cached for 5 min. |
-| **`/api/forecast/all`** | `GET` | Batch forecast across all 4 stations $\times$ 3 horizons (12 combinations) in one response. |
-| **`/api/replay`** | `GET` | Historical storm replay time series: `?event=march_2023_g4&station=lucknow&horizon=1h`. |
+**Windows (easiest):**
+Double-click `start_aegis.bat`
 
-### Mandatory Calibration Warning
-Every forecast includes a `calibration_warning: bool` field. When $Kp \ge 5.0$, `calibration_warning` is `True` and includes an explicit warning stating that conformal safety bounds lose calibration during geomagnetic storms (dropping from nominal 95% to 63.4%–87.1% coverage).
+**Any OS (terminal):**
+```bash
+python -m uvicorn api:app --host 127.0.0.1 --port 8000
+```
+
+### Step 6 — Open the Dashboard
+
+The browser will open automatically. If it doesn't, navigate to:
+```
+http://localhost:8000
+```
+
+To stop AEGIS, press `Ctrl+C` in the terminal or close the window.
 
 ---
 
-## Real-Time Space Weather Ingestion Worker (`live_ingest.py`)
+## Project Structure
 
-The real-time ingestion worker [`live_ingest.py`](file:///c:/Users/PARAM/Desktop/AEGIS/live_ingest.py) autonomously streams live space-weather drivers from public NOAA Space Weather Prediction Center (SWPC) feeds to provide operational feature windows for the API.
+```
+AEGIS/
+├── api.py                  # FastAPI server — serves dashboard + forecasts + WebSocket
+├── live_ingest.py          # Real-time NOAA SWPC data ingestion worker
+├── data_acquisition.py     # Historical training data downloader (one-time use)
+├── stage1_split.py         # Training pipeline — data split
+├── stage4_lstm_v2.py       # Training pipeline — AttentionBiLSTM
+├── stage5_ensemble.py      # Training pipeline — XGBoost ensemble
+├── stage6_diagnostics.py   # Training pipeline — diagnostics
+├── tec_to_gps_error.py     # TEC-to-GPS error conversion
+├── download_models.py      # Model weight downloader (run once after cloning)
+├── index.html              # Frontend dashboard (single-file)
+├── start_aegis.bat         # Windows one-click launcher
+├── requirements.txt        # Python dependencies
+├── models/                 # Pre-trained model weights (downloaded via download_models.py)
+├── data/                   # Live buffer and map data
+│   ├── countries_110m.json # GeoJSON for 3D globe
+│   ├── live_buffer.csv     # Rolling live data buffer
+│   └── processed/          # Training/test datasets (not in repo)
+├── diagnostics/            # Model evaluation charts
+├── metrics/                # Training metrics JSON
+└── fonts/                  # Custom fonts for dashboard
+```
 
-### NOAA SWPC Real-Time Feeds (No Authentication Required)
-1. **Planetary Kp Index**: `https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json`
-2. **Solar Wind Plasma ($V_{\text{sw}}$)**: `https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json` *(Active fallback: `products/summary/solar-wind-speed.json` and `json/rtsw/rtsw_wind_1m.json`)*
-3. **Solar Wind Magnetic Field (IMF $B_z$ in GSM)**: `https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json` *(Active fallback: `products/summary/solar-wind-mag-field.json` and `json/rtsw/rtsw_mag_1m.json`)*
-4. **GOES Solar X-Ray Flux (0.1–0.8 nm)**: `https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json`
-5. **Kyoto Dst Index Estimate**: `https://services.swpc.noaa.gov/products/kyoto-dst.json`
-6. **GOES Energetic Protons ($\ge 10$ MeV)**: `https://services.swpc.noaa.gov/json/goes/primary/integral-protons-1-day.json`
+---
 
-### Key Architecture & Capabilities
-- **5-Minute Polling Cycle**: Queries feeds, validates data ranges, strips invalid instrument fill values (e.g., `-999.0`, `-9999.0`), and aggregates to hourly averages.
-- **Rolling Lookback Buffer**: Maintains a rolling 24-to-72 hour contiguous feature buffer persisted to disk at `data/live_buffer.csv` and `data/live_buffer_status.json`, ensuring process restarts retain full lookback memory without cold-start data loss.
-- **Identical Scaler Parameters**: Uses the exact `StandardScaler` parameters saved inside the PyTorch model checkpoints — never refitting scalers on live data.
-- **Graceful Failover & Staleness Detection**:
-  - Retries transient failures with exponential backoff (retries $\times 3$).
-  - Falls back to last known valid values for transient feed gaps.
-  - Automatically flags forecasts as **degraded** (`is_degraded: true`) if any required space-weather feed is stale beyond 3 hours.
-- **Station TEC Physical Baseline**: In the absence of real-time ground dual-frequency GNSS receivers streaming RINEX, station TEC values are anchored to regional diurnal baselines indexed by local solar hour.
-- **Daemon Integration**: Automatically launched as a background daemon by `api.py` during FastAPI application lifespan startup and gracefully terminated on shutdown. Can also be executed independently via `python live_ingest.py --daemon`.
+## Data Sources
 
-### Operational Caveat & Data Provenance Notice
-> [!IMPORTANT]
-> **Data Provenance Caveat (Live SWPC vs. Historical Archives):**
-> AEGIS models were trained, validated, and tested on finalized, post-processed historical archives (NASA OMNIWeb, GFZ Potsdam, and NOAA GOES Level-2 data). Operational live data streams from NOAA SWPC Real-Time Solar Wind (RTSW) and quick-look feeds, which utilize automated baseline subtractions, satellite handovers (e.g. DSCOVR to ACE), and near-real-time filtering.
->
-> **Live-mode forecasting accuracy has not been formally benchmarked against the historical test-set metrics.** To make this difference completely visible to downstream consumers, every API forecast explicitly includes:
-> - `data_source: "live_swpc"` (for live operational forecasts) vs `data_source: "historical"` (for storm replay and test benchmarks).
-> - `live_accuracy_caveat`: An operational disclaimer indicating that live SWPC feeds differ in calibration and latency from training data.
-> - `is_degraded`: Boolean flag indicating whether any required feed has exceeded the 3-hour staleness threshold.
+All live data is fetched from **publicly available, no-authentication-required** feeds:
 
+| Parameter | Source |
+|---|---|
+| Kp index | NOAA SWPC |
+| Solar wind speed & density | NOAA SWPC / ACE satellite |
+| IMF Bz (magnetic field) | NOAA SWPC / ACE satellite |
+| X-ray flux (solar flares) | NOAA GOES-16 |
+| Dst ring current index | Kyoto World Data Centre |
+| F10.7 solar flux | NOAA SWPC |
+
+---
+
+## Monitored Stations
+
+| Station | Location | Lat | Lon |
+|---|---|---|---|
+| Bangalore | Karnataka, India | 12.97°N | 77.59°E |
+| Hyderabad | Telangana, India | 17.37°N | 78.48°E |
+| Lucknow | Uttar Pradesh, India | 26.85°N | 80.92°E |
+| Colombo | Sri Lanka | 6.93°N | 79.84°E |
+
+---
+
+## Troubleshooting
+
+**"Python is not detected"**
+→ Reinstall Python and make sure to tick "Add Python to PATH"
+
+**"No module named uvicorn"**
+→ Run `pip install -r requirements.txt` again
+
+**"Model files not found"**
+→ Run `python download_models.py`
+
+**Dashboard shows no live data**
+→ Check your internet connection. AEGIS needs internet to fetch live NOAA feeds.
+
+**Port 8000 already in use**
+→ Run `start_aegis.bat` again — it auto-clears port 8000. Or use: `python -m uvicorn api:app --port 8001`
+
+---
+
+## Contact
+
+**Author:** Param Patil
+**Email:** parampatil658@gmail.com
+**GitHub:** https://github.com/ParamPatil-03
