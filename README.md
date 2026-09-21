@@ -83,7 +83,7 @@ The trained model weights are not stored in the repository (they are large binar
 python download_models.py
 ```
 
-This will download ~72 MB of model weights from GitHub Releases and place them in the `models/` folder. You only need to do this once.
+This will download ~44 MB of model weights from GitHub Releases and place them in the `models/` folder. You only need to do this once.
 
 ### Step 5 — Run AEGIS
 
