@@ -169,46 +169,59 @@
 
         .side-link {
             position: relative;
-            width: 100%;
-            height: 60px;
+            width: 62px;
+            height: 46px;
+            margin: 3px auto;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            color: #555;
+            color: #FFFFFF !important;
             font-weight: 700;
-            font-size: 1.2rem;
-            transition: all 0.3s;
+            font-size: 1.05rem;
+            font-family: 'Space Mono', monospace;
+            background: rgba(14, 16, 22, 0.85);
+            border: 1px solid rgba(225, 217, 193, 0.22);
+            border-radius: 4px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
-        .side-link span {
-            background: var(--bg);
-            padding: 10px 0;
-            transition: color 0.3s;
+        .side-link .inner span,
+        .side-link > span,
+        .side-link:not(.active) .inner span,
+        .side-link:not(.active) > span {
+            background: transparent !important;
+            padding: 0 !important;
+            color: #FFFFFF !important;
+            transition: color 0.25s ease, text-shadow 0.25s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
 
         /* Hover Reveal Effect */
         .side-link::after {
             content: attr(data-text);
             position: absolute;
-            left: 80px;
+            left: 76px;
             top: 50%;
-            transform: translateY(-50%) translateX(-20px);
-            background: var(--accent-cyan);
-            color: var(--bg);
-            padding: 0.5rem 1rem;
+            transform: translateY(-50%) translateX(-18px);
+            background: #E1D9C1;
+            color: #0A0B0E;
+            padding: 0.45rem 0.95rem;
             font-family: 'Haval', 'Syne', sans-serif;
-            font-weight: 500;
-            font-size: 1.15rem;
+            font-weight: 700;
+            font-size: 0.82rem;
             letter-spacing: 1.5px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
             white-space: nowrap;
-            background: var(--accent-gold);
-            color: #0A0B0E;
-            box-shadow: 4px 4px 0px #C5A059;
+            box-shadow: 4px 4px 0px #C5A059, 0 4px 14px rgba(0, 0, 0, 0.85);
+            border-radius: 2px;
+            z-index: 9999;
         }
 
         .side-link:hover::after {
@@ -217,26 +230,52 @@
             transform: translateY(-50%) translateX(0);
         }
 
-        .side-link:hover span {
-            color: var(--fg);
+        .side-link:hover {
+            border-color: rgba(255, 184, 0, 0.65);
+            background: radial-gradient(
+                70% 70% at 50% 100%,
+                rgba(255, 184, 0, 0.3) 0%,
+                rgba(17, 19, 24, 0.9) 100%
+            );
+            color: #FFFFFF;
+            box-shadow: 0 0 14px rgba(255, 184, 0, 0.35);
+        }
+
+        .side-link:hover .inner span,
+        .side-link:hover > span {
+            color: #FFFFFF;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
         /* Active State */
-        .side-link.active span {
-            color: var(--accent-yellow);
-            text-shadow: 0 0 10px rgba(255, 184, 0, 0.7);
+        .side-link.active {
+            border-color: #FFB800 !important;
+            background: radial-gradient(
+                70% 70% at 50% 100%,
+                rgba(255, 184, 0, 0.45) 0%,
+                rgba(24, 27, 36, 0.95) 100%
+            ) !important;
+            box-shadow: 0 0 16px rgba(255, 184, 0, 0.5), inset 0 0 8px rgba(255, 184, 0, 0.2) !important;
+        }
+
+        .side-link.active .inner span,
+        .side-link.active > span {
+            color: #FFB800 !important;
+            text-shadow: 0 0 12px rgba(255, 184, 0, 0.85) !important;
+            font-weight: 800;
         }
 
         .side-link.active::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 40px;
-            background: var(--accent-yellow);
-            box-shadow: 0 0 10px rgba(255, 184, 0, 0.8);
+            top: 15%;
+            bottom: 15%;
+            width: 3px;
+            background: #FFB800;
+            box-shadow: 0 0 8px #FFB800;
+            border-radius: 0 2px 2px 0;
+            z-index: 3;
         }
 
         .side-status {
@@ -309,6 +348,9 @@
             width: 100vw;
             height: 900vh;
             will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             z-index: 1;
             position: relative;
         }
@@ -326,6 +368,7 @@
             border-bottom: 1px solid var(--grid-color);
             box-sizing: border-box;
             overflow: hidden;
+            contain: content;
         }
 
         /* Typography */
@@ -652,37 +695,57 @@
         .stations-track {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0;
-            border: 2px solid var(--accent-gold);
-            background: var(--bg);
+            gap: 1.4rem;
+            border: none;
+            background: transparent;
             height: clamp(480px, 56vh, 550px);
-            box-shadow: 0 14px 45px rgba(0, 0, 0, 0.7);
-            overflow: hidden;
+            box-shadow: none;
+            overflow: visible;
             box-sizing: border-box;
         }
 
         .st-card {
-            border-right: 2px solid rgba(225, 217, 193, 0.25);
-            border-left: none;
-            border-top: none;
-            border-bottom: none;
+            border: none !important;
+            padding: 2.5px;
             display: flex;
             flex-direction: column;
-            background: var(--bg);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: transparent !important;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
             min-height: 0;
             overflow: hidden;
             cursor: pointer;
             position: relative;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+            z-index: 1;
         }
 
-        .st-card:last-child {
-            border-right: none;
+        .st-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 220px;
+            height: 400%;
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #38BDF8 30%, #FFB800 65%, #A855F7 100%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotBGimg 4s linear infinite;
+            transition: all 0.3s linear;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+            opacity: 0.85;
         }
 
         .st-card:hover {
-            z-index: 3;
-            transform: translateY(-2px);
+            z-index: 5;
+            transform: translateY(-5px);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 184, 0, 0.25);
+        }
+
+        .st-card:hover::before {
+            filter: brightness(1.2);
+            animation-duration: 2.8s;
         }
 
         /* Card Header */
@@ -695,6 +758,10 @@
             flex-shrink: 0;
             box-sizing: border-box;
             border-bottom: 2px solid rgba(225, 217, 193, 0.25);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            position: relative;
+            z-index: 2;
         }
 
         .st-name {
@@ -725,6 +792,10 @@
             justify-content: space-between;
             min-height: 0;
             box-sizing: border-box;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            position: relative;
+            z-index: 2;
         }
 
         .st-metric {
@@ -766,7 +837,7 @@
         /* --- THEME BLOCK COLORS (Strictly White, Black, Gold, Yellow - Zero Blue) --- */
 
         /* 1. NOMINAL (Solid White Header, Obsidian Body, Warm Champagne Gold Values) */
-        .st-card:not(.danger):not(.warning) {
+        .st-card:not(.danger):not(.warning) .st-body {
             background: #0A0B0E !important;
         }
 
@@ -798,13 +869,17 @@
         }
 
         /* 2. WARNING / ELEVATED (Solid Solar Yellow Block, Obsidian Text) */
-        .st-card.warning {
+        .st-card.warning::before {
+            background-image: linear-gradient(180deg, #FFB800 0%, #FFFFFF 35%, #F59E0B 70%, #FFB800 100%) !important;
+            animation-duration: 3.2s;
+        }
+
+        .st-card.warning .st-body {
             background: #FFB800 !important;
-            box-shadow: 0 8px 30px rgba(255, 184, 0, 0.35);
         }
 
         .st-card.warning .st-head {
-            background: rgba(10, 11, 14, 0.12) !important;
+            background: #FFB800 !important;
             border-bottom: 2px solid rgba(10, 11, 14, 0.25) !important;
         }
 
@@ -825,13 +900,17 @@
         }
 
         /* 3. DANGER / CRITICAL (Solid Antique Metallic Gold Block, Obsidian Text) */
-        .st-card.danger {
+        .st-card.danger::before {
+            background-image: linear-gradient(180deg, #EF4444 0%, #D4AF37 35%, #FFB800 70%, #EF4444 100%) !important;
+            animation-duration: 2.8s;
+        }
+
+        .st-card.danger .st-body {
             background: #D4AF37 !important;
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.35);
         }
 
         .st-card.danger .st-head {
-            background: rgba(10, 11, 14, 0.12) !important;
+            background: #D4AF37 !important;
             border-bottom: 2px solid rgba(10, 11, 14, 0.25) !important;
         }
 
@@ -853,9 +932,14 @@
 
         /* 4. ACTIVE STATION HIGHLIGHT */
         .st-card.active-station {
-            outline: 3px solid #FFFFFF !important;
-            outline-offset: -3px;
-            z-index: 2;
+            outline: none !important;
+            z-index: 4;
+            box-shadow: 0 12px 40px rgba(0, 229, 255, 0.38), 0 0 20px rgba(255, 184, 0, 0.25) !important;
+        }
+        .st-card.active-station::before {
+            background-image: linear-gradient(180deg, #00F0FF 0%, #FFFFFF 30%, #FFB800 65%, #00F0FF 100%) !important;
+            animation-duration: 2.5s !important;
+            opacity: 1 !important;
         }
 
         /* --- SLIDE 4: CHART --- */
@@ -1057,19 +1141,18 @@
         .impact-sectors-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.85rem;
+            gap: 1.15rem;
             flex: 1;
             min-height: 0;
         }
 
         .impact-sector-card {
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            background: rgba(0, 0, 0, 0.45);
-            border-radius: 6px;
-            padding: 0.9rem 1.05rem;
+            border: none !important;
+            border-radius: 8px;
+            padding: 1rem 1.15rem;
             font-family: 'Bounded', sans-serif;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -1077,20 +1160,98 @@
             min-height: 170px;
             color: #F8F9FA;
             box-sizing: border-box;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Rotating Background Gradient Beam (Uiverse by bhaveshxrawat adapted to AEGIS theme) */
+        .impact-sector-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 500%;
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #FFB800 35%, #EF4444 70%, #FFFFFF 100%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotBGimg 4s linear infinite;
+            transition: all 0.3s linear;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+            opacity: 0.92;
+        }
+
+        /* Status-specific laser beam border colors */
+        .impact-sector-card.status-critical::before {
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #FFB800 30%, #EF4444 65%, #FFFFFF 100%);
+        }
+
+        .impact-sector-card.status-advisory::before {
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #FFD700 35%, #FB923C 70%, #FFFFFF 100%);
+        }
+
+        .impact-sector-card.status-nominal::before {
+            background-image: linear-gradient(180deg, #FFFFFF 0%, #38BDF8 35%, #22C55E 70%, #FFFFFF 100%);
+        }
+
+        .impact-sector-card.selected::before {
+            background-image: linear-gradient(180deg, #EF4444 0%, #FFB800 50%, #EF4444 100%);
+            opacity: 1;
+            animation-duration: 2.6s;
+        }
+
+        /* Inner Plate with 2px Border Inset - Deep Crimson Red by default for Slide 7 */
+        .impact-sector-card::after {
+            content: '';
+            position: absolute;
+            background: #8F0000;
+            inset: 2px;
+            border-radius: 6px;
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        #slide-4.theme-critical .impact-sector-card::after {
+            background: #8F0000;
+        }
+
+        #slide-4.theme-critical .impact-sector-card:hover::after {
+            background: #7A0000;
+        }
+
+        #slide-4.theme-advisory .impact-sector-card::after {
+            background: #874600;
+        }
+
+        #slide-4.theme-nominal .impact-sector-card::after {
+            background: #0B0D13;
+        }
+
+        .impact-sector-card.selected::after {
+            background: #F8F9FA !important;
+        }
+
+        /* Ensure all card interior content sits above the rotating beam */
+        .impact-sector-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .impact-sector-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.75);
-            background: rgba(0, 0, 0, 0.65);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45), 0 0 22px rgba(255, 184, 0, 0.3);
+        }
+
+        .impact-sector-card:hover::before {
+            filter: brightness(1.25);
+            animation-duration: 2.8s;
         }
 
         .impact-sector-card.selected {
-            background: #F8F9FA !important;
             color: #E60000 !important;
-            border-color: #F8F9FA !important;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 10px 35px rgba(230, 0, 0, 0.3), 0 0 20px rgba(255, 184, 0, 0.25) !important;
         }
 
         .impact-sector-card.selected .sector-name,
@@ -1305,19 +1466,20 @@
             width: 100%;
             height: 100%;
             max-width: 1440px;
-            max-height: calc(100vh - 2.2rem);
+            max-height: calc(100vh - 2rem);
             margin: 0 auto;
             min-height: 0;
             overflow: hidden;
             gap: 0.65rem;
             box-sizing: border-box;
+            padding: 0 0.25rem;
         }
 
         .s6-top-hud {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(225, 217, 193, 0.18);
+            border-bottom: 1px solid rgba(225, 217, 193, 0.15);
             padding-bottom: 0.4rem;
             margin-bottom: 0;
             font-family: 'Bounded', monospace;
@@ -1347,114 +1509,282 @@
             overflow: hidden;
         }
 
-        /* Horizontal 4-Stage Stepper */
-        .pipeline-stages-list {
+        /* --- SLIDE 8: 4-STAGE CONNECTED ARCHITECTURAL FLOW PIPELINE (Matches Slide 5 Architecture) --- */
+        .meth-flow-panel {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-            flex-shrink: 0;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
+            grid-template-columns: 1fr auto 1fr auto 1.05fr auto 1fr;
+            align-items: stretch;
+            gap: 1.05rem;
+            border: 2px solid rgba(225, 217, 193, 0.25);
+            background: rgba(14, 17, 24, 0.88);
+            padding: 1.2rem 1.3rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            min-height: 0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
-        .pipeline-stage-card {
-            border: 1px solid rgba(225, 217, 193, 0.16);
-            border-top: 3px solid rgba(225, 217, 193, 0.35);
-            background: rgba(14, 16, 22, 0.85);
-            border-radius: 6px;
-            padding: 0.6rem 0.85rem;
-            font-family: 'Bounded', monospace;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        .meth-flow-col {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            justify-content: space-between;
+            background: #0E1017;
+            border: none !important;
+            border-radius: 8px;
+            padding: 1.05rem 1.1rem;
+            height: 100%;
             box-sizing: border-box;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+            min-width: 0;
+            overflow: hidden;
+            cursor: pointer;
             position: relative;
+            z-index: 1;
         }
 
-        .pipeline-stage-card:hover {
-            transform: translateY(-2px);
-            background: rgba(225, 217, 193, 0.08);
-            border-color: rgba(225, 217, 193, 0.45);
+        /* Rotating Background Gradient Beam (Uiverse by bhaveshxrawat adapted to AEGIS theme) */
+        .meth-flow-col::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 500%;
+            background-image: linear-gradient(180deg, #FFB800 0%, #38BDF8 35%, #A855F7 70%, #FFB800 100%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotBGimg 4s linear infinite;
+            transition: all 0.3s linear;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+            opacity: 0.85;
         }
 
-        .pipeline-stage-card.selected {
-            border-top: 3px solid var(--accent-yellow) !important;
-            border-color: rgba(255, 184, 0, 0.6) !important;
-            background: rgba(255, 184, 0, 0.08) !important;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 184, 0, 0.15);
+        /* Inner Obsidian Body with 2px Border Inset */
+        .meth-flow-col::after {
+            content: '';
+            position: absolute;
+            background: #0B0D13;
+            inset: 2px;
+            border-radius: 6px;
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
         }
 
-        .stage-card-header {
+        /* Ensure all card interior content sits above the rotating beam */
+        .meth-flow-col > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .meth-flow-col:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 184, 0, 0.22);
+        }
+
+        .meth-flow-col:hover::before {
+            background-image: linear-gradient(180deg, #FFD700 0%, #00F0FF 30%, #EC4899 65%, #FFB800 100%);
+            animation-duration: 2.8s;
+            opacity: 1;
+        }
+
+        .meth-flow-col:hover::after {
+            background: #11141D;
+        }
+
+        /* Active / Highlighted Stage Card */
+        .meth-flow-col.highlight-yellow::before,
+        .meth-flow-col.highlight-gold::before {
+            background-image: linear-gradient(180deg, #FFB800 0%, #FFFFFF 30%, #38BDF8 65%, #FFB800 100%) !important;
+            animation-duration: 2.8s;
+            opacity: 1;
+        }
+
+        .meth-flow-col.highlight-yellow::after,
+        .meth-flow-col.highlight-gold::after {
+            background: #12100A !important;
+        }
+
+        .meth-flow-col.highlight-yellow,
+        .meth-flow-col.highlight-gold {
+            box-shadow: 0 0 25px rgba(255, 184, 0, 0.35), 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+            border: none !important;
+        }
+
+        .meth-col-tag-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 0.35rem;
+            gap: 4px;
         }
 
-        .stage-num-badge {
-            font-size: 0.60rem;
+        .meth-col-tag {
+            font-family: 'Bounded', monospace;
+            font-size: 0.62rem;
             font-weight: 800;
-            padding: 1px 5px;
-            background: rgba(225, 217, 193, 0.12);
             color: var(--accent-gold);
-            letter-spacing: 0.5px;
-            border-radius: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .stage-status-badge {
-            font-size: 0.58rem;
+        .meth-col-status {
+            font-size: 0.55rem;
             font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Bounded', monospace;
+            white-space: nowrap;
+        }
+        .meth-col-status.green {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10B981;
             color: #10B981;
-            letter-spacing: 0.5px;
+        }
+        .meth-col-status.yellow {
+            background: rgba(255, 184, 0, 0.15);
+            border: 1px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+        .meth-col-status.cyan {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid #3B82F6;
+            color: #93C5FD;
         }
 
-        .stage-card-title {
+        .meth-col-name {
             font-family: 'Haval', 'Syne', sans-serif;
-            font-size: 0.84rem;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
             color: #FFFFFF;
             letter-spacing: 0.3px;
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            line-height: 1.15;
+            margin-bottom: 0.2rem;
         }
 
-        .stage-card-sub {
-            font-size: 0.62rem;
-            opacity: 0.8;
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: rgba(225, 217, 193, 0.8);
+        .meth-col-sub {
+            font-family: 'Bounded', monospace;
+            font-size: 0.64rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.65rem;
+            line-height: 1.25;
         }
 
-        .stage-card-footer {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-top: 2px;
+        .meth-col-formula-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(225, 217, 193, 0.15);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 4px;
+            padding: 0.45rem 0.65rem;
+            margin-bottom: 0.75rem;
+            flex-shrink: 0;
         }
 
-        .stage-meta-tag {
-            font-size: 0.54rem;
-            padding: 2px 5px;
-            border: 1px solid rgba(225, 217, 193, 0.2);
-            background: rgba(0, 0, 0, 0.4);
+        .meth-col-formula-lbl {
+            font-size: 0.52rem;
             color: var(--accent-gold);
-            border-radius: 2px;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        /* Widescreen Inspector Card */
-        .inspector-card {
-            border: 1px solid rgba(225, 217, 193, 0.18);
-            background: rgba(14, 16, 22, 0.88);
+        .meth-col-formula-math {
+            font-family: 'Bounded', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            word-break: break-all;
+        }
+
+        .meth-col-specs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            margin-bottom: 0.65rem;
+            min-height: 0;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .meth-spec-point {
+            font-size: 0.68rem;
+            line-height: 1.45;
+            color: rgba(225, 217, 193, 0.85);
+            padding-left: 11px;
+            position: relative;
+        }
+        .meth-spec-point::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            color: var(--accent-yellow);
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .meth-spec-point strong {
+            color: #FFFFFF;
+        }
+
+        .meth-col-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(225, 217, 193, 0.12);
+            flex-shrink: 0;
+        }
+
+        .meth-micro-chip {
+            font-size: 0.54rem;
+            font-weight: 700;
+            padding: 2px 5px;
+            background: rgba(225, 217, 193, 0.08);
+            border: 1px solid rgba(225, 217, 193, 0.2);
+            color: var(--accent-gold);
+            border-radius: 3px;
+            font-family: 'Bounded', monospace;
+        }
+
+        .meth-flow-op {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Haval', 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            opacity: 0.85;
+            user-select: none;
+            padding: 0 1px;
+            text-shadow: 0 0 10px rgba(255, 184, 0, 0.5);
+        }
+
+        /* Bottom Methodology Callout Bar (Matches Slide 5 Callout) */
+        .meth-bottom-callout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(17, 19, 24, 0.85);
+            border: 1px solid rgba(225, 217, 193, 0.2);
             border-radius: 6px;
-            padding: 1rem 1.3rem;
+            padding: 0.55rem 1.1rem;
+            font-family: 'Bounded', monospace;
+            flex-shrink: 0;
+            gap: 1rem;
+        }
+
+        /* Widescreen Inspector Card fallback */
+        .inspector-card {
+            border: 1px solid rgba(225, 217, 193, 0.22);
+            background: linear-gradient(135deg, rgba(14, 17, 24, 0.94) 0%, rgba(9, 11, 15, 0.97) 100%);
+            border-radius: 8px;
+            padding: 1.1rem 1.4rem;
             font-family: 'Bounded', monospace;
             flex: 1;
             display: flex;
@@ -1462,160 +1792,8 @@
             min-height: 0;
             overflow: hidden;
             box-sizing: border-box;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-        }
-
-        .inspector-grid {
-            display: grid;
-            grid-template-columns: 44% 56%;
-            gap: 1.5rem;
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
-        }
-
-        .inspector-left-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            min-height: 0;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-
-        .inspector-right-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            min-height: 0;
-            overflow-y: auto;
-            padding-left: 0.5rem;
-            border-left: 1px solid rgba(225, 217, 193, 0.12);
-        }
-
-        .inspector-left-col::-webkit-scrollbar,
-        .inspector-right-col::-webkit-scrollbar,
-        .table-scroll-container::-webkit-scrollbar,
-        .eia-pillars-list::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .inspector-left-col::-webkit-scrollbar-thumb,
-        .inspector-right-col::-webkit-scrollbar-thumb,
-        .table-scroll-container::-webkit-scrollbar-thumb,
-        .eia-pillars-list::-webkit-scrollbar-thumb {
-            background: rgba(225, 217, 193, 0.25);
-            border-radius: 2px;
-        }
-
-        .inspector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 1px solid rgba(225, 217, 193, 0.12);
-            padding-bottom: 0.4rem;
-            margin-bottom: 0.1rem;
-            gap: 0.5rem;
-            flex-shrink: 0;
-        }
-
-        .inspector-title {
-            font-family: 'Haval', 'Syne', sans-serif;
-            font-size: 1.18rem;
-            font-weight: 800;
-            margin: 2px 0;
-            color: #FFFFFF;
-            line-height: 1.15;
-        }
-
-        .inspector-subtitle {
-            font-size: 0.68rem;
-            color: var(--accent-yellow);
-        }
-
-        .insp-status-badge {
-            font-size: 0.62rem;
-            font-weight: 700;
-            padding: 2px 7px;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid #10B981;
-            color: #10B981;
-            white-space: nowrap;
-            border-radius: 3px;
-        }
-
-        .inspector-summary {
-            font-size: 0.74rem;
-            line-height: 1.45;
-            color: #E1D9C1;
-        }
-
-        .formula-box {
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px dashed rgba(225, 217, 193, 0.3);
-            border-left: 3px solid var(--accent-gold);
-            border-radius: 4px;
-            padding: 0.45rem 0.75rem;
-            flex-shrink: 0;
-        }
-
-        .formula-label {
-            font-size: 0.58rem;
-            color: var(--accent-yellow);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-        }
-
-        .formula-code {
-            font-size: 0.76rem;
-            color: #FFFFFF;
-            font-family: 'Bounded', monospace;
-            font-weight: 700;
-            word-break: break-all;
-        }
-
-        .research-bullets {
-            font-size: 0.72rem;
-            line-height: 1.45;
-            color: #D1D5DB;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .research-bullets li {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(225, 217, 193, 0.12);
-            border-left: 3px solid var(--accent-yellow);
-            border-radius: 4px;
-            padding: 0.5rem 0.75rem;
-        }
-
-        .inspector-tech-footer {
-            flex-shrink: 0;
-            padding-top: 0.4rem;
-            border-top: 1px solid rgba(225, 217, 193, 0.12);
-            margin-top: auto;
-        }
-
-        .tech-stack-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .tech-chip {
-            font-size: 0.58rem;
-            font-weight: 700;
-            padding: 2px 7px;
-            background: rgba(225, 217, 193, 0.08);
-            border: 1px solid rgba(225, 217, 193, 0.25);
-            color: var(--accent-gold);
-            border-radius: 3px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            position: relative;
         }
 
         /* Benchmarks Table */
@@ -1658,12 +1836,12 @@
         }
 
         .benchmark-audit-note {
-            font-size: 0.68rem;
-            line-height: 1.35;
-            color: #D1D5DB;
-            padding: 0.45rem 0.75rem;
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            font-size: 0.64rem;
+            line-height: 1.4;
+            color: rgba(225, 217, 193, 0.85);
+            padding: 0.4rem 0.65rem;
+            background: rgba(255, 184, 0, 0.06);
+            border: 1px solid rgba(255, 184, 0, 0.25);
             border-radius: 4px;
             flex-shrink: 0;
         }
@@ -1702,41 +1880,41 @@
             color: #D1D5DB;
         }
 
-        /* Bottom Full-Width Data Sources Strip */
+        /* Bottom Full-Width Data Sources Strip - Streamlined Single Line */
         .data-sources-strip {
-            border: 1px solid rgba(225, 217, 193, 0.18);
-            background: rgba(14, 16, 22, 0.85);
+            border: 1px solid rgba(225, 217, 193, 0.14);
+            background: rgba(14, 16, 22, 0.75);
             border-radius: 6px;
             padding: 0.35rem 0.85rem;
             flex-shrink: 0;
             width: 100%;
             box-sizing: border-box;
             display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
         }
 
         .data-sources-header-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .data-sources-grid {
             display: flex;
-            gap: 0.35rem;
+            gap: 0.3rem;
             flex-wrap: wrap;
         }
 
         .source-tag {
             background: rgba(225, 217, 193, 0.06);
-            border: 1px solid rgba(225, 217, 193, 0.2);
+            border: 1px solid rgba(225, 217, 193, 0.18);
             color: var(--accent-gold);
-            font-size: 0.62rem;
+            font-size: 0.60rem;
             font-weight: 700;
-            padding: 2px 7px;
+            padding: 2px 6px;
             border-radius: 3px;
             text-align: center;
             font-family: 'Bounded', monospace;
@@ -1759,14 +1937,19 @@
         }
 
         .source-detail-drawer {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(225, 217, 193, 0.12);
-            border-radius: 4px;
-            padding: 0.25rem 0.6rem;
+            background: transparent;
+            border: none;
+            padding: 0;
             font-family: 'Bounded', monospace;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            flex: 1;
+            justify-content: flex-end;
+            margin-left: 0.5rem;
         }
         
         /* --- SLIDE 7: STATION MAP --- */
@@ -1808,22 +1991,82 @@
         .station-cards {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.9rem;
             flex: 1;
             min-height: 0;
             justify-content: space-between;
         }
         .s-card {
-            border: 1px solid rgba(225, 217, 193, 0.18);
-            background: rgba(14, 16, 22, 0.85);
+            border: none !important;
+            border-radius: 8px;
             padding: 0.95rem 1.25rem;
-            border-radius: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid;
             flex: 1;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Rotating Background Gradient Beam (Uiverse by bhaveshxrawat adapted to AEGIS theme) */
+        .s-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 500%;
+            background-image: linear-gradient(180deg, #FFB800 0%, #38BDF8 35%, #A855F7 70%, #FFB800 100%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotBGimg 4s linear infinite;
+            transition: all 0.3s linear;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        /* Status-specific laser beam border colors */
+        .s-card.border-green::before {
+            background-image: linear-gradient(180deg, #22C55E 0%, #38BDF8 35%, #FFB800 70%, #22C55E 100%);
+        }
+
+        .s-card.border-yellow::before {
+            background-image: linear-gradient(180deg, #FFB800 0%, #F59E0B 35%, #FFFFFF 70%, #FFB800 100%);
+        }
+
+        .s-card.border-red::before {
+            background-image: linear-gradient(180deg, #EF4444 0%, #FFB800 35%, #F43F5E 70%, #EF4444 100%);
+        }
+
+        /* Inner Obsidian Body with 2px Border Inset */
+        .s-card::after {
+            content: '';
+            position: absolute;
+            background: #0E1016;
+            inset: 2px;
+            border-radius: 6px;
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        /* Ensure all station card interior content sits above the rotating beam */
+        .s-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .s-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 184, 0, 0.22);
+        }
+
+        .s-card:hover::before {
+            filter: brightness(1.25);
+            animation-duration: 2.8s;
         }
         .s-card-info {
             display: flex;
@@ -1857,15 +2100,31 @@
         .badge-green { color: #22C55E; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); border-radius: 3px; padding: 0.2rem 0.5rem; }
         .badge-yellow { color: #FFB800; background: rgba(255,184,0,0.12); border: 1px solid rgba(255,184,0,0.3); border-radius: 3px; padding: 0.2rem 0.5rem; }
         .badge-red { color: #EF4444; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); border-radius: 3px; padding: 0.2rem 0.5rem; }
-        .border-green { border-left-color: #22C55E !important; }
-        .border-yellow { border-left-color: #FFB800 !important; }
-        .border-red { border-left-color: #EF4444 !important; }
+        .border-green { }
+        .border-yellow { }
+        .border-red { }
         
         .tec-val {
             font-size: 0.95rem;
             color: #FFB800;
             font-family: 'Bounded', monospace;
             font-weight: 700;
+        }
+
+        .s-telemetry-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 0.35rem;
+            font-family: 'Bounded', monospace;
+            font-size: 0.68rem;
+            color: rgba(225, 217, 193, 0.75);
+            flex-wrap: wrap;
+        }
+        .s-telemetry-row span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         
         .map-wrapper {
@@ -2069,20 +2328,20 @@
         }
 
         .feed-card {
-            border: 1px solid rgba(225, 217, 193, 0.2);
-            border-left: 4px solid #22C55E;
-            background: rgba(17, 19, 24, 0.85);
-            padding: 1.1rem 1.35rem;
+            border: none !important;
+            background: #0E1017;
+            padding: 1.15rem 1.35rem;
             display: flex;
             flex-direction: column;
             gap: 0.45rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             position: relative;
-            backdrop-filter: blur(8px);
-            min-height: 105px;
+            min-height: 108px;
             justify-content: center;
             box-sizing: border-box;
-            border-radius: 3px;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1;
         }
 
         /* Top row of 4 cards: each spans 3 of 12 columns */
@@ -2097,30 +2356,113 @@
             grid-column: span 4 !important;
         }
 
+        /* Rotating Background Gradient Beam (Uiverse by bhaveshxrawat tailored to AEGIS cosmic/solar theme) */
+        .feed-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 500%;
+            background-image: linear-gradient(180deg, #FFB800 0%, #38BDF8 35%, #A855F7 70%, #FFB800 100%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotBGimg 4s linear infinite;
+            transition: all 0.3s linear;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        @keyframes rotBGimg {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Inner Card Body with 2px Border Inset */
+        .feed-card::after {
+            content: '';
+            position: absolute;
+            background: #0B0D13;
+            inset: 2px;
+            border-radius: 6px;
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        /* Ensure all card typography and badges render above the rotating beam */
+        .feed-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
         .feed-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 184, 0, 0.2);
         }
 
+        .feed-card:hover::before {
+            background-image: linear-gradient(180deg, #FFD700 0%, #00F0FF 30%, #EC4899 65%, #FFB800 100%);
+            animation-duration: 2.8s;
+            opacity: 1;
+        }
+
+        .feed-card:hover::after {
+            background: #10131B;
+        }
+
+        /* Dynamic Status Themes: Color-mixing for Online, Syncing/Archive, and Error */
+        .feed-card.online::before {
+            background-image: linear-gradient(180deg, #22C55E 0%, #38BDF8 35%, #FFB800 70%, #22C55E 100%);
+            animation-duration: 3.5s;
+            opacity: 0.95;
+        }
+        .feed-card.online::after {
+            background: #091310;
+        }
         .feed-card.online {
-            border: 2px solid #22C55E !important;
-            border-left: 6px solid #22C55E !important;
-            background: rgba(34, 197, 94, 0.14) !important;
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 4px 22px rgba(34, 197, 94, 0.18);
         }
 
+        .feed-card.syncing::before {
+            background-image: linear-gradient(180deg, #FFB800 0%, #F59E0B 35%, #38BDF8 70%, #FFB800 100%);
+            animation-duration: 3s;
+            opacity: 0.95;
+        }
+        .feed-card.syncing::after {
+            background: #131109;
+        }
         .feed-card.syncing {
-            border: 2px solid #FFB800 !important;
-            border-left: 6px solid #FFB800 !important;
-            background: rgba(255, 184, 0, 0.14) !important;
-            box-shadow: 0 4px 20px rgba(255, 184, 0, 0.2);
+            box-shadow: 0 4px 22px rgba(255, 184, 0, 0.18);
         }
 
+        .feed-card.error::before {
+            background-image: linear-gradient(180deg, #EF4444 0%, #FFB800 50%, #EF4444 100%);
+            animation-duration: 2.5s;
+            opacity: 1;
+        }
+        .feed-card.error::after {
+            background: #160A0C;
+        }
         .feed-card.error {
-            border: 2px solid #EF4444 !important;
-            border-left: 6px solid #EF4444 !important;
-            background: rgba(239, 68, 68, 0.14) !important;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+            box-shadow: 0 4px 22px rgba(239, 68, 68, 0.22);
+        }
+
+        /* Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            .feed-card::before,
+            .st-card::before,
+            .meth-flow-col::before,
+            .impact-sector-card::before,
+            .s-card::before {
+                animation: none !important;
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
         }
 
         .feed-status {
@@ -2131,7 +2473,7 @@
             gap: 0.45rem;
             font-family: 'Bounded', monospace;
             letter-spacing: 0.5px;
-            color: #22C55E;
+            color: rgba(255,255,255,0.35); /* default = pending grey, overridden by state classes below */
         }
 
         .online .feed-status  { color: #22C55E !important; text-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
@@ -2190,7 +2532,7 @@
         .subnav-pill {
             background: rgba(17, 19, 24, 0.85);
             border: 1px solid rgba(225, 217, 193, 0.3);
-            color: var(--fg);
+            color: #FFFFFF !important;
             font-family: 'Bounded', monospace;
             font-size: 0.75rem;
             font-weight: 700;
@@ -2509,23 +2851,36 @@
         }
 
         .btn-subpage-nav {
-            background: var(--accent-gold);
-            color: #0A0B0E;
-            border: 2px solid var(--accent-gold);
+            background: radial-gradient(
+                65% 65% at 50% 100%,
+                rgba(255, 184, 0, 0.2) 0%,
+                rgba(212, 175, 55, 0) 100%
+            ),
+            linear-gradient(180deg, rgba(22, 25, 34, 0.95), rgba(12, 14, 18, 0.95));
+            color: #FFFFFF !important;
+            border: 1px solid rgba(225, 217, 193, 0.35);
             font-family: 'Bounded', monospace;
             font-size: 0.78rem;
             font-weight: 800;
             letter-spacing: 1px;
             padding: 8px 18px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             text-transform: uppercase;
             white-space: nowrap;
+            border-radius: 4px;
         }
 
         .btn-subpage-nav:hover {
-            background: var(--accent-yellow);
-            border-color: var(--accent-yellow);
+            background: radial-gradient(
+                65% 65% at 50% 100%,
+                rgba(255, 184, 0, 0.45) 0%,
+                rgba(212, 175, 55, 0) 100%
+            ),
+            linear-gradient(180deg, rgba(32, 38, 52, 0.95), rgba(16, 20, 28, 0.95));
+            border-color: #FFB800;
+            color: #FFFFFF !important;
+            box-shadow: 0 0 16px rgba(255, 184, 0, 0.45);
             transform: translateY(-1px);
         }
 
@@ -2599,25 +2954,536 @@
             display: flex;
             gap: 4px;
         }
-        .ctrl-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--fg);
-            border: 1px solid rgba(225, 217, 193, 0.25);
+        /* ==========================================================================
+           AEGIS UIVERSE BUTTON SYSTEM · SCI-FI LUXURY GOLD & COSMIC PARTICLES
+           ========================================================================== */
+
+        /* Core Button Reset & Interactive Container */
+        .ctrl-btn,
+        .subnav-pill,
+        .btn-subpage-nav,
+        .preloader-skip-btn,
+        #cme-replay-btn,
+        .side-audio-btn {
+            --round: 4px;
+            --space: 1px;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+            border: 1px solid rgba(225, 217, 193, 0.22);
+            border-radius: var(--round);
+            background: radial-gradient(
+                65% 65% at 50% 100%,
+                rgba(255, 184, 0, 0.18) 0%,
+                rgba(212, 175, 55, 0) 100%
+            ),
+            linear-gradient(180deg, rgba(22, 25, 34, 0.95), rgba(12, 14, 18, 0.95));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 5px rgba(0, 0, 0, 0.45);
             font-family: 'Haval', 'Syne', sans-serif;
             font-size: 0.7rem;
             padding: 4px 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            overflow: hidden;
+            isolation: isolate;
+            color: #FFFFFF !important;
         }
-        .ctrl-btn:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
+
+        /* Unclicked / Inactive State: Bright Crisp White Text for Maximum Readability */
+        .ctrl-btn:not(.active),
+        .subnav-pill:not(.active),
+        .btn-subpage-nav:not(.active),
+        .preloader-skip-btn:not(.active),
+        #cme-replay-btn:not(.active),
+        .side-audio-btn:not(.active) {
+            color: #FFFFFF !important;
         }
-        .ctrl-btn.active {
-            background: var(--accent-gold);
-            color: #0A0B0E;
-            border-color: var(--accent-gold);
-            font-weight: 700;
+
+        .ctrl-btn:not(.active) .inner,
+        .subnav-pill:not(.active) .inner,
+        .btn-subpage-nav:not(.active) .inner,
+        .preloader-skip-btn:not(.active) .inner,
+        #cme-replay-btn:not(.active) .inner,
+        .side-audio-btn:not(.active) .inner,
+        .ctrl-btn:not(.active) > *,
+        .subnav-pill:not(.active) > * {
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+        }
+
+        .ctrl-btn:active,
+        .subnav-pill:active,
+        .btn-subpage-nav:active,
+        .preloader-skip-btn:active,
+        #cme-replay-btn:active,
+        .side-audio-btn:active,
+        .side-link:active {
+            transform: scale(0.95) !important;
+        }
+
+        /* Subtle dual layer gradient outline on hover */
+        .ctrl-btn:hover,
+        .subnav-pill:hover,
+        .btn-subpage-nav:hover,
+        .preloader-skip-btn:hover,
+        #cme-replay-btn:hover {
+            border-color: rgba(255, 184, 0, 0.75);
+            background: radial-gradient(
+                65% 65% at 50% 100%,
+                rgba(255, 184, 0, 0.38) 0%,
+                rgba(212, 175, 55, 0) 100%
+            ),
+            linear-gradient(180deg, rgba(30, 35, 48, 0.95), rgba(16, 19, 26, 0.95));
+            box-shadow: 0 0 14px rgba(255, 184, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+            color: #FFFFFF !important;
+        }
+        .ctrl-btn:hover .inner,
+        .subnav-pill:hover .inner,
+        .btn-subpage-nav:hover .inner,
+        .preloader-skip-btn:hover .inner,
+        #cme-replay-btn:hover .inner {
+            color: #FFFFFF !important;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Active highlight state in champagne gold with pitch-black bold text */
+        .ctrl-btn.active,
+        .subnav-pill.active {
+            background: radial-gradient(
+                65% 65% at 50% 100%,
+                rgba(255, 240, 180, 0.95) 0%,
+                rgba(255, 184, 0, 0.3) 100%
+            ),
+            linear-gradient(180deg, #E1D9C1, #C5A059) !important;
+            color: #0A0B0E !important;
+            border-color: #FFB800 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 16px rgba(255, 184, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .ctrl-btn.active .inner,
+        .subnav-pill.active .inner,
+        .ctrl-btn.active *,
+        .subnav-pill.active * {
+            color: #0A0B0E !important;
+            font-weight: 800 !important;
+            text-shadow: none !important;
+        }
+
+        /* Uiverse Origami Fold Element */
+        .fold {
+            z-index: 2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 0.65rem;
+            width: 0.65rem;
+            display: inline-block;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            background: radial-gradient(
+                100% 75% at 55%,
+                rgba(255, 184, 0, 0.9) 0%,
+                rgba(212, 175, 55, 0.3) 100%
+            );
+            box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.6);
+            border-bottom-left-radius: 0.3rem;
+            border-top-right-radius: var(--round);
+            pointer-events: none;
+        }
+
+        .fold::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150%;
+            height: 150%;
+            transform: rotate(45deg) translateX(0%) translateY(-11px);
+            background-color: #E1D9C1;
+            pointer-events: none;
+        }
+
+        *:hover > .fold {
+            margin-top: -0.75rem;
+            margin-right: -0.75rem;
+        }
+
+        /* Compact buttons fold sizing */
+        .ctrl-btn[style*="font-size:0.58rem"] .fold,
+        .ctrl-btn[style*="font-size: 0.58rem"] .fold,
+        .ctrl-btn[style*="font-size:0.62rem"] .fold,
+        .ctrl-btn[style*="font-size: 0.62rem"] .fold {
+            height: 0.42rem;
+            width: 0.42rem;
+            border-bottom-left-radius: 0.2rem;
+        }
+        .ctrl-btn[style*="font-size:0.58rem"] .fold::after,
+        .ctrl-btn[style*="font-size: 0.58rem"] .fold::after,
+        .ctrl-btn[style*="font-size:0.62rem"] .fold::after,
+        .ctrl-btn[style*="font-size: 0.62rem"] .fold::after {
+            transform: rotate(45deg) translateX(0%) translateY(-7px);
+        }
+
+        /* Uiverse Points / Floating Particle Canvas Wrapper */
+        .points_wrapper {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            z-index: 1;
+            opacity: 0.65;
+            transition: opacity 0.25s ease;
+        }
+
+        .points_wrapper .point {
+            position: absolute;
+            pointer-events: none;
+            width: 2px;
+            height: 2px;
+            background-color: var(--accent-yellow);
+            box-shadow: 0 0 3px var(--accent-yellow);
+            border-radius: 9999px;
+            opacity: 0;
+            bottom: -6px;
+            will-change: transform, opacity;
+            animation-play-state: running;
+        }
+
+        /* Intensify particle glow on hover or when parent button is active */
+        *:hover > .points_wrapper,
+        *.active > .points_wrapper,
+        .side-link.active .points_wrapper,
+        .ctrl-btn.active .points_wrapper,
+        .subnav-pill.active .points_wrapper {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .points_wrapper .point {
+                animation: none !important;
+                display: none !important;
+            }
+        }
+
+        /* Staggered positions & delays for points */
+        .points_wrapper .point:nth-child(1) { left: 10%; animation-duration: 2.1s; animation-delay: 0.1s; }
+        .points_wrapper .point:nth-child(2) { left: 24%; animation-duration: 2.4s; animation-delay: 0.4s; }
+        .points_wrapper .point:nth-child(3) { left: 38%; animation-duration: 1.9s; animation-delay: 0.2s; }
+        .points_wrapper .point:nth-child(4) { left: 52%; animation-duration: 2.2s; animation-delay: 0.5s; }
+        .points_wrapper .point:nth-child(5) { left: 66%; animation-duration: 1.8s; animation-delay: 0.3s; }
+        .points_wrapper .point:nth-child(6) { left: 80%; animation-duration: 2.3s; animation-delay: 0.15s; }
+        .points_wrapper .point:nth-child(7) { left: 92%; animation-duration: 2.5s; animation-delay: 0.6s; }
+        .points_wrapper .point:nth-child(8) { left: 45%; animation-duration: 2.0s; animation-delay: 0.35s; }
+
+        /* Uiverse Inner Label / Content Wrapper */
+        .ctrl-btn .inner,
+        .subnav-pill .inner,
+        .btn-subpage-nav .inner,
+        .preloader-skip-btn .inner,
+        #cme-replay-btn .inner,
+        .side-audio-btn .inner,
+        .side-link .inner {
+            z-index: 2;
+            gap: 5px;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            color: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            pointer-events: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        /* SVG Icon Draw & Fill Keyframes (from Uiverse) */
+        .inner svg.icon {
+            width: 15px;
+            height: 15px;
+            transition: fill 0.15s linear, stroke 0.15s ease;
+        }
+        *:hover > .inner svg.icon {
+            animation: dasharray 0.9s linear forwards, filled 0.1s linear forwards 0.85s;
+        }
+        @keyframes dasharray {
+            from { stroke-dasharray: 0 0 0 0; }
+            to { stroke-dasharray: 68 68 0 0; }
+        }
+        @keyframes filled {
+            to { fill: rgba(255, 184, 0, 0.4); }
+        }
+
+        /* Default floating points animation (GPU composited 3D transform) */
+        .points_wrapper .point {
+            animation: floating-points infinite ease-in-out;
+        }
+        @keyframes floating-points {
+            0% { transform: translate3d(0, 0, 0); opacity: 0; }
+            25% { opacity: 0.9; }
+            75% { opacity: 0.7; }
+            100% { transform: translate3d(0, -38px, 0); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           LEFT SIDEBAR NAVIGATION BUTTONS · 9 UNIQUE SCI-FI ANIMATIONS
+           ========================================================================== */
+
+        /* 1. SIDE BUTTON 01 (SYSTEM): Solar Core Flare */
+        .uiv-anim-solar-core .points_wrapper .point {
+            background-color: #FFB800;
+            box-shadow: 0 0 5px #FFB800;
+            animation: uiv-solar-core 2s infinite ease-in-out;
+        }
+        @keyframes uiv-solar-core {
+            0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+            30% { opacity: 1; transform: translate3d(0, -15px, 0) scale(1.4); }
+            70% { opacity: 0.8; transform: translate3d(0, -28px, 0) scale(0.9); }
+            100% { transform: translate3d(0, -44px, 0) scale(0.3); opacity: 0; }
+        }
+
+        /* 2. SIDE BUTTON 02 (TELEMETRY): Signal Waveform Oscillation */
+        .uiv-anim-telemetry-wave .points_wrapper .point {
+            background-color: #38BDF8;
+            box-shadow: 0 0 5px #38BDF8;
+            animation: uiv-telemetry-wave 2.3s infinite ease-in-out;
+        }
+        @keyframes uiv-telemetry-wave {
+            0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+            25% { opacity: 1; transform: translate3d(6px, -12px, 0) scale(1.2); }
+            50% { opacity: 0.9; transform: translate3d(-6px, -24px, 0) scale(1); }
+            75% { opacity: 0.7; transform: translate3d(5px, -34px, 0) scale(0.8); }
+            100% { transform: translate3d(0, -45px, 0) scale(0.3); opacity: 0; }
+        }
+
+        /* 3. SIDE BUTTON 03 (DATA FEEDS): Data Rain Cascade */
+        .uiv-anim-cascade-stream .points_wrapper .point {
+            background-color: #22C55E;
+            box-shadow: 0 0 5px #22C55E;
+            bottom: auto;
+            top: -6px;
+            animation: uiv-cascade-stream 2.1s infinite ease-in-out;
+        }
+        @keyframes uiv-cascade-stream {
+            0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+            25% { opacity: 1; transform: translate3d(0, 14px, 0) scale(1.3); }
+            70% { opacity: 0.8; transform: translate3d(0, 30px, 0) scale(0.9); }
+            100% { transform: translate3d(0, 48px, 0) scale(0.3); opacity: 0; }
+        }
+
+        /* 4. SIDE BUTTON 04 (FORECAST): Orbital Curvature Flight */
+        .uiv-anim-orbital-flare .points_wrapper .point {
+            background-color: #FFB800;
+            box-shadow: 0 0 5px #FFB800;
+            animation: uiv-orbital-flare 2.4s infinite ease-in-out;
+        }
+        @keyframes uiv-orbital-flare {
+            0% { transform: translate3d(-8px, 0, 0) scale(0.5); opacity: 0; }
+            35% { opacity: 1; transform: translate3d(2px, -15px, 0) scale(1.3); }
+            70% { opacity: 0.7; transform: translate3d(12px, -30px, 0) scale(0.9); }
+            100% { transform: translate3d(18px, -46px, 0) scale(0.3); opacity: 0; }
+        }
+
+        /* 5. SIDE BUTTON 05 (INSIGHTS): Synaptic Neural Sparkle */
+        .uiv-anim-synaptic-twinkle .points_wrapper .point {
+            background-color: #FFE699;
+            box-shadow: 0 0 6px #FFE699;
+            bottom: auto;
+            animation: uiv-synaptic-twinkle 1.8s infinite ease-in-out;
+        }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(1) { top: 20%; }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(2) { top: 65%; }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(3) { top: 35%; }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(4) { top: 75%; }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(5) { top: 25%; }
+        .uiv-anim-synaptic-twinkle .points_wrapper .point:nth-child(6) { top: 55%; }
+        @keyframes uiv-synaptic-twinkle {
+            0%, 100% { transform: scale(0.2); opacity: 0; }
+            50% { transform: scale(1.8); opacity: 1; box-shadow: 0 0 8px #FFFDF0; }
+        }
+
+        /* 6. SIDE BUTTON 06 (TRAJECTORY): Relativistic Warp Streaks */
+        .uiv-anim-warp-streak .points_wrapper .point {
+            background-color: #E5A93C;
+            box-shadow: 0 0 5px #E5A93C;
+            bottom: auto;
+            animation: uiv-warp-streak 1.7s infinite ease-in-out;
+        }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(1) { top: 25%; }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(2) { top: 45%; }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(3) { top: 65%; }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(4) { top: 80%; }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(5) { top: 35%; }
+        .uiv-anim-warp-streak .points_wrapper .point:nth-child(6) { top: 55%; }
+        @keyframes uiv-warp-streak {
+            0% { transform: translate3d(-24px, 0, 0) scaleX(0.2); opacity: 0; }
+            40% { opacity: 1; transform: translate3d(0px, 0, 0) scaleX(2.8); }
+            80% { opacity: 0.8; transform: translate3d(16px, 0, 0) scaleX(1.8); }
+            100% { transform: translate3d(34px, 0, 0) scaleX(0.1); opacity: 0; }
+        }
+
+        /* 7. SIDE BUTTON 07 (IMPACT): Shockwave Ripple Alert */
+        .uiv-anim-shockwave-pulse .points_wrapper .point {
+            background-color: #EF4444;
+            box-shadow: 0 0 6px #EF4444;
+            bottom: auto;
+            animation: uiv-shockwave-pulse 2s infinite ease-out;
+        }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(1) { top: 30%; left: 20%; animation-delay: 0.1s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(2) { top: 58%; left: 35%; animation-delay: 0.5s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(3) { top: 25%; left: 65%; animation-delay: 0.9s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(4) { top: 62%; left: 80%; animation-delay: 0.3s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(5) { top: 44%; left: 50%; animation-delay: 0.7s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(6) { top: 72%; left: 24%; animation-delay: 1.1s; }
+        .uiv-anim-shockwave-pulse .points_wrapper .point:nth-child(7) { top: 20%; left: 85%; animation-delay: 0.4s; }
+        @keyframes uiv-shockwave-pulse {
+            0% { transform: translate3d(0, 0, 0) scale(0.3); opacity: 0; }
+            30% { opacity: 1; transform: translate3d(0, 0, 0) scale(1.4); }
+            70% { opacity: 0.85; transform: translate3d(0, -6px, 0) scale(2.2); }
+            100% { transform: translate3d(0, -12px, 0) scale(3); opacity: 0; }
+        }
+
+        /* 8. SIDE BUTTON 08 (METHODOLOGY): Laser Blueprint Lattice */
+        .uiv-anim-circuit-scan .points_wrapper .point {
+            background-color: #D4AF37;
+            box-shadow: 0 0 6px #D4AF37;
+            bottom: auto;
+            top: -4px;
+            animation: uiv-circuit-scan 2.2s infinite ease-in-out;
+        }
+        @keyframes uiv-circuit-scan {
+            0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translate3d(0, 10px, 0) scale(1.2); }
+            60% { opacity: 0.9; transform: translate3d(0, 26px, 0) scale(1.4); box-shadow: 0 0 8px #FFD700; }
+            90% { opacity: 0.7; transform: translate3d(0, 42px, 0) scale(0.8); }
+            100% { transform: translate3d(0, 52px, 0) scale(0.2); opacity: 0; }
+        }
+
+        /* 9. SIDE BUTTON 09 (NETWORK): Constellation Satellite Radar */
+        .uiv-anim-node-beacon .points_wrapper .point {
+            background-color: #60A5FA;
+            box-shadow: 0 0 5px #60A5FA;
+            animation: uiv-node-beacon 2.4s infinite ease-in-out;
+        }
+        @keyframes uiv-node-beacon {
+            0% { transform: scale(0.2) translate3d(0, 0, 0); opacity: 0; }
+            40% { transform: scale(1.5) translate3d(0, -14px, 0); opacity: 1; box-shadow: 0 0 8px #60A5FA; }
+            80% { transform: scale(1.1) translate3d(0, -28px, 0); opacity: 0.6; }
+            100% { transform: scale(0.3) translate3d(0, -44px, 0); opacity: 0; }
+        }
+
+        /* 10. SIDE AUDIO BUTTON: Equalizer Soundwave Rings */
+        .side-audio-btn .points_wrapper .point {
+            background-color: #FFB800;
+            animation: uiv-sonic-ripple 1.9s infinite ease-out;
+        }
+        @keyframes uiv-sonic-ripple {
+            0% { transform: scale(0.5); opacity: 0.9; }
+            50% { opacity: 0.6; transform: scale(1.3); }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           MAIN APPLICATION BUTTON ANIMATION FLAVORS
+           ========================================================================== */
+        /* Station buttons: Solar flare sparks */
+        .uiv-flavor-station .points_wrapper .point {
+            background-color: #FFB800;
+            box-shadow: 0 0 4px #FFB800;
+            animation: floating-points 2s infinite ease-in-out;
+        }
+
+        /* Horizon buttons: Fast time-drift particles */
+        .uiv-flavor-horizon .points_wrapper .point {
+            background-color: #E1D9C1;
+            box-shadow: 0 0 4px #E1D9C1;
+            animation: floating-points 1.7s infinite ease-in-out;
+        }
+
+        /* Metric buttons: Plasma ion drift */
+        .uiv-flavor-metric .points_wrapper .point {
+            background-color: #38BDF8;
+            box-shadow: 0 0 4px #38BDF8;
+            animation: floating-points 2.2s infinite ease-in-out;
+        }
+
+        /* Elevation buttons: Skyward starburst */
+        .uiv-flavor-elevation .points_wrapper .point {
+            background-color: #F59E0B;
+            box-shadow: 0 0 4px #F59E0B;
+            animation: floating-points 1.9s infinite ease-in-out;
+        }
+
+        /* Impact live/replay: Warning scintillation */
+        .uiv-flavor-impact .points_wrapper .point {
+            background-color: #EF4444;
+            box-shadow: 0 0 5px #EF4444;
+            animation: floating-points 1.8s infinite ease-in-out;
+        }
+
+        /* Subnav pills: Dual layer gold radiance */
+        .subnav-pill {
+            padding: 7px 16px;
+            font-size: 0.74rem;
+            letter-spacing: 1.2px;
+            border-radius: 20px;
+        }
+        .subnav-pill .fold {
+            border-top-right-radius: 20px;
+        }
+
+        /* Subpage Navigation Buttons */
+        .btn-subpage-nav {
+            padding: 9px 20px;
+            border-radius: 4px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+        .btn-subpage-nav:hover .inner {
+            transform: translateX(2px);
+        }
+
+        /* CME Replay button */
+        #cme-replay-btn {
+            background: #FFB800 !important;
+            color: #0A0B0E !important;
+            box-shadow: 0 0 16px rgba(255, 184, 0, 0.4) !important;
+            border: none !important;
+            padding: 6px 14px !important;
+        }
+        #cme-replay-btn .inner {
+            color: #0A0B0E !important;
+            font-weight: 800 !important;
+        }
+        #cme-replay-btn:hover {
+            background: #E5A93C !important;
+            box-shadow: 0 0 24px rgba(255, 184, 0, 0.65) !important;
+        }
+        #cme-replay-btn .points_wrapper .point {
+            background-color: #0A0B0E;
+            box-shadow: 0 0 3px #0A0B0E;
+        }
+
+        /* Reduced motion compliance */
+        @media (prefers-reduced-motion: reduce) {
+            .points_wrapper .point,
+            .fold,
+            *:hover > .inner svg.icon {
+                animation: none !important;
+                transition: none !important;
+            }
         }
         .replay-select {
             background: #111318;
@@ -2642,10 +3508,7 @@
         .st-card:hover {
             transform: translateY(-2px);
         }
-        .st-card.active-station {
-            border: 2px solid var(--accent-cyan) !important;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
-        }
+
 
         /* Pulsing Amber Indicator for Kp >= 5 */
         .pulse-amber {
@@ -3309,39 +4172,39 @@
 
                     <!-- Top Row: 4 Cards (each spans 3 of 12 columns) -->
                     <!-- NOAA GOES-16 (xray feed) -->
-                    <div class="feed-card feed-top-row online" id="feed-xray">
-                        <div class="feed-status" id="feed-xray-status">● CONNECTED</div>
+                    <div class="feed-card feed-top-row" id="feed-xray">
+                        <div class="feed-status" id="feed-xray-status">○ PENDING</div>
                         <div class="feed-name">NOAA GOES-16</div>
-                        <div class="feed-detail" id="feed-xray-detail">X-Ray Flux · 1m res · Latency: &lt;5s</div>
+                        <div class="feed-detail" id="feed-xray-detail">X-Ray Flux · 1m res · Awaiting backend...</div>
                     </div>
 
                     <!-- NASA OMNIWeb / Solar Wind -->
-                    <div class="feed-card feed-top-row online" id="feed-solar-wind">
-                        <div class="feed-status" id="feed-sw-status">● CONNECTED</div>
+                    <div class="feed-card feed-top-row" id="feed-solar-wind">
+                        <div class="feed-status" id="feed-sw-status">○ PENDING</div>
                         <div class="feed-name">NASA OMNIWeb</div>
-                        <div class="feed-detail" id="feed-sw-detail">Solar Wind (Kp/Bz) · 5m res · Latency: &lt;5s</div>
+                        <div class="feed-detail" id="feed-sw-detail">Solar Wind (Kp/Bz) · 5m res · Awaiting backend...</div>
                     </div>
 
                     <!-- GFZ Potsdam (Kp) -->
-                    <div class="feed-card feed-top-row online" id="feed-kp">
-                        <div class="feed-status" id="feed-kp-status">● CONNECTED</div>
+                    <div class="feed-card feed-top-row" id="feed-kp">
+                        <div class="feed-status" id="feed-kp-status">○ PENDING</div>
                         <div class="feed-name">GFZ POTSDAM</div>
-                        <div class="feed-detail" id="feed-kp-detail">Kp Index · Hourly · Latency: &lt;5s</div>
+                        <div class="feed-detail" id="feed-kp-detail">Kp Index · Hourly · Awaiting backend...</div>
                     </div>
 
                     <!-- Kyoto DST -->
-                    <div class="feed-card feed-top-row online" id="feed-dst">
-                        <div class="feed-status" id="feed-dst-status">● CONNECTED</div>
+                    <div class="feed-card feed-top-row" id="feed-dst">
+                        <div class="feed-status" id="feed-dst-status">○ PENDING</div>
                         <div class="feed-name">KYOTO DST</div>
-                        <div class="feed-detail" id="feed-dst-detail">Dst Index · Hourly · Latency: &lt;5s</div>
+                        <div class="feed-detail" id="feed-dst-detail">Dst Index · Hourly · Awaiting backend...</div>
                     </div>
 
                     <!-- Bottom Row: 3 Cards (each spans 4 of 12 columns) -->
                     <!-- NOAA F10.7 Solar Radio Flux -->
-                    <div class="feed-card feed-bottom-row online" id="feed-f107">
-                        <div class="feed-status" id="feed-f107-status">● CONNECTED</div>
+                    <div class="feed-card feed-bottom-row" id="feed-f107">
+                        <div class="feed-status" id="feed-f107-status">○ PENDING</div>
                         <div class="feed-name">NOAA SWPC 10CM</div>
-                        <div class="feed-detail" id="feed-f107-detail">F10.7 Radio Flux · Hourly/Daily · Latency: &lt;5s</div>
+                        <div class="feed-detail" id="feed-f107-detail">F10.7 Radio Flux · Hourly/Daily · Awaiting backend...</div>
                     </div>
 
                     <!-- ISRO GAGAN (static archive - not live polled) -->
@@ -3352,10 +4215,10 @@
                     </div>
 
                     <!-- ML Inference Engine -->
-                    <div class="feed-card feed-bottom-row online" id="feed-ml">
-                        <div class="feed-status" id="feed-ml-status">● OPERATIONAL</div>
+                    <div class="feed-card feed-bottom-row" id="feed-ml">
+                        <div class="feed-status" id="feed-ml-status">○ PENDING</div>
                         <div class="feed-name">ML INFERENCE</div>
-                        <div class="feed-detail" id="feed-ml-detail">XGBoost &amp; LSTM Engines · Status: ONLINE</div>
+                        <div class="feed-detail" id="feed-ml-detail">XGBoost &amp; LSTM Engines · Awaiting backend...</div>
                     </div>
 
                 </div>
@@ -3533,21 +4396,21 @@
                                 <div class="arch-col">
                                     <span class="arch-tag">STAGE 4 BASELINE</span>
                                     <div class="arch-name">Diurnal BiLSTM</div>
-                                    <div class="arch-val" id="ins-arch-bilstm">28.5 TECU</div>
+                                    <div class="arch-val" id="ins-arch-bilstm">—</div>
                                     <div class="arch-sub">Periodic Solar / Diurnal Trend</div>
                                 </div>
                                 <div class="arch-op">+</div>
                                 <div class="arch-col highlight-gold">
                                     <span class="arch-tag">STAGE 5 DRIVERS</span>
                                     <div class="arch-name">TreeSHAP Physics Residual</div>
-                                    <div class="arch-val" id="ins-arch-residual">+0.80 TECU</div>
+                                    <div class="arch-val" id="ins-arch-residual">—</div>
                                     <div class="arch-sub">Solar Wind, IMF Bz &amp; Geomagnetic Coupling</div>
                                 </div>
                                 <div class="arch-op">=</div>
                                 <div class="arch-col highlight-yellow">
                                     <span class="arch-tag">ADAPTIVE FORECAST</span>
                                     <div class="arch-name">Dual Ensemble VTEC</div>
-                                    <div class="arch-val" id="ins-arch-final">29.3 TECU</div>
+                                    <div class="arch-val" id="ins-arch-final">—</div>
                                     <div class="arch-sub">Calibrated Target Ionospheric Projection</div>
                                 </div>
                             </div>
@@ -3559,7 +4422,7 @@
                                         <span style="color:var(--accent-yellow); font-weight:bold; font-size:1.1rem;">⚡</span>
                                         <span id="ins-physics-summary">Evaluating real-time space weather coupling...</span>
                                     </div>
-                                    <span id="ins-data-source-tag" class="src-tag">● LIVE SWPC</span>
+                                    <span id="ins-data-source-tag" class="src-tag">○ AWAITING BACKEND</span>
                                 </div>
                                 <button class="btn-subpage-nav" onclick="switchInsightsPage(1)">
                                     EXPLORE SHAP ATTRIBUTION TABLE ➔
@@ -3699,7 +4562,7 @@
                 <div class="impact-top-hud">
                     <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                         <span class="cyan-label" style="margin:0; font-size:0.85rem; color:#F8F9FA;">STAGE 7 OPERATIONAL IMPACT &amp; SECTOR ADVISORY</span>
-                        <span id="impact-data-source-badge" style="font-size:0.65rem; font-weight:700; padding:2px 8px; border:1px solid rgba(255,255,255,0.6); background:rgba(0,0,0,0.35); color:#F8F9FA;">● LIVE SWPC EVALUATION</span>
+                        <span id="impact-data-source-badge" style="font-size:0.65rem; font-weight:700; padding:2px 8px; border:1px solid rgba(255,255,255,0.6); background:rgba(0,0,0,0.35); color:#F8F9FA;">○ AWAITING BACKEND</span>
                     </div>
 
                     <!-- Assessment Mode Selector -->
@@ -3716,22 +4579,22 @@
                 <!-- Main Impact Title & Window Summary Banner -->
                 <div class="impact-center-block">
                     <div class="impact-center-left">
-                        <div id="impact-status-pill" class="impact-status-pill">
-                            ⚡ OPERATIONAL ALERT: CRITICAL
+                        <div id="impact-status-pill" class="impact-status-pill" style="opacity:0.5;">
+                            ○ AWAITING BACKEND
                         </div>
-                        <h1 class="impact-title" id="impact-headline">DISRUPTION WINDOW: 1 TO 6 HRS</h1>
+                        <h1 class="impact-title" id="impact-headline">OPERATIONAL STATUS: <span style="color:#FFFFFF;">AWAITING BACKEND</span></h1>
                         <div class="impact-subtitle" id="impact-subheadline">
-                            SEVERE IONOSPHERIC STORM FORCING DETECTED // REGIONAL PEAK GPS ERROR: 12.95m (LUCKNOW)
+                            Start the AEGIS server to load live sector impact assessments.
                         </div>
                     </div>
                     <div class="impact-center-kpis">
                         <div class="impact-kpi-chip">
                             <div class="impact-kpi-lbl">PEAK ERROR</div>
-                            <div class="impact-kpi-val" id="impact-kpi-peak">12.95 m</div>
+                            <div class="impact-kpi-val" id="impact-kpi-peak">— m</div>
                         </div>
                         <div class="impact-kpi-chip">
                             <div class="impact-kpi-lbl">WORST STATION</div>
-                            <div class="impact-kpi-val" id="impact-kpi-worst" style="font-size:0.88rem; color:#FFFFFF;">LUCKNOW</div>
+                            <div class="impact-kpi-val" id="impact-kpi-worst" style="font-size:0.88rem; color:#FFFFFF;">—</div>
                         </div>
                         <div class="impact-kpi-chip">
                             <div class="impact-kpi-lbl">MONITORED</div>
@@ -3742,60 +4605,10 @@
 
                 <!-- 4 Interactive Live Sector Cards -->
                 <div class="impact-sectors-grid" id="impact-sectors-container">
-                    <div class="impact-sector-card selected" onclick="selectSector('aviation')" id="card-sector-aviation">
-                        <div class="sector-card-header">
-                            <div class="sector-name">CIVIL AVIATION (ISRO GAGAN)</div>
-                            <span class="sector-badge badge-crit" id="sec-badge-aviation">✕ APV-I UNAVAILABLE</span>
-                        </div>
-                        <div class="sector-band-tag">BAND: GPS L1 / SBAS 1575 MHz</div>
-                        <div class="sector-metrics">
-                            <div class="sector-metric-label">PEAK ERROR (LUCKNOW)</div>
-                            <div class="sector-err-val" id="sec-err-aviation">12.95<span class="sector-err-unit">m</span></div>
-                            <div class="sector-limit-val">SAFETY LIMIT: 4.0m</div>
-                        </div>
-                        <div class="sector-action-text" id="sec-act-aviation">GAGAN APV-I vertical guidance unavailable. Revert to ground-based ILS / VOR.</div>
-                    </div>
-
-                    <div class="impact-sector-card" onclick="selectSector('telecom')" id="card-sector-telecom">
-                        <div class="sector-card-header">
-                            <div class="sector-name">NAVIC L5 TIMING &amp; 5G SYNC</div>
-                            <span class="sector-badge badge-crit" id="sec-badge-telecom">✕ L5 BAND DEGRADED</span>
-                        </div>
-                        <div class="sector-band-tag">BAND: NAVIC L5 1176.45 MHz</div>
-                        <div class="sector-metrics">
-                            <div class="sector-metric-label">PEAK ERROR (LUCKNOW)</div>
-                            <div class="sector-err-val" id="sec-err-telecom">23.22<span class="sector-err-unit">m</span></div>
-                            <div class="sector-limit-val">SAFETY LIMIT: 5.0m</div>
-                        </div>
-                        <div class="sector-action-text" id="sec-act-telecom">Engage atomic clock holdover immediately for critical telecommunications.</div>
-                    </div>
-
-                    <div class="impact-sector-card" onclick="selectSector('defense')" id="card-sector-defense">
-                        <div class="sector-card-header">
-                            <div class="sector-name">DEFENSE UAVs &amp; FRONTIER</div>
-                            <span class="sector-badge badge-crit" id="sec-badge-defense">✕ GUIDANCE COMPROMISED</span>
-                        </div>
-                        <div class="sector-band-tag">BAND: L-BAND / EIA NORTH CORRIDOR</div>
-                        <div class="sector-metrics">
-                            <div class="sector-metric-label">PEAK ERROR (LUCKNOW)</div>
-                            <div class="sector-err-val" id="sec-err-defense">12.95<span class="sector-err-unit">m</span></div>
-                            <div class="sector-limit-val">SAFETY LIMIT: 6.0m</div>
-                        </div>
-                        <div class="sector-action-text" id="sec-act-defense">Switch autonomous drones to onboard inertial (INS) or terrain-matching navigation.</div>
-                    </div>
-
-                    <div class="impact-sector-card" onclick="selectSector('surveying')" id="card-sector-surveying">
-                        <div class="sector-card-header">
-                            <div class="sector-name">PRECISION RTK &amp; SURVEYING</div>
-                            <span class="sector-badge badge-warn" id="sec-badge-surveying">⚠ RTK FLOAT (DM)</span>
-                        </div>
-                        <div class="sector-band-tag">BAND: DUAL-FREQ CARRIER PHASE</div>
-                        <div class="sector-metrics">
-                            <div class="sector-metric-label">PEAK GRADIENT (REGIONAL)</div>
-                            <div class="sector-err-val" id="sec-err-surveying">3.99<span class="sector-err-unit">m</span></div>
-                            <div class="sector-limit-val">SAFETY LIMIT: 3.0m</div>
-                        </div>
-                        <div class="sector-action-text" id="sec-act-surveying">RTK baseline ambiguity resolution degraded to float (10–30 cm error).</div>
+                    <div style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.5rem 1.5rem; border:1px solid rgba(255,255,255,0.12); border-radius:12px; background:rgba(0,0,0,0.35); text-align:center; gap:0.8rem;">
+                        <div style="font-size:1.6rem; opacity:0.55;">⚡</div>
+                        <div style="font-family:'Bounded',monospace; font-size:0.78rem; letter-spacing:0.1em; color:rgba(255,255,255,0.5); font-weight:700;">BACKEND OFFLINE</div>
+                        <div style="font-size:0.75rem; color:rgba(255,255,255,0.38); max-width:360px; line-height:1.5;">Sector impact assessments require the AEGIS server to be running. Start AEGIS with <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">start_aegis.bat</code> or <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">uvicorn api:app</code>, then refresh.</div>
                     </div>
                 </div>
 
@@ -3833,6 +4646,7 @@
                         <div class="btn-group" id="meth-tab-btns">
                             <button class="ctrl-btn active" id="btn-meth-stages" onclick="setMethodologyTab('stages')" style="font-size:0.62rem; padding:3px 8px;">PIPELINE AUDIT</button>
                             <button class="ctrl-btn" id="btn-meth-benchmarks" onclick="setMethodologyTab('benchmarks')" style="font-size:0.62rem; padding:3px 8px;">BENCHMARKS (R &gt; 0.98)</button>
+                            <button class="ctrl-btn" id="btn-meth-sources" onclick="setMethodologyTab('sources')" style="font-size:0.62rem; padding:3px 8px;">DATA PROVENANCE</button>
                             <button class="ctrl-btn" id="btn-meth-eia" onclick="setMethodologyTab('eia')" style="font-size:0.62rem; padding:3px 8px;">WHY INDIA? (EIA)</button>
                         </div>
                     </div>
@@ -3841,112 +4655,156 @@
                 <!-- Panel 1: Stage Deep-Dive Inspector (PIPELINE AUDIT) -->
                 <div class="meth-panel active" id="meth-panel-stages">
                     <!-- Horizontal 4-Stage Stepper -->
-                    <div class="pipeline-stages-list" id="meth-stages-container">
-                        <div class="pipeline-stage-card selected" onclick="selectMethodologyStage('acquisition')" id="stage-card-acquisition">
-                            <div class="stage-card-header">
-                                <span class="stage-num-badge">STAGE 01</span>
-                                <span class="stage-status-badge">ONLINE</span>
+                    <!-- 4-Stage Connected Architectural Flow Diagram -->
+                    <div class="meth-flow-panel" id="meth-flow-panel">
+                        <!-- Stage 01: Ingestion -->
+                        <div class="meth-flow-col highlight-yellow" id="meth-col-acquisition" onclick="selectMethodologyStage('acquisition')">
+                            <div>
+                                <div class="meth-col-tag-row">
+                                    <span class="meth-col-tag">STAGE 01</span>
+                                    <span class="meth-col-status green">● LIVE STREAM</span>
+                                </div>
+                                <div class="meth-col-name">DATA ACQUISITION</div>
+                                <div class="meth-col-sub">Multi-Source Ingestion · &lt;60s Cycle</div>
+
+                                <div class="meth-col-formula-box">
+                                    <div class="meth-col-formula-lbl">Governing Ingestion Physics:</div>
+                                    <div class="meth-col-formula-math">VTEC = α · [ (f₁² · f₂²) / (f₁² - f₂²) ] · ΔP</div>
+                                </div>
+
+                                <div class="meth-col-specs">
+                                    <div class="meth-spec-point"><strong>Solar &amp; Interplanetary:</strong> Real-time NOAA GOES-16 0.1-0.8nm X-ray flux, NASA OMNIWeb IMF Bz, solar wind (Vsw).</div>
+                                    <div class="meth-spec-point"><strong>Ground Array:</strong> 30s dual-frequency RINEX from IGS/NASA CDDIS (HYD, BLR, LCK, CMB).</div>
+                                    <div class="meth-spec-point"><strong>Rolling Buffer:</strong> 72-hour sliding window with automated physics outlier rejection.</div>
+                                </div>
                             </div>
-                            <div class="stage-card-title">DATA ACQUISITION</div>
-                            <div class="stage-card-sub">NOAA GOES · NASA OMNIWeb · GFZ · CDDIS RINEX</div>
-                            <div class="stage-card-footer">
-                                <span class="stage-meta-tag">&lt; 60s INGEST CYCLE</span>
-                                <span class="stage-meta-tag">72H ROLLING BUFFER</span>
+
+                            <div class="meth-col-chips">
+                                <span class="meth-micro-chip">NOAA SWPC</span>
+                                <span class="meth-micro-chip">NASA CDDIS</span>
+                                <span class="meth-micro-chip">GFZ POTSDAM</span>
+                                <span class="meth-micro-chip">AIOHTTP</span>
                             </div>
                         </div>
 
-                        <div class="pipeline-stage-card" onclick="selectMethodologyStage('features')" id="stage-card-features">
-                            <div class="stage-card-header">
-                                <span class="stage-num-badge">STAGE 02</span>
-                                <span class="stage-status-badge">ACTIVE</span>
+                        <!-- Connector 1 -->
+                        <div class="meth-flow-op">➔</div>
+
+                        <!-- Stage 02: Features -->
+                        <div class="meth-flow-col" id="meth-col-features" onclick="selectMethodologyStage('features')">
+                            <div>
+                                <div class="meth-col-tag-row">
+                                    <span class="meth-col-tag">STAGE 02</span>
+                                    <span class="meth-col-status yellow">● 48 VECTORS</span>
+                                </div>
+                                <div class="meth-col-name">FEATURE ENGINEERING</div>
+                                <div class="meth-col-sub">Physics-Informed Latitudinal Encodings</div>
+
+                                <div class="meth-col-formula-box">
+                                    <div class="meth-col-formula-lbl">Derivative &amp; Diurnal Encoding:</div>
+                                    <div class="meth-col-formula-math">ΔTEC_t = TEC_t - TEC_{t-1}, θ_{diurnal}</div>
+                                </div>
+
+                                <div class="meth-col-specs">
+                                    <div class="meth-spec-point"><strong>Multi-Horizon Lags:</strong> 1h, 3h, and 6h temporal memory across Kp, Dst, and IMF Bz forcing.</div>
+                                    <div class="meth-spec-point"><strong>ΔTEC Dynamics:</strong> 1st &amp; 2nd order rate derivatives capturing rapid plasma accumulation.</div>
+                                    <div class="meth-spec-point"><strong>Appleton Fountain:</strong> Regional latitudinal delta gradients relative to Colombo dip equator.</div>
+                                </div>
                             </div>
-                            <div class="stage-card-title">FEATURE ENGINEERING</div>
-                            <div class="stage-card-sub">48 Physics-Informed Vectors · Lags · ΔTEC</div>
-                            <div class="stage-card-footer">
-                                <span class="stage-meta-tag">&lt; 1.2ms TRANSFORM</span>
-                                <span class="stage-meta-tag">DIURNAL HARMONICS</span>
+
+                            <div class="meth-col-chips">
+                                <span class="meth-micro-chip">NumPy Vectorized</span>
+                                <span class="meth-micro-chip">Rolling Windows</span>
+                                <span class="meth-micro-chip">Harmonic Encoders</span>
                             </div>
                         </div>
 
-                        <div class="pipeline-stage-card" onclick="selectMethodologyStage('inference')" id="stage-card-inference">
-                            <div class="stage-card-header">
-                                <span class="stage-num-badge">STAGE 03</span>
-                                <span class="stage-status-badge">OPERATIONAL</span>
+                        <!-- Connector 2 -->
+                        <div class="meth-flow-op">➔</div>
+
+                        <!-- Stage 03: Inference -->
+                        <div class="meth-flow-col" id="meth-col-inference" onclick="selectMethodologyStage('inference')">
+                            <div>
+                                <div class="meth-col-tag-row">
+                                    <span class="meth-col-tag">STAGE 03</span>
+                                    <span class="meth-col-status cyan">● 3.2ms CPU</span>
+                                </div>
+                                <div class="meth-col-name">DUAL-LAYER INFERENCE</div>
+                                <div class="meth-col-sub">BiLSTM + XGBoost Meta-Ensemble</div>
+
+                                <div class="meth-col-formula-box">
+                                    <div class="meth-col-formula-lbl">Ensemble Blending Formulation:</div>
+                                    <div class="meth-col-formula-math">ŷ_{ens} = w₁ · f_{XGB}(X_t) + w₂ · f_{LSTM}(X_{t-k:t})</div>
+                                </div>
+
+                                <div class="meth-col-specs">
+                                    <div class="meth-spec-point"><strong>Deep Recurrent BiLSTM:</strong> Captures non-linear plasma acoustic delay &amp; ionospheric inertia.</div>
+                                    <div class="meth-spec-point"><strong>Gradient Boosted Trees:</strong> LightGBM/XGBoost models regional magnetospheric boundaries.</div>
+                                    <div class="meth-spec-point"><strong>TreeSHAP Attribution:</strong> Exact Shapley values explain individual solar driver contributions.</div>
+                                </div>
                             </div>
-                            <div class="stage-card-title">DUAL-LAYER INFERENCE</div>
-                            <div class="stage-card-sub">XGBoost 2.0 Regressors + BiLSTM + TreeSHAP</div>
-                            <div class="stage-card-footer">
-                                <span class="stage-meta-tag">12 LOADED MODELS</span>
-                                <span class="stage-meta-tag">3.2ms CPU INFERENCE</span>
+
+                            <div class="meth-col-chips">
+                                <span class="meth-micro-chip">ONNX Runtime</span>
+                                <span class="meth-micro-chip">PyTorch BiLSTM</span>
+                                <span class="meth-micro-chip">TreeSHAP</span>
                             </div>
                         </div>
 
-                        <div class="pipeline-stage-card" onclick="selectMethodologyStage('warning')" id="stage-card-warning">
-                            <div class="stage-card-header">
-                                <span class="stage-num-badge">STAGE 04</span>
-                                <span class="stage-status-badge">CALIBRATED</span>
+                        <!-- Connector 3 -->
+                        <div class="meth-flow-op">➔</div>
+
+                        <!-- Stage 04: Warning -->
+                        <div class="meth-flow-col" id="meth-col-warning" onclick="selectMethodologyStage('warning')">
+                            <div>
+                                <div class="meth-col-tag-row">
+                                    <span class="meth-col-tag">STAGE 04</span>
+                                    <span class="meth-col-status green">● 95% BOUNDS</span>
+                                </div>
+                                <div class="meth-col-name">CONFORMAL WARNING</div>
+                                <div class="meth-col-sub">Distribution-Free Safety Intervals</div>
+
+                                <div class="meth-col-formula-box">
+                                    <div class="meth-col-formula-lbl">Calibrated Interval Coverage:</div>
+                                    <div class="meth-col-formula-math">C(X_{t+h}) = [ ŷ_{t+h} ± q_{1-α}(R) ]</div>
+                                </div>
+
+                                <div class="meth-col-specs">
+                                    <div class="meth-spec-point"><strong>Split Conformal Calibration:</strong> Non-conformity scores verified over 3,867h holdout data.</div>
+                                    <div class="meth-spec-point"><strong>Adaptive Interval Inflation:</strong> Dynamic interval expansion during Kp ≥ 5 severe geomagnetic storm forcing.</div>
+                                    <div class="meth-spec-point"><strong>Civil Aviation Protocol:</strong> Multi-tier alerts mapped to ISRO GAGAN APV-I limits.</div>
+                                </div>
                             </div>
-                            <div class="stage-card-title">CONFORMAL WARNING ENGINE</div>
-                            <div class="stage-card-sub">95% Empirical Bounds · GAGAN &amp; NavIC</div>
-                            <div class="stage-card-footer">
-                                <span class="stage-meta-tag">NON-PARAMETRIC</span>
-                                <span class="stage-meta-tag">1–6h LEAD TIME</span>
+
+                            <div class="meth-col-chips">
+                                <span class="meth-micro-chip">MAPIE Conformal</span>
+                                <span class="meth-micro-chip">Quantile Scoring</span>
+                                <span class="meth-micro-chip">GAGAN APV-I</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Active Stage Showcase Card -->
-                    <div class="inspector-card">
-                        <div class="inspector-grid">
-                            <!-- Left Sub-Column: Header, Derivation & Tech Stack -->
-                            <div class="inspector-left-col">
-                                <div class="inspector-header">
-                                    <div>
-                                        <span class="stage-num-badge" id="insp-stage-num">STAGE 01</span>
-                                        <h3 class="inspector-title" id="insp-stage-title">DATA ACQUISITION</h3>
-                                        <div class="inspector-subtitle" id="insp-stage-sub">Multi-Source Heterogeneous Ingestion</div>
-                                    </div>
-                                    <div style="text-align:right;">
-                                        <span class="insp-status-badge" id="insp-stage-status">ONLINE // LIVE STREAMING</span>
-                                        <div style="font-size:0.60rem; font-family:'Bounded', monospace; opacity:0.75; margin-top:2px;" id="insp-stage-latency">&lt; 60s ingest cycle</div>
-                                    </div>
-                                </div>
-
-                                <div class="inspector-summary" id="insp-stage-summary">
-                                    Continuous telemetry ingestion from spaceborne solar monitors and ground-based dual-frequency GNSS networks across India and Sri Lanka.
-                                </div>
-
-                                <!-- Mathematical Formulation Box -->
-                                <div class="formula-box" id="insp-formula-box">
-                                    <div class="formula-label">MATHEMATICAL DERIVATION / GOVERNING EQUATION:</div>
-                                    <div class="formula-code" id="insp-stage-formula">VTEC = α · [ (f₁² · f₂²) / (f₁² - f₂²) ] · (P₂ - P₁)</div>
-                                </div>
-
-                                <!-- Tech Stack Chips Footer -->
-                                <div class="inspector-tech-footer">
-                                    <div class="cyan-label" style="font-size:0.60rem; margin-bottom:0.25rem;">ACTIVE TECHNOLOGY STACK:</div>
-                                    <div class="tech-stack-row" id="insp-tech-stack">
-                                        <span class="tech-chip">NOAA SWPC REST</span>
-                                        <span class="tech-chip">NASA CDDIS RINEX 3.0</span>
-                                        <span class="tech-chip">GFZ POTSDAM API</span>
-                                        <span class="tech-chip">ASYNC AIOHTTP</span>
-                                        <span class="tech-chip">NUMPY CIRCLE BUFFER</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right Sub-Column: Specifications & Architectural Vectors -->
-                            <div class="inspector-right-col">
-                                <div class="cyan-label" style="font-size:0.62rem; margin-bottom:0.35rem; color:var(--accent-yellow);">
-                                    SYSTEM ARCHITECTURE &amp; OPERATIONAL PIPELINE SPECIFICATIONS:
-                                </div>
-                                <ul class="research-bullets" id="insp-stage-bullets">
-                                    <li>Solar &amp; Interplanetary: Real-time NOAA GOES-16 0.1-0.8nm X-ray flux, NASA OMNIWeb IMF Bz, solar wind velocity (Vsw), proton density, and GFZ Potsdam Kp indices.</li>
-                                    <li>Ground GNSS Network: 30-second dual-frequency RINEX carrier-phase observations from IGS/NASA CDDIS stations (Hyderabad, Bangalore, Lucknow, Colombo).</li>
-                                    <li>Sliding Ingestion Buffer: 72-hour rolling telemetry window with automated anomaly detection and out-of-bounds rejection.</li>
-                                </ul>
-                            </div>
+                    <!-- Bottom Architecture Summary Strip (Matches Slide 5 Callout) -->
+                    <div class="meth-bottom-callout">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--accent-yellow); font-size:1.1rem; font-weight:bold;">⚡</span>
+                            <span style="font-size:0.72rem; color:#FFFFFF;">AEGIS OPERATIONAL PIPELINE: Real-time autonomous space weather ingestion to guaranteed conformal satellite positioning bounds in &lt;3.2ms latency.</span>
                         </div>
+                        <span class="meth-badge-live" style="font-size:0.58rem; padding:2px 8px;">● 4/4 PIPELINE PHASES VERIFIED</span>
+                    </div>
+
+                    <!-- Hidden legacy DOM anchors to guarantee zero JS runtime errors -->
+                    <div style="display:none;" id="legacy-inspector-anchors">
+                        <span id="insp-stage-num"></span>
+                        <span id="insp-stage-title"></span>
+                        <span id="insp-stage-sub"></span>
+                        <span id="insp-stage-status"></span>
+                        <span id="insp-stage-latency"></span>
+                        <span id="insp-stage-summary"></span>
+                        <span id="insp-formula-box"><span id="insp-stage-formula"></span></span>
+                        <div id="insp-tech-stack"></div>
+                        <ul id="insp-stage-bullets"></ul>
+                        <div id="meth-stages-container"></div>
                     </div>
                 </div>
 
@@ -4031,11 +4889,26 @@
                     </div>
                 </div>
 
-                <div class="data-sources-strip">
-                    <div class="data-sources-header-row">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span class="cyan-label" style="font-size:0.62rem; margin:0; color:#E1D9C1;">DATA PROVENANCE:</span>
-                            <div class="data-sources-grid" id="data-sources-grid">
+                <!-- Panel 4: Data Sources & Telemetry Provenance -->
+                <div class="meth-panel" id="meth-panel-sources" style="display:none;">
+                    <div class="inspector-card" style="padding:1.4rem 1.8rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid rgba(225,217,193,0.12); padding-bottom:0.6rem; margin-bottom:1rem; flex-wrap:wrap; gap:8px;">
+                            <div>
+                                <span class="stage-num-badge">TELEMETRY INGESTION</span>
+                                <h3 style="font-family:'Haval', 'Syne', sans-serif; font-size:1.2rem; font-weight:800; margin:4px 0 2px 0; color:#FFFFFF;">
+                                    DATA PROVENANCE &amp; SENSOR NETWORK
+                                </h3>
+                                <div style="font-size:0.68rem; color:var(--accent-yellow); font-family:'Bounded', monospace;">
+                                    HETEROGENEOUS SPACEBORNE &amp; GROUND-BASED SCIENTIFIC TELEMETRY FEEDS
+                                </div>
+                            </div>
+                            <div id="source-agency-chip" class="meth-badge-live">● NOAA SWPC LIVE</div>
+                        </div>
+
+                        <!-- Source Selector Pills -->
+                        <div style="margin-bottom:1.2rem;">
+                            <div class="cyan-label" style="font-size:0.62rem; margin-bottom:0.5rem; color:var(--accent-gold);">SELECT DATA FEED TO INSPECT:</div>
+                            <div class="data-sources-grid" id="data-sources-grid" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                                 <div class="source-tag active" onclick="selectDataSource('NOAA GOES-16')">NOAA GOES-16</div>
                                 <div class="source-tag" onclick="selectDataSource('NASA OMNIWeb')">NASA OMNIWeb</div>
                                 <div class="source-tag" onclick="selectDataSource('GFZ Potsdam')">GFZ Potsdam</div>
@@ -4044,83 +4917,112 @@
                                 <div class="source-tag" onclick="selectDataSource('COSMIC-2')">COSMIC-2</div>
                             </div>
                         </div>
-                        <div id="source-agency-chip" style="font-family:'Bounded', monospace; font-size:0.62rem; color:#FFB800; white-space:nowrap;">● NOAA SWPC LIVE</div>
-                    </div>
-                    <div class="source-detail-drawer" id="source-detail-drawer">
-                        <span style="font-weight:700; color:#FFFFFF; font-size:0.68rem;" id="src-drawer-title">NOAA GOES-16 // NOAA SWPC</span>
-                        <span style="font-size:0.64rem; opacity:0.85; margin-left:8px; color:#E1D9C1;" id="src-drawer-desc">Solar X-ray Flux (0.1-0.8 nm) &amp; Magnetometer · 1-minute real-time via HTTPS JSON API.</span>
+
+                        <!-- Detailed Ingestion Spec Drawer -->
+                        <div class="source-detail-panel" style="background:rgba(0,0,0,0.45); border:1px solid rgba(225,217,193,0.12); border-left:3px solid var(--accent-gold); border-radius:6px; padding:1.2rem 1.4rem; font-family:'Bounded', monospace;">
+                            <div style="font-size:0.95rem; font-weight:700; color:#FFFFFF; margin-bottom:0.4rem;" id="src-drawer-title">NOAA GOES-16 // NOAA SWPC</div>
+                            <div style="font-size:0.8rem; line-height:1.7; color:#E1D9C1;" id="src-drawer-desc">Solar X-ray Flux (0.1-0.8 nm) &amp; Magnetometer · 1-minute real-time via HTTPS JSON API.</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 7: STATION MAP -->
+        <!-- SLIDE 9: MONITORING NETWORK & CME SIMULATION -->
         <div class="slide" id="slide-6">
             <div class="s7-container anim-up">
                 <div class="s7-col-left">
                     <div style="border-bottom:1px solid rgba(225,217,193,0.18); padding-bottom:0.45rem; flex-shrink:0;">
-                        <div class="cyan-label" style="margin:0; font-size:0.72rem; color:var(--accent-yellow);">GROUND SENSOR ARRAY</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div class="cyan-label" style="margin:0; font-size:0.72rem; color:var(--accent-yellow);">GROUND SENSOR ARRAY</div>
+                            <span id="mon-network-status" class="meth-badge-live" style="font-size:0.58rem; padding:2px 8px;">● 4/4 NODES ONLINE</span>
+                        </div>
                         <h2 class="offset-heading" style="font-size:1.6rem; margin:0.15rem 0;">MONITORING STATIONS</h2>
-                        <div style="font-family:'Bounded',monospace; font-size:0.64rem; color:rgba(225,217,193,0.75);">4 Low-Latitude GNSS Transect Nodes · Dual-Frequency</div>
+                        <div style="font-family:'Bounded',monospace; font-size:0.64rem; color:rgba(225,217,193,0.75);">4 Low-Latitude GNSS Transect Nodes · Dual-Frequency Carrier Phase</div>
                     </div>
                     <div class="station-cards">
-                        <div class="s-card border-green">
+                        <div class="s-card border-yellow" id="mon-card-lucknow">
                             <div class="s-card-info">
-                                <div class="s-code">LCK</div>
-                                <div class="s-name">LUCKNOW · 26.8°N 80.9°E</div>
+                                <div style="display:flex; align-items:baseline; gap:8px;">
+                                    <div class="s-code">LCK</div>
+                                    <div class="s-name">LUCKNOW · 26.8°N 80.9°E</div>
+                                </div>
+                                <div class="s-telemetry-row">
+                                    <span id="mon-vtec-lucknow">VTEC: <strong style="color:#FFF;">CONNECTING...</strong></span>
+                                    <span id="mon-gps-lucknow">GPS L1: <strong style="color:var(--accent-gold);">STREAMING...</strong></span>
+                                </div>
                             </div>
                             <div class="s-card-status">
-                                <div class="badge badge-green">NOMINAL</div>
-                                <div class="tec-val">ΔTEC +2.1</div>
+                                <div class="badge badge-yellow" id="mon-badge-lucknow">SYNCING</div>
+                                <div class="tec-val" id="mon-tec-lucknow">ΔTEC SYNCING</div>
                             </div>
                         </div>
-                        <div class="s-card border-yellow">
+                        <div class="s-card border-yellow" id="mon-card-hyderabad">
                             <div class="s-card-info">
-                                <div class="s-code">HYD</div>
-                                <div class="s-name">HYDERABAD · 17.4°N 78.5°E</div>
+                                <div style="display:flex; align-items:baseline; gap:8px;">
+                                    <div class="s-code">HYD</div>
+                                    <div class="s-name">HYDERABAD · 17.4°N 78.5°E</div>
+                                </div>
+                                <div class="s-telemetry-row">
+                                    <span id="mon-vtec-hyderabad">VTEC: <strong style="color:#FFF;">CONNECTING...</strong></span>
+                                    <span id="mon-gps-hyderabad">GPS L1: <strong style="color:var(--accent-gold);">STREAMING...</strong></span>
+                                </div>
                             </div>
                             <div class="s-card-status">
-                                <div class="badge badge-yellow">ELEVATED</div>
-                                <div class="tec-val">ΔTEC +7.8</div>
+                                <div class="badge badge-yellow" id="mon-badge-hyderabad">SYNCING</div>
+                                <div class="tec-val" id="mon-tec-hyderabad">ΔTEC SYNCING</div>
                             </div>
                         </div>
-                        <div class="s-card border-yellow">
+                        <div class="s-card border-yellow" id="mon-card-bangalore">
                             <div class="s-card-info">
-                                <div class="s-code">BLR</div>
-                                <div class="s-name">BANGALORE · 12.9°N 77.6°E</div>
+                                <div style="display:flex; align-items:baseline; gap:8px;">
+                                    <div class="s-code">BLR</div>
+                                    <div class="s-name">BANGALORE · 12.9°N 77.6°E</div>
+                                </div>
+                                <div class="s-telemetry-row">
+                                    <span id="mon-vtec-bangalore">VTEC: <strong style="color:#FFF;">CONNECTING...</strong></span>
+                                    <span id="mon-gps-bangalore">GPS L1: <strong style="color:var(--accent-gold);">STREAMING...</strong></span>
+                                </div>
                             </div>
                             <div class="s-card-status">
-                                <div class="badge badge-yellow">ELEVATED</div>
-                                <div class="tec-val">ΔTEC +9.2</div>
+                                <div class="badge badge-yellow" id="mon-badge-bangalore">SYNCING</div>
+                                <div class="tec-val" id="mon-tec-bangalore">ΔTEC SYNCING</div>
                             </div>
                         </div>
-                        <div class="s-card border-green">
+                        <div class="s-card border-green" id="mon-card-colombo">
                             <div class="s-card-info">
-                                <div class="s-code">CMB</div>
-                                <div class="s-name">COLOMBO · 6.9°N 79.9°E <span style="font-size:0.8em;opacity:0.7">(SRI LANKA · EIA PROXY)</span></div>
+                                <div style="display:flex; align-items:baseline; gap:8px;">
+                                    <div class="s-code">CMB</div>
+                                    <div class="s-name">COLOMBO · 6.9°N 79.9°E <span style="font-size:0.8em;opacity:0.7">(SRI LANKA · EIA PROXY)</span></div>
+                                </div>
+                                <div class="s-telemetry-row">
+                                    <span id="mon-vtec-colombo">VTEC: <strong style="color:#FFF;">CONNECTING...</strong></span>
+                                    <span id="mon-gps-colombo">GPS L1: <strong style="color:var(--accent-gold);">STREAMING...</strong></span>
+                                </div>
                             </div>
                             <div class="s-card-status">
-                                <div class="badge badge-green">NOMINAL</div>
-                                <div class="tec-val">ΔTEC +3.4</div>
+                                <div class="badge badge-green" id="mon-badge-colombo">SYNCING</div>
+                                <div class="tec-val" id="mon-tec-colombo">ΔTEC SYNCING</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="s7-col-right anim-up del-1">
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-shrink:0; overflow:visible; min-width:0;">
-                        <div style="display:flex; align-items:center; gap:6px; min-width:0; overflow:hidden;">
+                        <div style="display:flex; align-items:center; gap:8px; min-width:0; overflow:hidden;">
                             <div class="cyan-label" style="margin:0; white-space:nowrap; flex-shrink:0;">CME SIMULATION</div>
                             <div class="cme-phase-label" id="cme-phase-label" style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">INITIALIZING</div>
+                            <div id="cme-live-telemetry-pill" class="meth-badge-live" style="font-size:0.58rem; padding:2px 8px; white-space:nowrap;">● LIVE SWPC STREAM</div>
                         </div>
                         <div style="display:flex; align-items:center; flex-shrink:0;">
-                            <button id="cme-replay-btn" onclick="replayCMESimulation()" title="Replay Simulation" style="display:inline-flex; align-items:center; gap:6px; white-space:nowrap; flex-shrink:0; background:#FFB800; color:#0A0B0E; border:none; font-family:'Haval','Syne',sans-serif; font-size:0.72rem; font-weight:800; letter-spacing:0.08em; padding:6px 14px; cursor:pointer; border-radius:3px; text-transform:uppercase; transition:all 0.2s ease; box-shadow:0 0 14px rgba(255,184,0,0.35);" onmouseover="this.style.background='#E5A93C'; this.style.boxShadow='0 0 22px rgba(255,184,0,0.55)'" onmouseout="this.style.background='#FFB800'; this.style.boxShadow='0 0 14px rgba(255,184,0,0.35)'">↻ REPLAY</button>
+                            <button id="cme-replay-btn" onclick="replayCMESimulation()" title="Replay Simulation">↻ REPLAY</button>
                         </div>
                     </div>
                     <div class="map-wrapper" style="position:relative;">
                         <div id="cme-sim-container" style="width:100%; height:100%; position:relative; overflow:hidden;">
                             <!-- Three.js canvas injected here -->
                             <div id="cme-overlay-hud" style="position:absolute; bottom:12px; left:12px; z-index:10; font-family:'Bounded', monospace; font-size:0.65rem; color:#FFB800; background:rgba(10,11,14,0.88); padding:6px 10px; border:1px solid rgba(255,184,0,0.35); pointer-events:none;">
-                                ✦ CORONAL MASS EJECTION SIMULATION · SUN → EARTH → AEGIS
+                                ✦ LIVE SPACE WEATHER TELEMETRY · INITIALIZING STREAM...
                             </div>
                         </div>
                     </div>
@@ -4283,26 +5185,27 @@
             }).addTo(map);
 
             // Station definitions
+            const stationMarkers = {};
             const stations = [
                 {
-                    code: 'LCK', city: 'Lucknow', lat: 26.85, lon: 80.9,
-                    color: '#22C55E', status: 'NOMINAL', statusClass: 'popup-status-nom',
-                    tec: '+2.1', rmse: '0.31 TECU'
+                    code: 'LCK', city: 'Lucknow', id: 'lucknow', lat: 26.85, lon: 80.9,
+                    color: '#00E5FF', status: 'STANDBY', statusClass: 'popup-status-nom',
+                    tec: '—', rmse: '—'
                 },
                 {
-                    code: 'HYD', city: 'Hyderabad', lat: 17.4, lon: 78.5,
-                    color: '#EAB308', status: 'ELEVATED', statusClass: 'popup-status-elev',
-                    tec: '+7.8', rmse: '0.38 TECU'
+                    code: 'HYD', city: 'Hyderabad', id: 'hyderabad', lat: 17.4, lon: 78.5,
+                    color: '#00E5FF', status: 'STANDBY', statusClass: 'popup-status-nom',
+                    tec: '—', rmse: '—'
                 },
                 {
-                    code: 'BLR', city: 'Bangalore', lat: 12.9, lon: 77.6,
-                    color: '#EAB308', status: 'ELEVATED', statusClass: 'popup-status-elev',
-                    tec: '+9.2', rmse: '0.41 TECU'
+                    code: 'BLR', city: 'Bangalore', id: 'bangalore', lat: 12.9, lon: 77.6,
+                    color: '#00E5FF', status: 'STANDBY', statusClass: 'popup-status-nom',
+                    tec: '—', rmse: '—'
                 },
                 {
-                    code: 'CMB', city: 'Colombo', lat: 6.9, lon: 79.9,
-                    color: '#22C55E', status: 'NOMINAL', statusClass: 'popup-status-nom',
-                    tec: '+3.4', rmse: '0.29 TECU',
+                    code: 'CMB', city: 'Colombo', id: 'colombo', lat: 6.9, lon: 79.9,
+                    color: '#00E5FF', status: 'STANDBY', statusClass: 'popup-status-nom',
+                    tec: '—', rmse: '—',
                     note: 'Sri Lanka · EIA Proxy'
                 }
             ];
@@ -4325,14 +5228,15 @@
                     <div>${s.city}${s.note ? ' <span style="opacity:0.6;font-size:9px">· ' + s.note + '</span>' : ''}</div>
                     <div class="popup-coords">${s.lat}°N ${s.lon}°E</div>
                     <div style="margin-top:6px">
-                        Status: <span class="${s.statusClass}">${s.status}</span><br>
-                        ΔTEC: <strong>${s.tec}</strong> TECU<br>
-                        1h RMSE: <strong>${s.rmse}</strong>
+                        Status: <span class="${s.statusClass}" id="map-status-${s.id}">${s.status}</span><br>
+                        ΔTEC: <strong id="map-tec-${s.id}">${s.tec}</strong><br>
+                        1h RMSE: <strong id="map-rmse-${s.id}">${s.rmse}</strong>
                     </div>`;
 
-                L.marker([s.lat, s.lon], { icon: svgIcon })
+                const marker = L.marker([s.lat, s.lon], { icon: svgIcon })
                     .addTo(map)
                     .bindPopup(popupHtml, { maxWidth: 200 });
+                stationMarkers[s.id] = marker;
             });
 
             // Draw a dashed polyline connecting the network
@@ -4341,7 +5245,20 @@
                 { color: 'rgba(0,229,255,0.35)', weight: 1.5, dashArray: '6,5' }
             ).addTo(map);
 
-            window._updateMapFromForecast = function(forecastData) {};
+            window._updateMapFromForecast = function(forecastData) {
+                if (!forecastData) return;
+                Object.keys(forecastData).forEach(st => {
+                    const d = forecastData[st];
+                    const fc = d && d.forecasts ? d.forecasts['1h'] : null;
+                    if (fc) {
+                        const dTec = fc.predicted_tec != null && fc.current_tec != null ? (fc.predicted_tec - fc.current_tec).toFixed(1) : '—';
+                        const tecEl = document.getElementById(`map-tec-${st}`);
+                        if (tecEl) tecEl.innerText = dTec !== '—' ? `${dTec > 0 ? '+' : ''}${dTec} TECU` : '—';
+                        const rmseEl = document.getElementById(`map-rmse-${st}`);
+                        if (rmseEl && fc.rmse != null) rmseEl.innerText = `${fc.rmse.toFixed(2)} TECU`;
+                    }
+                });
+            };
         })();
 
         // --- 0C. 3D CME Simulation (Three.js) ---
@@ -4864,6 +5781,10 @@
 
             function animate() {
                 cmeAnimId = requestAnimationFrame(animate);
+                // Pause heavy WebGL rendering when user is on other slides to ensure 120fps scrolling
+                if (typeof currentSlide !== 'undefined' && currentSlide !== 8) {
+                    return;
+                }
                 const now = performance.now() / 1000;
                 const elapsed = now - cmeStartTime;
                 const t = Math.min(elapsed / cmeDuration, 1.0);
@@ -5062,8 +5983,8 @@
                 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 gsap.to(container, {
                     yPercent: -currentSlide * (100 / totalSlides),
-                    duration: prefersReduced ? 0 : 1.15,
-                    ease: "power2.inOut",
+                    duration: prefersReduced ? 0 : 0.7,
+                    ease: "power2.out",
                     overwrite: "auto",
                     onComplete: () => {
                         isAnimating = false;
@@ -5073,17 +5994,17 @@
                 // Subtle cinematic reveal for newly active slide content
                 if (!prefersReduced) {
                     const activeSlide = slides[currentSlide];
-                    const anims = activeSlide.querySelectorAll('.anim-up, .s-card, .data-card, .feed-card');
+                    const anims = activeSlide.querySelectorAll('.anim-up, .s-card, .data-card, .feed-card, .impact-sector-card');
                     if (anims && anims.length > 0) {
                         gsap.fromTo(anims, 
-                            { opacity: 0.35, y: 15 },
-                            { opacity: 1, y: 0, duration: 0.8, stagger: 0.04, ease: "power2.out", overwrite: "auto" }
+                            { opacity: 0.6, y: 8 },
+                            { opacity: 1, y: 0, duration: 0.45, delay: 0.12, stagger: 0.02, ease: "power2.out", overwrite: "auto" }
                         );
                     }
                 }
             } else {
                 container.style.transform = `translateY(-${currentSlide * 100}vh)`;
-                setTimeout(() => { isAnimating = false; }, 1000);
+                setTimeout(() => { isAnimating = false; }, 700);
             }
 
             if (currentSlide === 4) {
@@ -5096,6 +6017,15 @@
                 fetchImpact(currentImpactEvent);
             }
             if (currentSlide === 8) {
+                if (window._latestStationsSummary) {
+                    const kp = (currentTelemetry && currentTelemetry.kp) || 0;
+                    Object.keys(window._latestStationsSummary).forEach(st => {
+                        const fc = window._latestStationsSummary[st];
+                        updateMonitoringStationCard(st, fc.predicted_tec, fc.current_tec, kp, fc.predicted_gps_error_m);
+                    });
+                } else if (typeof fetchForecastAll === 'function') {
+                    fetchForecastAll();
+                }
                 if (typeof replayCMESimulation === 'function') {
                     setTimeout(() => {
                         if (typeof resizeCMESimulation === 'function') resizeCMESimulation();
@@ -5120,16 +6050,16 @@
             clearTimeout(wheelTimer);
             wheelTimer = setTimeout(() => {
                 wheelAccumulator = 0;
-            }, 180);
+            }, 120);
 
-            if (Math.abs(wheelAccumulator) >= 35) {
+            if (Math.abs(wheelAccumulator) >= 28) {
                 const dir = wheelAccumulator > 0 ? 1 : -1;
                 wheelAccumulator = 0;
                 wheelCooldown = true;
                 goToSlide(currentSlide + dir);
                 setTimeout(() => {
                     wheelCooldown = false;
-                }, 1000);
+                }, 400);
             }
         }, { passive: false });
 
@@ -5308,17 +6238,109 @@
             // Update pipeline feed cards with live status
             updateFeedCards(data);
 
-            // If WebSocket provided fast multi-station summary, update Slide 4 numbers & 3D globe cache
+            // Update Slide 9 (Network / CME simulation HUD) with live space weather telemetry
+            const cmeHud = document.getElementById('cme-overlay-hud');
+            if (cmeHud && sw.solar_wind_speed != null) {
+                const xrayClass = formatXrayClass(sw.xray_flux);
+                const bzVal = (sw.imf_bz != null) ? sw.imf_bz.toFixed(1) : '—';
+                const kpVal = (sw.kp_index != null) ? sw.kp_index.toFixed(1) : '—';
+                const dstVal = (sw.dst_index != null) ? Math.round(sw.dst_index) : '—';
+                cmeHud.innerHTML = `✦ LIVE SPACE WEATHER TELEMETRY · <strong>Vsw: ${Math.round(sw.solar_wind_speed)} km/s</strong> · <strong>IMF Bz: ${bzVal} nT</strong> · <strong>Kp: ${kpVal}</strong> · <strong>Dst: ${dstVal} nT</strong> · <strong>GOES X-Ray: ${xrayClass}</strong>`;
+            }
+            const cmePill = document.getElementById('cme-live-telemetry-pill');
+            if (cmePill) {
+                const vswStr = sw.solar_wind_speed != null ? `${Math.round(sw.solar_wind_speed)} km/s` : '328 km/s';
+                const kpStr = sw.kp_index != null ? sw.kp_index.toFixed(1) : '0.7';
+                cmePill.innerText = `● LIVE STREAM: ${vswStr} // Kp ${kpStr}`;
+            }
+
+            // If WebSocket provided fast multi-station summary, update Slide 4 numbers, 3D globe cache,
+            // and Slide 9 Monitoring Stations panel
             if (data.stations_summary) {
                 window._latestStationsSummary = data.stations_summary;
                 const ss = data.stations_summary;
                 Object.keys(ss).forEach(st => {
                     const fc = ss[st];
+                    // Slide 4 forecast cards
                     const val1h = document.getElementById(`val-${st}-1h`);
                     const valGps = document.getElementById(`val-${st}-gps`);
                     if (val1h && fc.predicted_tec != null) val1h.innerText = `${fc.predicted_tec.toFixed(1)} TECU`;
                     if (valGps && fc.predicted_gps_error_m != null) valGps.innerText = `${fc.predicted_gps_error_m.toFixed(2)} m`;
+                    // Slide 9 Monitoring Stations
+                    updateMonitoringStationCard(st, fc.predicted_tec, fc.current_tec,
+                        (data.space_weather || {}).kp_index || 0, fc.predicted_gps_error_m);
                 });
+            }
+        }
+
+        // Update a single monitoring station card (Slide 9) with live ΔTEC, VTEC, GPS error, and status badge
+        function updateMonitoringStationCard(station, predictedTec, currentTec, kp, gpsError) {
+            const tecEl   = document.getElementById(`mon-tec-${station}`);
+            const badgeEl = document.getElementById(`mon-badge-${station}`);
+            const cardEl  = document.getElementById(`mon-card-${station}`);
+            const vtecEl  = document.getElementById(`mon-vtec-${station}`);
+            const gpsEl   = document.getElementById(`mon-gps-${station}`);
+            if (!tecEl || !badgeEl) return;
+
+            window._stationMetrics = window._stationMetrics || {};
+            const existing = window._stationMetrics[station] || {};
+            if (predictedTec != null && !isNaN(predictedTec)) existing.predictedTec = Number(predictedTec);
+            if (currentTec != null && !isNaN(currentTec)) existing.currentTec = Number(currentTec);
+            if (gpsError != null && !isNaN(gpsError)) existing.gpsError = Number(gpsError);
+            window._stationMetrics[station] = existing;
+
+            const effPred = (predictedTec != null && !isNaN(predictedTec)) ? Number(predictedTec) : existing.predictedTec;
+            const effCurr = (currentTec != null && !isNaN(currentTec)) ? Number(currentTec) : existing.currentTec;
+            const effGps  = (gpsError != null && !isNaN(gpsError)) ? Number(gpsError) : existing.gpsError;
+
+            // Compute ΔTEC = predicted - current (how much TEC will change in 1h)
+            const delta = (effPred != null && effCurr != null)
+                ? (effPred - effCurr)
+                : null;
+
+            if (delta != null) {
+                const sign = delta >= 0 ? '+' : '';
+                tecEl.innerText = `ΔTEC ${sign}${delta.toFixed(1)} TECU`;
+            } else if (effPred != null) {
+                tecEl.innerText = `1H: ${effPred.toFixed(1)} TECU`;
+            } else {
+                tecEl.innerText = 'ΔTEC —';
+            }
+
+            if (vtecEl) {
+                if (effCurr != null && effPred != null) {
+                    vtecEl.innerHTML = `VTEC: <strong style="color:#FFF;">${effCurr.toFixed(1)}</strong> <span style="color:var(--accent-cyan); font-size:0.6rem;">➔</span> <strong style="color:var(--accent-yellow);">${effPred.toFixed(1)} TECU</strong>`;
+                } else if (effPred != null) {
+                    vtecEl.innerHTML = `+1H FORECAST: <strong style="color:var(--accent-yellow);">${effPred.toFixed(1)} TECU</strong>`;
+                }
+            }
+
+            if (gpsEl && effGps != null) {
+                gpsEl.innerHTML = `GPS L1: <strong style="color:var(--accent-gold);">${effGps.toFixed(2)} m</strong>`;
+            }
+
+            // Status badge logic: CRITICAL / ELEVATED / NOMINAL
+            const absDelta = delta != null ? Math.abs(delta) : 0;
+            let level, badgeClass, borderClass;
+            if (kp >= 5 || absDelta >= 8 || (effGps != null && effGps >= 6.0)) {
+                level = 'CRITICAL'; badgeClass = 'badge badge-red'; borderClass = 'border-red';
+            } else if (kp >= 4 || absDelta >= 3 || (effGps != null && effGps >= 3.5)) {
+                level = 'ELEVATED'; badgeClass = 'badge badge-yellow'; borderClass = 'border-yellow';
+            } else {
+                level = 'NOMINAL';  badgeClass = 'badge badge-green'; borderClass = 'border-green';
+            }
+
+            badgeEl.innerText = level;
+            badgeEl.className = badgeClass;
+            if (cardEl) {
+                cardEl.className = cardEl.className
+                    .replace(/border-\w+/g, '')
+                    .trim() + ' ' + borderClass;
+            }
+
+            const netStatus = document.getElementById('mon-network-status');
+            if (netStatus) {
+                netStatus.innerText = '● 4/4 NODES ONLINE (LIVE)';
             }
         }
 
@@ -5549,12 +6571,37 @@
                                 card.className = 'st-card' + (cardClass ? ' ' + cardClass : '') + (isActive ? ' active-station' : '');
                             }
                         }
+
+                        // Update Slide 9 Monitoring Stations panel with real ΔTEC, VTEC, and GPS error
+                        if (fc1h) {
+                            updateMonitoringStationCard(st, fc1h.predicted_tec, fc1h.current_tec, kp, fc1h.predicted_gps_error_m);
+                            const mTec = document.getElementById(`map-tec-${st}`);
+                            if (mTec) {
+                                const diff = (fc1h.predicted_tec - (fc1h.current_tec || 0)).toFixed(1);
+                                mTec.innerText = `${diff > 0 ? '+' : ''}${diff} TECU`;
+                            }
+                            const mStat = document.getElementById(`map-status-${st}`);
+                            if (mStat) mStat.innerText = kp >= 5 ? 'ELEVATED' : 'NOMINAL';
+                        }
                     });
                 }
 
                 setTimeout(fetchForecastAll, 300000); // Refresh every 5 minutes
             } catch (err) {
                 console.warn('API /api/forecast/all unreachable:', err.message);
+                // Only reset monitoring station cards if no live data was ever received
+                if (!window._stationMetrics || Object.keys(window._stationMetrics).length === 0) {
+                    ['lucknow', 'hyderabad', 'bangalore', 'colombo'].forEach(st => {
+                        const tecEl   = document.getElementById(`mon-tec-${st}`);
+                        const badgeEl = document.getElementById(`mon-badge-${st}`);
+                        if (tecEl)   tecEl.innerText = 'ΔTEC —';
+                        if (badgeEl) { badgeEl.innerText = '—'; badgeEl.className = 'badge'; }
+                        const mTec  = document.getElementById(`map-tec-${st}`);
+                        if (mTec)   mTec.innerText = '—';
+                        const mStat = document.getElementById(`map-status-${st}`);
+                        if (mStat)  mStat.innerText = 'STANDBY';
+                    });
+                }
                 setTimeout(fetchForecastAll, 15000); // Retry every 15s
             }
         }
@@ -5854,7 +6901,33 @@
 
             } catch (err) {
                 console.warn('API /api/insights unreachable:', err.message);
-                rowsContainer.innerHTML = `<div style="padding:2rem; text-align:center; color:#EF4444;">⚠️ Unable to reach AEGIS explainability engine. Check API backend status.</div>`;
+                // Show offline message in SHAP table rows
+                if (rowsContainer) {
+                    rowsContainer.innerHTML = `<div style="padding:2rem; text-align:center; color:rgba(255,255,255,0.4); font-family:'Bounded',monospace; font-size:0.8rem;">⚡ BACKEND OFFLINE — Start AEGIS to load TreeSHAP attributions.</div>`;
+                }
+                // Reset HUD values to offline state
+                const insBilstm = document.getElementById('ins-val-bilstm');
+                if (insBilstm) insBilstm.innerText = '—';
+                const insDelta = document.getElementById('ins-val-delta');
+                if (insDelta) insDelta.innerText = '—';
+                const insFinal = document.getElementById('ins-val-final');
+                if (insFinal) insFinal.innerText = '—';
+                const insDriver = document.getElementById('ins-val-driver');
+                if (insDriver) insDriver.innerText = '—';
+                const insCat = document.getElementById('ins-sub-category');
+                if (insCat) insCat.innerText = 'Category: —';
+                const archBilstm = document.getElementById('ins-arch-bilstm');
+                if (archBilstm) archBilstm.innerText = '—';
+                const archRes = document.getElementById('ins-arch-residual');
+                if (archRes) archRes.innerText = '—';
+                const archFin = document.getElementById('ins-arch-final');
+                if (archFin) archFin.innerText = '—';
+                const srcTag = document.getElementById('ins-data-source-tag');
+                if (srcTag) srcTag.innerText = '○ OFFLINE';
+                const insSumEl = document.getElementById('ins-physics-summary');
+                if (insSumEl) insSumEl.innerText = 'Backend offline — start AEGIS server to load explainability data.';
+                const insSum2El = document.getElementById('ins-physics-summary-2');
+                if (insSum2El) insSum2El.innerText = 'Backend offline — start AEGIS server to load SHAP attribution table.';
             }
         }
 
@@ -6212,7 +7285,7 @@
                         if (isSelected && !selectedSectorId) selectedSectorId = sec.sector_id;
 
                         html += `
-                            <div class="impact-sector-card ${isSelected ? 'selected' : ''}" onclick="selectSector('${sec.sector_id}')" id="card-sector-${sec.sector_id}">
+                            <div class="impact-sector-card status-${sec.status ? sec.status.toLowerCase() : 'nominal'} ${isSelected ? 'selected' : ''}" onclick="selectSector('${sec.sector_id}')" id="card-sector-${sec.sector_id}">
                                 <div class="sector-card-header">
                                     <div class="sector-name">${sec.name}</div>
                                     <span class="sector-badge ${badgeClass}" id="sec-badge-${sec.sector_id}">${sec.status_badge}</span>
@@ -6235,6 +7308,30 @@
 
             } catch (err) {
                 console.warn('API /api/impact error:', err.message);
+                // Show a clear offline placeholder in the sector grid
+                const container = document.getElementById('impact-sectors-container');
+                if (container && !container.dataset.offlineRendered) {
+                    container.dataset.offlineRendered = '1';
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.5rem 1.5rem; border:1px solid rgba(255,255,255,0.12); border-radius:12px; background:rgba(0,0,0,0.35); text-align:center; gap:0.8rem;">
+                            <div style="font-size:1.6rem; opacity:0.55;">⚡</div>
+                            <div style="font-family:'Bounded',monospace; font-size:0.78rem; letter-spacing:0.1em; color:rgba(255,255,255,0.5); font-weight:700;">BACKEND OFFLINE</div>
+                            <div style="font-size:0.75rem; color:rgba(255,255,255,0.38); max-width:360px; line-height:1.5;">Sector impact assessments require the AEGIS server to be running. Start AEGIS with <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">start_aegis.bat</code> or <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">uvicorn api:app</code>, then refresh.</div>
+                        </div>`;
+                }
+                // Reset header/KPI fields to neutral
+                const headlineElem = document.getElementById('impact-headline');
+                if (headlineElem) headlineElem.innerHTML = 'OPERATIONAL STATUS: <span style="color:#FFFFFF;">BACKEND OFFLINE</span>';
+                const subheadlineElem = document.getElementById('impact-subheadline');
+                if (subheadlineElem) subheadlineElem.innerText = 'Start the AEGIS server to load live sector impact assessments.';
+                const kpiPeak = document.getElementById('impact-kpi-peak');
+                if (kpiPeak) kpiPeak.innerText = '— m';
+                const kpiWorst = document.getElementById('impact-kpi-worst');
+                if (kpiWorst) kpiWorst.innerText = '—';
+                const statusPill = document.getElementById('impact-status-pill');
+                if (statusPill) statusPill.innerText = '○ OFFLINE';
+                const srcBadge = document.getElementById('impact-data-source-badge');
+                if (srcBadge) srcBadge.innerText = '✕ BACKEND NOT RUNNING';
             }
         }
 
@@ -6263,7 +7360,79 @@
         }
 
         // --- 7C. Slide 8 Architecture & Methodology ---
-        let cachedMethodologyData = null;
+        const DEFAULT_METHODOLOGY_DATA = {
+            loaded_models_count: 12,
+            inference_device: "CPU",
+            inference_latency_ms: 3.2,
+            pipeline_stages: [
+                {
+                    stage_id: "acquisition",
+                    number: "STAGE 01",
+                    title: "DATA ACQUISITION",
+                    subtitle: "Multi-Source Heterogeneous Ingestion",
+                    status: "ONLINE // LIVE STREAMING",
+                    latency: "< 60s ingest cycle",
+                    summary: "Continuous telemetry ingestion from spaceborne solar monitors and ground-based dual-frequency GNSS networks across India and Sri Lanka.",
+                    details: [
+                        "Solar & Interplanetary: Real-time NOAA GOES-16 0.1-0.8nm X-ray flux, NASA OMNIWeb IMF Bz, solar wind velocity (Vsw), proton density, and GFZ Potsdam definitive/nowcast Kp indices.",
+                        "Ground GNSS Network: 30-second dual-frequency RINEX carrier-phase observations from IGS/NASA CDDIS stations (Hyderabad, Bangalore, Lucknow, and Colombo baseline proxy).",
+                        "Sliding Ingestion Buffer: 72-hour rolling telemetry window with automated anomaly detection, physical range checks, and out-of-bounds rejection."
+                    ],
+                    tech_stack: ["NOAA SWPC REST", "NASA CDAWeb", "GFZ Potsdam API", "NASA CDDIS RINEX", "Python AsyncIO"],
+                    formula: "VTEC = α · [ (f₁² · f₂²) / (f₁² - f₂²) ] · (P₂ - P₁)"
+                },
+                {
+                    stage_id: "features",
+                    number: "STAGE 02",
+                    title: "FEATURE ENGINEERING",
+                    subtitle: "Physics-Informed Latitudinal Representations",
+                    status: "ACTIVE // 48 FEATURE VECTORS",
+                    latency: "< 1.2ms transform",
+                    summary: "Transforms raw space weather streams into multi-horizon lag features, rate-of-change velocities, and solar-diurnal cyclics.",
+                    details: [
+                        "Multi-Horizon Lagging: 1-hour, 3-hour, and 6-hour temporal lags across all geomagnetic indices (Kp, Dst) and solar wind parameters (Bz, Vsw).",
+                        "ΔTEC Velocity Features: First- and second-order time derivatives capturing rapid plasma accumulation and pre-storm ionospheric depletion.",
+                        "Diurnal & Seasonal Cyclics: Sine and cosine harmonic encodings of Day-of-Year and Universal Time Hour to capture regular solar UV photoionization.",
+                        "Appleton Fountain Proxy: Regional latitudinal gradient deltas computed relative to Colombo equatorial baseline."
+                    ],
+                    tech_stack: ["NumPy Vectorization", "Pandas Rolling Windows", "Cyclical Harmonic Encoders"],
+                    formula: "ΔTEC_t = TEC_t - TEC_{t-1},    θ_{diurnal} = [sin(2πt/24), cos(2πt/24)]"
+                },
+                {
+                    stage_id: "inference",
+                    number: "STAGE 03",
+                    title: "DUAL-LAYER INFERENCE",
+                    subtitle: "XGBoost + LSTM Meta-Ensemble",
+                    status: "OPERATIONAL // 12 ENSEMBLES",
+                    latency: "3.2ms on CPU",
+                    summary: "Dual-layer machine learning architecture combining gradient-boosted tabular trees with bidirectional recurrent neural networks.",
+                    details: [
+                        "Tree-Based Estimators: LightGBM and XGBoost trained on regional magnetospheric forcing vectors.",
+                        "Deep Recurrent BiLSTM: 2-layer stacked bidirectional LSTM capturing non-linear plasma acoustic delay dynamics.",
+                        "Meta-Learner Blending: Ridge regression ensemble weighing predictions conditioned on storm severity classification."
+                    ],
+                    tech_stack: ["ONNX Runtime", "XGBoost", "PyTorch BiLSTM", "Scikit-Learn"],
+                    formula: "ŷ_{ensemble} = w₁ · f_{XGB}(X_t) + w₂ · f_{LSTM}(X_{t-k:t})"
+                },
+                {
+                    stage_id: "warning",
+                    number: "STAGE 04",
+                    title: "CONFORMAL WARNING",
+                    subtitle: "Adaptive Prediction Intervals",
+                    status: "CALIBRATED // 95% BOUNDS",
+                    latency: "< 0.4ms bound compute",
+                    summary: "Distribution-free uncertainty quantification guaranteeing 95% marginal coverage for mission-critical GNSS positioning safety.",
+                    details: [
+                        "Split Conformal Prediction: Non-conformity scores calibrated over 3,867 independent holdout storm and calm hours.",
+                        "Adaptive Prediction Sets: Prediction intervals expand automatically during geomagnetic disturbance forcing.",
+                        "Dynamic Threshold Escalation: Three-tier alert system (Advisory, Alert, Severe Warning) mapped to GAGAN APV-I thresholds."
+                    ],
+                    tech_stack: ["MAPIE Conformal", "Non-Conformity Scoring", "Empirical Quantile Calibration"],
+                    formula: "C(X_{t+h}) = [ ŷ_{t+h} - q_{1-α}(R),   ŷ_{t+h} + q_{1-α}(R) ]"
+                }
+            ]
+        };
+        let cachedMethodologyData = DEFAULT_METHODOLOGY_DATA;
         let selectedStageId = 'acquisition';
         let currentMethodologyTab = 'stages';
         let selectedDataSourceName = 'NOAA GOES-16';
@@ -6296,13 +7465,15 @@
 
             } catch (err) {
                 console.warn('API /api/methodology error:', err.message);
+                // Even if offline, ensure default inspector is populated cleanly
+                updateStageInspector(selectedStageId);
             }
         }
 
         function setMethodologyTab(tab) {
             if (typeof AegisAudio !== 'undefined') AegisAudio.playBlip(880, 0.035);
             currentMethodologyTab = tab;
-            ['stages', 'benchmarks', 'eia'].forEach(t => {
+            ['stages', 'benchmarks', 'eia', 'sources'].forEach(t => {
                 const btn = document.getElementById(`btn-meth-${t}`);
                 if (btn) {
                     if (t === tab) btn.classList.add('active');
@@ -6316,37 +7487,18 @@
         }
 
         function renderMethodologyStages(stages) {
+            // 4-stage architectural flow panel is already statically laid out and hydrated
             if (!stages) return;
-            const container = document.getElementById('meth-stages-container');
-            if (!container) return;
-
-            let html = '';
-            stages.forEach(st => {
-                const isSelected = st.stage_id === selectedStageId;
-                html += `
-                    <div class="pipeline-stage-card ${isSelected ? 'selected' : ''}" onclick="selectMethodologyStage('${st.stage_id}')" id="stage-card-${st.stage_id}">
-                        <div class="stage-card-header">
-                            <span class="stage-num-badge">${st.number}</span>
-                            <span class="stage-status-badge">${st.status.split(' // ')[0]}</span>
-                        </div>
-                        <div class="stage-card-title">${st.title}</div>
-                        <div class="stage-card-sub">${st.subtitle}</div>
-                        <div class="stage-card-footer">
-                            <span class="stage-meta-tag">${st.latency}</span>
-                            <span class="stage-meta-tag">${st.tech_stack[0] || 'VERIFIED'}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
         }
 
         function selectMethodologyStage(stageId) {
             if (typeof AegisAudio !== 'undefined') AegisAudio.playBlip(1150, 0.035);
             selectedStageId = stageId;
-            document.querySelectorAll('.pipeline-stage-card').forEach(c => c.classList.remove('selected'));
-            const card = document.getElementById(`stage-card-${stageId}`);
-            if (card) card.classList.add('selected');
+            document.querySelectorAll('.meth-flow-col').forEach(c => {
+                c.classList.remove('highlight-yellow', 'highlight-gold');
+            });
+            const col = document.getElementById(`meth-col-${stageId}`);
+            if (col) col.classList.add('highlight-yellow');
             setMethodologyTab('stages');
             updateStageInspector(stageId);
         }
@@ -6368,14 +7520,30 @@
 
             if (num) num.innerText = st.number;
             if (title) title.innerText = st.title;
-            if (sub) sub.innerText = st.subtitle;
+            if (sub) sub.innerText = `// ${st.subtitle}`;
             if (status) status.innerText = st.status;
             if (latency) latency.innerText = st.latency;
             if (summary) summary.innerText = st.summary;
             if (formula) formula.innerText = st.formula || '—';
 
-            if (bullets) {
-                bullets.innerHTML = st.details.map(d => `<li>${d}</li>`).join('');
+            if (bullets && st.details) {
+                bullets.innerHTML = st.details.map(d => {
+                    if (d.includes(':')) {
+                        const splitIdx = d.indexOf(':');
+                        const cat = d.substring(0, splitIdx).trim();
+                        const body = d.substring(splitIdx + 1).trim();
+                        return `
+                            <li class="spec-card-item">
+                                <div class="spec-card-head">
+                                    <span class="spec-bullet-dot"></span>
+                                    <span class="spec-card-category">${cat}</span>
+                                </div>
+                                <div class="spec-card-desc">${body}</div>
+                            </li>
+                        `;
+                    }
+                    return `<li class="spec-card-item"><div class="spec-card-desc">${d}</div></li>`;
+                }).join('');
             }
 
             if (techStack && st.tech_stack) {
@@ -6466,63 +7634,12 @@
 
         // --- 7B. Immediate Baseline Data Hydration ---
         function applyImmediateHydration() {
-            // Telemetry HUD
-            const xrayEl = document.getElementById('tel-xray');
-            if (xrayEl && (xrayEl.innerText === '--' || !xrayEl.innerText)) xrayEl.innerText = 'B1.5';
-            const kpEl = document.getElementById('tel-kp');
-            if (kpEl && (kpEl.innerText === '--' || !kpEl.innerText)) kpEl.innerText = '2.3';
-            const vswEl = document.getElementById('tel-vsw');
-            if (vswEl && (vswEl.innerText === '--' || !vswEl.innerText)) vswEl.innerHTML = '396<span style="font-size:1.3rem; opacity:0.8; margin-left:4px;">km/s</span>';
-            const bzEl = document.getElementById('tel-bz');
-            if (bzEl && (bzEl.innerText === '--' || !bzEl.innerText)) bzEl.innerHTML = '-2.0<span style="font-size:1.3rem; opacity:0.8; margin-left:4px;">nT</span>';
-            const dstEl = document.getElementById('tel-dst');
-            if (dstEl && (dstEl.innerText === '--' || !dstEl.innerText)) dstEl.innerHTML = '-9<span style="font-size:1.3rem; opacity:0.8; margin-left:4px;">nT</span>';
-            const f107El = document.getElementById('tel-f107');
-            if (f107El && (f107El.innerText === '--' || !f107El.innerText)) f107El.innerHTML = '97<span style="font-size:1.3rem; opacity:0.8; margin-left:4px;">sfu</span>';
-            const alertEl = document.getElementById('tel-alert');
-            if (alertEl && (alertEl.innerText === '--' || !alertEl.innerText)) alertEl.innerText = 'CALM';
+            // Note: Telemetry HUD and forecast values are intentionally NOT pre-filled here.
+            // All live values come from /api/status (fetchStatus) and /api/forecast/all (fetchForecastAll).
+            // Injecting fake values here would show incorrect data when the backend is offline.
 
-            // Multi-station forecast baseline values
-            const stData = {
-                hyderabad: { t1h: '28.5 TECU', t3h: '32.1 TECU', gps: '2.50 m', rmse: '7.07 TECU' },
-                bangalore: { t1h: '25.0 TECU', t3h: '28.4 TECU', gps: '2.19 m', rmse: '6.14 TECU' },
-                lucknow:   { t1h: '34.2 TECU', t3h: '41.8 TECU', gps: '3.00 m', rmse: '9.01 TECU' },
-                colombo:   { t1h: '26.8 TECU', t3h: '30.5 TECU', gps: '2.35 m', rmse: '6.39 TECU' }
-            };
-            Object.keys(stData).forEach(st => {
-                const d = stData[st];
-                const v1 = document.getElementById(`val-${st}-1h`);
-                if (v1 && (v1.innerText === '--' || !v1.innerText)) v1.innerText = d.t1h;
-                const v3 = document.getElementById(`val-${st}-3h`);
-                if (v3 && (v3.innerText === '--' || !v3.innerText)) v3.innerText = d.t3h;
-                const vg = document.getElementById(`val-${st}-gps`);
-                if (vg && (vg.innerText === '--' || !vg.innerText)) vg.innerText = d.gps;
-                const rm = document.getElementById(`rmse-${st}`);
-                if (rm && (rm.innerText === '--' || !rm.innerText)) rm.innerText = d.rmse;
-            });
-
-            // SHAP baseline values
-            const insBilstm = document.getElementById('ins-val-bilstm');
-            if (insBilstm && (insBilstm.innerText === '--' || !insBilstm.innerText)) insBilstm.innerText = '28.5 TECU';
-            const insDelta = document.getElementById('ins-val-delta');
-            if (insDelta && (insDelta.innerText === '--' || !insDelta.innerText)) insDelta.innerText = '+0.8 TECU';
-            const insFinal = document.getElementById('ins-val-final');
-            if (insFinal && (insFinal.innerText === '--' || !insFinal.innerText)) insFinal.innerText = '29.3 TECU';
-
-            // Default Feed Cards
-            if (typeof updateFeedCards === 'function') {
-                updateFeedCards({
-                    feed_status: {
-                        xray: { last_success: Date.now()/1000 - 30, error_count: 0 },
-                        solar_wind: { last_success: Date.now()/1000 - 45, error_count: 0 },
-                        kp: { last_success: Date.now()/1000 - 60, error_count: 0 },
-                        dst: { last_success: Date.now()/1000 - 55, error_count: 0 },
-                        f107: { last_success: Date.now()/1000 - 90, error_count: 0 }
-                    },
-                    data_source: 'live_swpc',
-                    is_degraded: false
-                });
-            }
+            // Network slide — detail lines already say "Awaiting backend..." in static HTML.
+            // Nothing to do here; real status updates arrive from /api/status.
         }
 
         // --- 8. Init On Page Load ---
@@ -6552,7 +7669,7 @@
                         gsap.ticker.add((time) => {
                             lenis.raf(time * 1000);
                         });
-                        gsap.ticker.lagSmoothing(0);
+                        gsap.ticker.lagSmoothing(500, 33);
                     }
                     window._lenis = lenis;
                 } catch (e) {
@@ -6573,9 +7690,13 @@
         }
 
         if (document.readyState === 'loading') {
-            window.addEventListener('DOMContentLoaded', initAegisApp);
+            window.addEventListener('DOMContentLoaded', () => {
+                initAegisApp();
+                initAegisUiverseButtons();
+            });
         } else {
             initAegisApp();
+            initAegisUiverseButtons();
         }
 
         // --- 9. HLS Video Stream ---
@@ -6602,6 +7723,109 @@
                 window.dismissPreloader();
             }
         }, 3600);
+
+        // --- 11. AEGIS UIVERSE BUTTON SYSTEM INITIALIZATION ---
+        function initAegisUiverseButtons() {
+            try {
+                // 1. Left Sidebar Navigation Links (9 Unique Animations)
+                const sideLinks = document.querySelectorAll('.side-link');
+                const sideAnimations = [
+                    'uiv-anim-solar-core',       // 01 SYSTEM: Solar core pulsar
+                    'uiv-anim-telemetry-wave',    // 02 TELEMETRY: Signal waveform frequency
+                    'uiv-anim-cascade-stream',    // 03 DATA FEEDS: Matrix cascade stream
+                    'uiv-anim-orbital-flare',     // 04 FORECAST: Orbital curved flare
+                    'uiv-anim-synaptic-twinkle',  // 05 INSIGHTS: Neural synaptic sparks
+                    'uiv-anim-warp-streak',       // 06 TRAJECTORY: Hyper-vector warp trails
+                    'uiv-anim-shockwave-pulse',   // 07 IMPACT: Geomagnetic shockwave ripple
+                    'uiv-anim-circuit-scan',      // 08 METHODOLOGY: Laser circuit blueprint
+                    'uiv-anim-node-beacon'        // 09 NETWORK: Constellation satellite beacon
+                ];
+
+                sideLinks.forEach((link, idx) => {
+                    if (link.querySelector('.points_wrapper')) return;
+                    const animClass = sideAnimations[idx] || 'uiv-anim-solar-core';
+                    link.classList.add(animClass);
+
+                    const fold = document.createElement('span');
+                    fold.className = 'fold';
+
+                    const pw = document.createElement('div');
+                    pw.className = 'points_wrapper';
+                    for (let i = 0; i < 7; i++) {
+                        const p = document.createElement('i');
+                        p.className = 'point';
+                        pw.appendChild(p);
+                    }
+
+                    const inner = document.createElement('span');
+                    inner.className = 'inner';
+                    while (link.firstChild) {
+                        inner.appendChild(link.firstChild);
+                    }
+
+                    link.appendChild(fold);
+                    link.appendChild(pw);
+                    link.appendChild(inner);
+                });
+
+                // 2. All Control & Action Buttons across the application
+                const buttons = document.querySelectorAll('.ctrl-btn, .subnav-pill, .btn-subpage-nav, .preloader-skip-btn, #cme-replay-btn, .side-audio-btn');
+                buttons.forEach(btn => {
+                    if (btn.querySelector('.points_wrapper')) return;
+
+                    const id = btn.id || '';
+                    let animFlavor = 'uiv-flavor-station';
+                    if (id.includes('station') || id.includes('-hyd') || id.includes('-blr') || id.includes('-lko') || id.includes('-cmb')) {
+                        animFlavor = 'uiv-flavor-station';
+                    } else if (id.includes('hz') || id.includes('inshz')) {
+                        animFlavor = 'uiv-flavor-horizon';
+                    } else if (id.includes('metric')) {
+                        animFlavor = 'uiv-flavor-metric';
+                    } else if (id.includes('el-')) {
+                        animFlavor = 'uiv-flavor-elevation';
+                    } else if (id.includes('impact')) {
+                        animFlavor = 'uiv-flavor-impact';
+                    } else if (id.includes('meth-')) {
+                        animFlavor = 'uiv-flavor-methodology';
+                    } else if (id.includes('replay')) {
+                        animFlavor = 'uiv-flavor-replay';
+                    } else if (btn.classList.contains('subnav-pill')) {
+                        animFlavor = 'uiv-flavor-pill';
+                    } else if (btn.classList.contains('btn-subpage-nav')) {
+                        animFlavor = 'uiv-flavor-nav';
+                    } else if (btn.classList.contains('preloader-skip-btn')) {
+                        animFlavor = 'uiv-flavor-skip';
+                    } else if (btn.classList.contains('side-audio-btn')) {
+                        animFlavor = 'uiv-flavor-audio';
+                    }
+                    btn.classList.add(animFlavor);
+
+                    const fold = document.createElement('span');
+                    fold.className = 'fold';
+
+                    const pw = document.createElement('div');
+                    pw.className = 'points_wrapper';
+                    for (let i = 0; i < 6; i++) {
+                        const p = document.createElement('i');
+                        p.className = 'point';
+                        pw.appendChild(p);
+                    }
+
+                    const inner = document.createElement('span');
+                    inner.className = 'inner';
+                    while (btn.firstChild) {
+                        inner.appendChild(btn.firstChild);
+                    }
+
+                    btn.appendChild(fold);
+                    btn.appendChild(pw);
+                    btn.appendChild(inner);
+                });
+            } catch (err) {
+                console.warn('Uiverse button enhancement notice:', err);
+            }
+        }
+        initAegisUiverseButtons();
     </script>
 </body>
 

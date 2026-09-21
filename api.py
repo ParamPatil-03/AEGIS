@@ -832,9 +832,15 @@ def build_telemetry_payload() -> dict:
         for st in STATIONS:
             try:
                 fc = compute_single_forecast(st, '1h')
+                curr_t = round(fc.current_tec, 2) if fc.current_tec is not None else 0.0
+                pred_t = round(fc.predicted_tec, 2)
                 stations_summary[st] = {
-                    'predicted_tec': round(fc.predicted_tec, 2),
+                    'predicted_tec': pred_t,
+                    'current_tec': curr_t,
+                    'delta_tec': round(pred_t - curr_t, 2),
                     'predicted_gps_error_m': round(fc.predicted_gps_error_m, 2),
+                    'current_gps_error_m': round(fc.current_gps_error_m, 2) if getattr(fc, 'current_gps_error_m', None) is not None else 0.0,
+                    'predicted_navic_error_m': round(fc.predicted_navic_error_m, 2) if getattr(fc, 'predicted_navic_error_m', None) is not None else 0.0,
                     'is_adaptive_scaling': fc.is_adaptive_scaling,
                     'adaptive_scale_factor': round(fc.adaptive_scale_factor, 2)
                 }
