@@ -17,6 +17,7 @@ import time
 import json
 import logging
 import asyncio
+import threading
 from typing import Dict, List, Optional, Any
 from contextlib import asynccontextmanager
 
@@ -493,10 +494,33 @@ class MethodologyResponse(BaseModel):
 
 
 # ── FastAPI Lifespan Handler ──────────────────────────────────────────────────
+# Model loading state (set by background loader thread)
+_models_loading = False
+_models_ready = False
+_models_load_error: Optional[str] = None
+
+
+def _background_model_loader():
+    """Loads ML models in a background thread so the server starts instantly."""
+    global _models_loading, _models_ready, _models_load_error
+    _models_loading = True
+    try:
+        model_store.load_all()
+        _models_ready = True
+        logger.info("[AEGIS] Background model loading complete — system is READY.")
+    except Exception as exc:
+        _models_load_error = str(exc)
+        logger.error(f"[AEGIS] Background model loading FAILED: {exc}")
+    finally:
+        _models_loading = False
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Load ML models and launch background real-time space weather ingest worker
-    model_store.load_all()
+    # Startup: kick off model loading in a daemon thread so the server binds
+    # to port 8000 immediately (< 2 seconds) instead of after 30-60 seconds.
+    loader_thread = threading.Thread(target=_background_model_loader, daemon=True)
+    loader_thread.start()
     start_live_ingest_worker()
     yield
     # Shutdown: Stop worker cleanly
@@ -524,6 +548,26 @@ app.add_middleware(
 @app.get("/")
 def serve_index():
     return FileResponse("index.html")
+
+
+@app.get("/health")
+def health_check():
+    """Fast health/readiness probe used by the launcher and the frontend."""
+    if _models_ready:
+        return {
+            "status": "ready",
+            "loaded_models": len(model_store.lstm_models),
+            "device": str(model_store.device),
+        }
+    if _models_load_error:
+        return {
+            "status": "error",
+            "detail": _models_load_error,
+        }
+    return {
+        "status": "loading",
+        "detail": "ML models are loading in the background — please wait.",
+    }
 
 
 # Mount fonts directory for custom typography (Haval & Bounded)
@@ -917,6 +961,7 @@ def get_forecast(
 
 @app.get("/api/forecast/all", response_model=AllForecastsResponse)
 def get_all_forecasts(
+    event: str = Query("live", description="Storm event or live"),
     elevation_deg: float = Query(45.0, ge=10.0, le=90.0, description="Satellite elevation angle in degrees"),
     mode: str = Query("single_frequency", description="Augmentation mode: single_frequency, gagan_sbas, dual_frequency")
 ):
@@ -924,18 +969,28 @@ def get_all_forecasts(
     Returns forecasts across all 4 stations x 3 horizons (12 combinations) in one response.
     Supports elevation angle and GAGAN augmentation modes. Cached for 5 minutes.
     """
-    cache_key = f"fc_all_{round(elevation_deg,1)}_{mode.lower()}"
+    ev = event.lower().strip()
+    cache_key = f"fc_all_{ev}_{round(elevation_deg,1)}_{mode.lower()}"
     cached_res = pred_cache.get(cache_key)
     if cached_res:
         return cached_res
 
-    if live_buffer_manager.is_ready():
+    target_idx = None
+    if ev == "march_2023_g4":
+        target_idx = 140
+    elif ev == "may_2024_g5":
+        target_idx = 4233
+    elif ev != "live":
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    if target_idx is None and live_buffer_manager.is_ready():
         df = live_buffer_manager.buffer_df
         data_source = "live_swpc"
         buf_status = live_buffer_manager.get_status()
         is_degraded = buf_status['is_degraded']
         degraded_reasons = buf_status['degraded_reasons']
         caveat_text = OPERATIONAL_CAVEAT_MSG
+        target_idx = len(df) - 1
     else:
         df = model_store.test_df
         if df is None:
@@ -944,8 +999,10 @@ def get_all_forecasts(
         is_degraded = False
         degraded_reasons = []
         caveat_text = None
+        if target_idx is None:
+            target_idx = len(df) - 1
 
-    row = df.iloc[-1]
+    row = df.iloc[target_idx]
     kp = float(row['kp_index'])
     is_storm = (kp >= 5.0)
 
@@ -972,7 +1029,7 @@ def get_all_forecasts(
     forecasts_list = []
     for st in STATIONS:
         for hz in HORIZONS:
-            fc = compute_single_forecast(st, hz, elevation_deg=elevation_deg, mode=mode)
+            fc = compute_single_forecast(st, hz, target_idx=target_idx, elevation_deg=elevation_deg, mode=mode)
             forecasts_list.append(fc)
 
     res = AllForecastsResponse(
@@ -1007,6 +1064,11 @@ def get_replay(
     st = station.lower().strip()
     hz = horizon.lower().strip()
     ev = event.lower().strip()
+
+    cache_key = f"replay_{ev}_{st}_{hz}_{round(elevation_deg,1)}_{mode.lower()}"
+    cached_res = pred_cache.get(cache_key)
+    if cached_res:
+        return cached_res
 
     if st not in STATIONS:
         raise HTTPException(status_code=400, detail=f"Invalid station '{station}'. Supported: {STATIONS}")
@@ -1071,13 +1133,15 @@ def get_replay(
             logger.warning(f"Error computing replay point at index {orig_idx}: {e}")
             continue
 
-    return ReplayResponse(
+    res = ReplayResponse(
         event=ev,
         station=st.capitalize(),
         horizon=hz,
         total_hours=len(time_series),
         time_series=time_series
     )
+    pred_cache.set(cache_key, res)
+    return res
 
 
 def compute_insights(station: str, horizon: str) -> InsightsResponse:
